@@ -48,6 +48,7 @@ passport.use(new FacebookStrategy({
 	passReqToCallback: true
 	},
 	function(req, accessToken, refreshToken, profile, done) {
+		//TO DO: add user into loggein users list / find or create user in db
 		console.log("id: " + profile.id + " name: " + profile.displayName);
 		done(null, { id: profile.id, name: profile.name });
 	}
@@ -60,3 +61,22 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback', 
 passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
+
+app.get('/logout', function(req, res){
+	//TO DO: remove user from loggedin users list
+	req.logout();
+	res.redirect('/');
+});
+
+app.get('/getLogin', function(req, res){
+	var loggedin = null;
+	console.log(req.sessionID);
+
+	//TO DO: find user on loggedin users list by session id
+
+	res.writeHead(200, {
+		'Content-Type': 'application/json; charset=utf8'
+	});
+	res.end(JSON.stringify(loggedin));
+	//}
+});
