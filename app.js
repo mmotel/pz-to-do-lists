@@ -4,17 +4,18 @@ var http = require('http');
 var path = require('path');
 var app = express();
 //passport
-var passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy;
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+	done(null, user);
 });
 
 passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+	done(null, obj);
 });
-//app config
+
+//app configuration
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
     app.use(express.favicon());
@@ -26,6 +27,7 @@ app.configure(function () {
 	app.use(express.session({secret: 'secret', key: 'express.sid'}));
 });
 
+//setup server
 var server = http.createServer(app).listen(app.get('port'), function () {
     console.log("Serwer nasłuchuje na porcie " + app.get('port'));
 });
@@ -34,3 +36,27 @@ var appData = require('./lib/data.js')();
 var appServer = require('./lib/server.js');
 
 appServer.listen(server, appData);
+
+//passport-facebook configuration
+var FACEBOOK_APP_ID = '637141929672070';
+var FACEBOOK_APP_SECRET = 'e68a60dd7659d17793c0c42d96bd5aeb';
+
+passport.use(new FacebookStrategy({
+	clientID: FACEBOOK_APP_ID,
+	clientSecret: FACEBOOK_APP_SECRET,
+	callbackURL: "http://localhost:3000/auth/facebook/callback",
+	passReqToCallback: true
+	},
+	function(req, accessToken, refreshToken, profile, done) {
+		console.log("id: " + profile.id + " name: " + profile.displayName);
+		done(null, { id: profile.id, name: profile.name });
+	}
+));
+
+// Redirect the user to Facebook for authentication.  When complete,
+// Facebook will redirect the user back to the application at
+//     /auth/facebook/callback
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback', 
+passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
