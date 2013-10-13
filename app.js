@@ -15,11 +15,7 @@ var server = http.createServer(app).listen(app.get('port'), function () {
     console.log("Serwer nasłuchuje na porcie " + app.get('port'));
 });
 
-var io = require('socket.io');
-var socket = io.listen(server);
+var appData = require('./lib/data.js')();
+var appServer = require('./lib/server.js');
 
-socket.on('connection', function (client) {
-    'use strict';
-
-});
-
+appServer.listen(server, appData);
