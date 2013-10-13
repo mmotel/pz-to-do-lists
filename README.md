@@ -2,7 +2,7 @@
 
 ##Install
 
-`mpn install`
+`npm install`
 
 ##Run
 
