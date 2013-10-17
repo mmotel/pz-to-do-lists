@@ -1,4 +1,4 @@
-#PZToDoLists
+#pz-to-do-lists
 
 ##Install
 
