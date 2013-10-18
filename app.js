@@ -33,9 +33,10 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 });
 
 var appData = require('./lib/data.js')();
+var appUser = require('./lib/user.js')(appData);
 var appServer = require('./lib/server.js');
 
-appServer.listen(server, appData);
+appServer.listen(server, appUser);
 
 //passport-facebook configuration
 var FACEBOOK_APP_ID = '637141929672070';
