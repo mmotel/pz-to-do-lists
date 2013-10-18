@@ -30,7 +30,7 @@ Finally add `alias` to your `~/.bashrc`:
 
 #Docs
 
-##data.js API
+##data.js
 
 ####findOrCreateUser
 
@@ -38,7 +38,7 @@ Finally add `alias` to your `~/.bashrc`:
 
 ####removeUser
 
-##user.js API
+##user.js
 
 ####login
 
@@ -46,4 +46,4 @@ Finally add `alias` to your `~/.bashrc`:
 
 ####getLogin
 
-##server.js API
+##server.js
