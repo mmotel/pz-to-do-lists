@@ -14,6 +14,7 @@ Then install `npm` (`node package manager`):
 	sudo apt-get npm
 
 Finally add `alias` to your `~/.bashrc`:
+
 	alias 'node'='nodejs'
 
 ##Install
