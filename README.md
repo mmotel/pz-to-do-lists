@@ -30,6 +30,8 @@ Finally add `alias` to your `~/.bashrc`:
 
 #Docs
 
-##server.js API
-
 ##data.js API
+
+##user.js API
+
+##server.js API
