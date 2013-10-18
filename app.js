@@ -67,6 +67,7 @@ passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }
 
 app.get('/logout', function(req, res){
 	//TO DO: remove user from loggedin users list
+	appUser.logout(req.sessionID);
 	req.logout();
 	res.redirect('/');
 });
