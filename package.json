@@ -1,7 +1,7 @@
 {
-	"name": "myApp",
+	"name": "pz-to-do-lists",
 	"version": "0.0.1",
-	"description": "Test login with fb",
+	"description": "projekt zespołowy - listy zadań",
 	"scripts": {
 		"start": "node app.js"
 	},
