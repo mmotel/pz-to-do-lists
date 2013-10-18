@@ -19,7 +19,10 @@ $(document).ready(function () {
 	});
 
 	//actions if user is loggedin
-	var loggedinCallback = function (data){
+	var loggedinCallback = function (user){
+		//object 'user' contains all data about current loggedin user
+
+		console.log(user);
 
 		var socket = io.connect('http://localhost:3000');
 
