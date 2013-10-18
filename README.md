@@ -32,6 +32,18 @@ Finally add `alias` to your `~/.bashrc`:
 
 ##data.js API
 
+####findOrCreateUser
+
+####updateUser
+
+####removeUser
+
 ##user.js API
+
+####login
+
+####logout
+
+####getLogin
 
 ##server.js API
