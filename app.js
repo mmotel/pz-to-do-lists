@@ -79,10 +79,11 @@ app.get('/getLogin', function(req, res){
 	console.log(sid);
 
 	//TO DO: find user on loggedin users list by session id
-	var loggedin = appUser.getLogin(sid);
-	res.writeHead(200, {
-		'Content-Type': 'application/json; charset=utf8'
+	appUser.getLogin(sid, function (user){
+		res.writeHead(200, {
+			'Content-Type': 'application/json; charset=utf8'
+		});
+		res.end(JSON.stringify(user));
 	});
-	res.end(JSON.stringify(loggedin));
 	//}
 });
