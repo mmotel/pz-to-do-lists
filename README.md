@@ -47,8 +47,8 @@ Two weeks just in case `16.01.2014 18:00`
 
 #[Docs (wiki)](https://github.com/mmotel/pz-to-do-lists/wiki)
 
-##[Data.js](https://github.com/mmotel/pz-to-do-lists/wiki/data-js)
+###[Data.js](https://github.com/mmotel/pz-to-do-lists/wiki/data-js)
 
-##[User.js](https://github.com/mmotel/pz-to-do-lists/wiki/user-js)
+###[User.js](https://github.com/mmotel/pz-to-do-lists/wiki/user-js)
 
-##Server.js
+###Server.js
