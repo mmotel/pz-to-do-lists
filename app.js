@@ -52,8 +52,8 @@ passport.use(new FacebookStrategy({
 		//TO DO: add user into loggein users list / find or create user in db
 		appUser.login(req.sessionID, profile, function (user){
 			console.log("sid: " + req.sessionID);
-			console.log("id: " + user.fbid + " name: " + user.displayName);
-			done(null, { id: user.fbid, name: user.displayName });
+			console.log("id: " + user.fbid + " name: " + user.profile.displayName);
+			done(null, { id: user.fbid, name: user.profile.displayName });
 		});
 	}
 ));
