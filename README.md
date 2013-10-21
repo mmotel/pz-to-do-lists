@@ -45,22 +45,10 @@ Incoming tasks etc. `02.01.2014 18:00`
 ###Extra time 
 Two weeks just in case `16.01.2014 18:00`
 
-#Docs
+#[Docs (wiki)](https://github.com/mmotel/pz-to-do-lists/wiki)
 
-##data.js
+##[Data.js](https://github.com/mmotel/pz-to-do-lists/wiki/data-js)
 
-####findOrCreateUser
+##[User.js](https://github.com/mmotel/pz-to-do-lists/wiki/user-js)
 
-####updateUser
-
-####removeUser
-
-##user.js
-
-####login
-
-####logout
-
-####getLogin
-
-##server.js
+##Server.js
