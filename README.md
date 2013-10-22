@@ -31,7 +31,7 @@ Finally add `alias` to your `~/.bashrc`:
 #Work schedule
 
 ###Task 1 
-Users' managment `24.10.2013 16:00` 
+Users' managment `27.10.2013 16:00` `new deadline`
 ###Task 2 
 Lists' managment `07.11.2013 18:00` 
 ###Task 3 
