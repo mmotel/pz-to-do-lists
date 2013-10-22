@@ -50,10 +50,11 @@ passport.use(new FacebookStrategy({
 	},
 	function(req, accessToken, refreshToken, profile, done) {
 		//TO DO: add user into loggein users list / find or create user in db
-		appUser.login(req.sessionID, profile);
-		console.log("sid: " + req.sessionID);
-		console.log("id: " + profile.id + " name: " + profile.displayName);
-		done(null, { id: profile.id, name: profile.name });
+		appUser.login(req.sessionID, profile, function (user){
+			console.log("sid: " + req.sessionID);
+			console.log("id: " + user.fbid + " name: " + user.profile.displayName);
+			done(null, { id: user.fbid, name: user.profile.displayName });
+		});
 	}
 ));
 
@@ -78,10 +79,11 @@ app.get('/getLogin', function(req, res){
 	console.log(sid);
 
 	//TO DO: find user on loggedin users list by session id
-	var loggedin = appUser.getLogin(sid);
-	res.writeHead(200, {
-		'Content-Type': 'application/json; charset=utf8'
+	appUser.getLogin(sid, function (user){
+		res.writeHead(200, {
+			'Content-Type': 'application/json; charset=utf8'
+		});
+		res.end(JSON.stringify(user));
 	});
-	res.end(JSON.stringify(loggedin));
 	//}
 });
