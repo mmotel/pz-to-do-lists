@@ -3,8 +3,25 @@
 $(document).ready(function () {
 	'use strict';
 
-	$.getJSON('http://localhost:3000/getLogin', 
-	function(data){ 
+	var getNormalFbPic = function (fbid, picElementId) {
+
+		$.getJSON('http://graph.facebook.com/'+fbid+'/picture?type=normal&redirect=false', function(pic){
+			console.log(pic.data.url);
+			$('#'+picElementId).attr('src', pic.data.url);
+		});
+
+	};
+
+	var getLargeFbPic = function (fbid, picElementId) {
+
+		$.getJSON('http://graph.facebook.com/'+fbid+'/picture?type=large&redirect=false', function(pic){
+			console.log(pic.data.url);
+			$('#'+picElementId).attr('src', pic.data.url);
+		});
+
+	};
+
+	$.getJSON('http://localhost:3000/getLogin', function(data){ 
 		console.log("data [ " + data + " ]"); 
 		if(data !== null) {
 			console.log('####@@@@loggedin!');
@@ -22,7 +39,10 @@ $(document).ready(function () {
 	var loggedinCallback = function (user){
 		//object 'user' contains all data about current loggedin user
 
-		console.log(user);
+		console.log("user.id: " + user.id);
+
+		// getNormalFbPic(user.id, 'fbNormalPic');
+		// getLargeFbPic(user.id, 'fbLargePic');
 
 		var socket = io.connect('http://localhost:3000');
 
