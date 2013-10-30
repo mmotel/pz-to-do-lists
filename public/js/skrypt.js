@@ -3,21 +3,14 @@
 $(document).ready(function () {
 	'use strict';
 
-	//hiding all contents
-	var hideAll = function (){
-		$('#user-settings').hide();
-		//---
-	}
-
 	//hiding elements
-	$('#login-link').hide();
-	$('#logout-link').hide();
-	$('#login-panel').hide();
-	$('#loggedin-panel').hide();
-	hideAll();
+	// $('#login-link').hide();
+	// $('#logout-link').hide();
+	// $('#login-panel').hide();
+	// $('#loggedin-panel').hide();
+	GUI.hideLogin();
+	GUI.hideAll();
 	//---
-
-
 
 	$.getJSON('http://localhost:3000/getLogin', function(data){ 
 		console.log("data [ " + data + " ]"); 
@@ -50,26 +43,15 @@ $(document).ready(function () {
 
 		//user-settings button click
 		$('#settings-button').click(function (){
-			$('#user-settings-displayname').val(user.profile.displayName);
-			$('#user-settings-givenname').val(user.profile.name.givenName);
-			$('#user-settings-middlename').val(user.profile.name.middleName);
-			$('#user-settings-familyname').val(user.profile.name.familyName);
-			$('#user-settings').slideDown('fast');
+			GUI.userSettingsButtonClick(user);
 		});	
 
 		$('#user-settings-cancel-button').click(function (){
-			$('#user-settings-displayname').val(user.profile.displayName);
-			$('#user-settings-givenname').val(user.profile.name.givenName);
-			$('#user-settings-middlename').val(user.profile.name.middleName);
-			$('#user-settings-familyname').val(user.profile.name.familyName);
+			GUI.userSettingsCancelClick(user);
 		});
 
 		$('#user-settings-save-button').click(function (){
-			var newuser = {id: user.id, "profile": {"name": {}}};
-			newuser.profile.displayName = $('#user-settings-displayname').val();
-			newuser.profile.name.givenName = $('#user-settings-givenname').val();
-			newuser.profile.name.middleName = $('#user-settings-middlename').val();
-			newuser.profile.name.familyName = $('#user-settings-familyname').val();
+			var newuser = GUI.userSettingsSaveClick(user);
 			console.log(newuser);
 		});
 
