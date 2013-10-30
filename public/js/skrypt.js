@@ -9,10 +9,6 @@ $(document).ready(function () {
 		//---
 	}
 
-	$('#settings-button').click(function (){
-		$('#user-settings').slideDown('fast');
-	});
-
 	//hiding elements
 	$('#login-link').hide();
 	$('#logout-link').hide();
@@ -66,8 +62,18 @@ $(document).ready(function () {
 	 	$('#login-link').hide();
 		$('#logout-link').show();
 		$('#login-panel').hide();
-		$('#loggedin-panel').show();	
+		$('#loggedin-panel').show();
+
+		//user-settings button click
+		$('#settings-button').click(function (){
+			$('#user-settings-displayname').val(user.profile.displayName);
+			$('#user-settings-givenname').val(user.profile.name.givenName);
+			$('#user-settings-middlename').val(user.profile.name.middleName);
+			$('#user-settings-familyname').val(user.profile.name.familyName);
+			$('#user-settings').slideDown('fast');
+		});	
 		
+
 		//sockets.io
 		var socket = io.connect('http://localhost:3000');
 
