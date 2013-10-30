@@ -4,14 +4,11 @@ $(document).ready(function () {
 	'use strict';
 
 	//hiding elements
-	// $('#login-link').hide();
-	// $('#logout-link').hide();
-	// $('#login-panel').hide();
-	// $('#loggedin-panel').hide();
 	GUI.hideLogin();
 	GUI.hideAll();
 	//---
 
+	//starting front-end
 	$.getJSON('http://localhost:3000/getLogin', function(data){ 
 		console.log("data [ " + data + " ]"); 
 		if(data !== null) {
@@ -29,17 +26,9 @@ $(document).ready(function () {
 	//actions if user is loggedin
 	var loggedinCallback = function (user){
 		//object 'user' contains all data about current loggedin user
-
-		console.log("user.id: " + user.id);
-		//fill loggedin panel with data
-		GUIutils.getNormalFbPic(user.id, 'profile-normal-pic');
-		// getLargeFbPic(user.id, 'fbLargePic');
-		 $('#profile-display-name').text(user.profile.displayName);
-		 //hide & show elements
-	 	$('#login-link').hide();
-		$('#logout-link').show();
-		$('#login-panel').hide();
-		$('#loggedin-panel').show();
+		GUI.fillLoginPanel(user);
+		// hide & show elements
+		GUI.showLoggedin();
 
 		//user-settings button click
 		$('#settings-button').click(function (){
@@ -68,7 +57,6 @@ $(document).ready(function () {
 	//actions if user is not loggedin
 	var loginCallback = function (){
 		//show content to login with fb
-		$('#login-link').show();
-		$('#login-panel').show();
+		GUI.showNotLoggedin();
 	};
 });

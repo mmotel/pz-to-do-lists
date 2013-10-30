@@ -8,6 +8,24 @@ var GUI = {
 	hideAll: function () {
 		$('#user-settings').hide();
 	},
+	fillLoginPanel: function (user){
+		console.log("user.id: " + user.id);
+		//fill loggedin panel with data
+		GUIutils.getNormalFbPic(user.id, 'profile-normal-pic');
+		// getLargeFbPic(user.id, 'fbLargePic');
+		$('#profile-display-name').text(user.profile.displayName);
+	},
+	showLoggedin: function (){
+		//hide & show elements
+	 	$('#login-link').hide();
+		$('#logout-link').show();
+		$('#login-panel').hide();
+		$('#loggedin-panel').show();
+	},
+	showNotLoggedin: function (){
+		$('#login-link').show();
+		$('#login-panel').show();
+	},
 	userSettingsButtonClick: function (user){
 		$('#user-settings-displayname').val(user.profile.displayName);
 		$('#user-settings-givenname').val(user.profile.name.givenName);
