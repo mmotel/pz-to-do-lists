@@ -72,7 +72,13 @@ $(document).ready(function () {
 			$('#user-settings-familyname').val(user.profile.name.familyName);
 			$('#user-settings').slideDown('fast');
 		});	
-		
+
+		$('#user-settings-cancel-button').click(function (){
+			$('#user-settings-displayname').val(user.profile.displayName);
+			$('#user-settings-givenname').val(user.profile.name.givenName);
+			$('#user-settings-middlename').val(user.profile.name.middleName);
+			$('#user-settings-familyname').val(user.profile.name.familyName);
+		});
 
 		//sockets.io
 		var socket = io.connect('http://localhost:3000');
