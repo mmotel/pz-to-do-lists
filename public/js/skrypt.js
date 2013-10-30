@@ -17,23 +17,7 @@ $(document).ready(function () {
 	hideAll();
 	//---
 
-	var getNormalFbPic = function (fbid, picElementId) {
 
-		$.getJSON('http://graph.facebook.com/'+fbid+'/picture?type=normal&redirect=false', function(pic){
-			console.log(pic.data.url);
-			$('#'+picElementId).attr('src', pic.data.url);
-		});
-
-	};
-
-	var getLargeFbPic = function (fbid, picElementId) {
-
-		$.getJSON('http://graph.facebook.com/'+fbid+'/picture?type=large&redirect=false', function(pic){
-			console.log(pic.data.url);
-			$('#'+picElementId).attr('src', pic.data.url);
-		});
-
-	};
 
 	$.getJSON('http://localhost:3000/getLogin', function(data){ 
 		console.log("data [ " + data + " ]"); 
@@ -55,7 +39,7 @@ $(document).ready(function () {
 
 		console.log("user.id: " + user.id);
 		//fill loggedin panel with data
-		 getNormalFbPic(user.id, 'profile-normal-pic');
+		GUIutils.getNormalFbPic(user.id, 'profile-normal-pic');
 		// getLargeFbPic(user.id, 'fbLargePic');
 		 $('#profile-display-name').text(user.profile.displayName);
 		 //hide & show elements
