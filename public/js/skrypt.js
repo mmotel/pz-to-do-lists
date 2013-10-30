@@ -38,9 +38,15 @@ $(document).ready(function () {
 		socket.on('connect', function () {
 			console.log('Połączony!');
 		});
+		//Update user
+		socket.on('updatedUser', function (data) {
+			console.log(data);
+			user = data;
+			GUI.userSettingsFill(user);
+		});
 		//---
 
-		
+
 		//user-settings button click
 		$('#settings-button').click(function (){
 			GUI.userSettingsButtonClick(user);
@@ -53,6 +59,7 @@ $(document).ready(function () {
 		$('#user-settings-save-button').click(function (){
 			var newuser = GUI.userSettingsSaveClick(user);
 			console.log(newuser);
+			socket.emit('updateUser', newuser);
 		});
 	};
 
