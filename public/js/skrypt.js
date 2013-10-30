@@ -3,12 +3,17 @@
 $(document).ready(function () {
 	'use strict';
 
+	//hiding all contents
+	var hideAll = function (){
+		$('#user-settings').hide();
+		//---
+	}
 	//hiding elements
 	$('#login-link').hide();
 	$('#logout-link').hide();
 	$('#login-panel').hide();
 	$('#loggedin-panel').hide();
-	$('#user-settings').hide();
+	hideAll();
 	//---
 
 	var getNormalFbPic = function (fbid, picElementId) {
