@@ -8,6 +8,11 @@ $(document).ready(function () {
 		$('#user-settings').hide();
 		//---
 	}
+
+	$('#settings-button').click(function (){
+		$('#user-settings').slideDown('fast');
+	});
+
 	//hiding elements
 	$('#login-link').hide();
 	$('#logout-link').hide();
