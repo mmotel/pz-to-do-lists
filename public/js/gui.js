@@ -33,7 +33,7 @@ var GUI = {
 		$('#user-settings-familyname').val(user.profile.name.familyName);
 		$('#user-settings').slideDown('fast');
 	},
-	userSettingsCancelClick: function (user){
+	userSettingsFill: function (user){
 		$('#user-settings-displayname').val(user.profile.displayName);
 		$('#user-settings-givenname').val(user.profile.name.givenName);
 		$('#user-settings-middlename').val(user.profile.name.middleName);

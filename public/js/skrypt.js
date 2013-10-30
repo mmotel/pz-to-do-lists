@@ -30,20 +30,6 @@ $(document).ready(function () {
 		// hide & show elements
 		GUI.showLoggedin();
 
-		//user-settings button click
-		$('#settings-button').click(function (){
-			GUI.userSettingsButtonClick(user);
-		});	
-
-		$('#user-settings-cancel-button').click(function (){
-			GUI.userSettingsCancelClick(user);
-		});
-
-		$('#user-settings-save-button').click(function (){
-			var newuser = GUI.userSettingsSaveClick(user);
-			console.log(newuser);
-		});
-
 		//sockets.io
 		var socket = io.connect('http://localhost:3000');
 
@@ -51,6 +37,22 @@ $(document).ready(function () {
 
 		socket.on('connect', function () {
 			console.log('Połączony!');
+		});
+		//---
+
+		
+		//user-settings button click
+		$('#settings-button').click(function (){
+			GUI.userSettingsButtonClick(user);
+		});	
+
+		$('#user-settings-cancel-button').click(function (){
+			GUI.userSettingsFill(user);
+		});
+
+		$('#user-settings-save-button').click(function (){
+			var newuser = GUI.userSettingsSaveClick(user);
+			console.log(newuser);
 		});
 	};
 
