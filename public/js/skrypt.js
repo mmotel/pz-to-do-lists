@@ -80,6 +80,15 @@ $(document).ready(function () {
 			$('#user-settings-familyname').val(user.profile.name.familyName);
 		});
 
+		$('#user-settings-save-button').click(function (){
+			var newuser = {id: user.id, "profile": {"name": {}}};
+			newuser.profile.displayName = $('#user-settings-displayname').val();
+			newuser.profile.name.givenName = $('#user-settings-givenname').val();
+			newuser.profile.name.middleName = $('#user-settings-middlename').val();
+			newuser.profile.name.familyName = $('#user-settings-familyname').val();
+			console.log(newuser);
+		});
+
 		//sockets.io
 		var socket = io.connect('http://localhost:3000');
 
