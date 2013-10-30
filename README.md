@@ -25,17 +25,17 @@ How to install `Node.JS` version `0.10`:
 ###Task 1 
 Users' managment `27.10.2013 16:00` `new deadline`
 ###Task 2 
-Lists' managment `07.11.2013 18:00` 
+Lists' managment `14.11.2013 18:00` `new deadline (+7days)`
 ###Task 3 
-Tasks' managment `21.11.2013 18:00` 
+Tasks' managment `28.11.2013 18:00` `new deadline (+7days)`
 ###Task 4 
-Groups' managment `05.12.2013 18:00` 
+Groups' managment `12.12.2013 18:00` `new deadline (+7days)`
 ###Task 5 
-Group's lists' and tasks' management `19.12.2013 18:00` 
+Group's lists' and tasks' management `26.12.2013 18:00` `new deadline (+7days)`
 ###Task 6 
-Incoming tasks etc. `02.01.2014 18:00` 
+Incoming tasks etc. `09.01.2014 18:00` `new deadline (+7days)`
 ###Extra time 
-Two weeks just in case `16.01.2014 18:00`
+One week just in case `16.01.2014 18:00`
 
 #[Docs (wiki)](https://github.com/mmotel/pz-to-do-lists/wiki)
 
@@ -45,4 +45,4 @@ Two weeks just in case `16.01.2014 18:00`
 
 ###Server.js
 
-###[Skrypt.js](https://github.com/mmotel/pz-to-do-lists/wiki/skrypt-js)
+###[Utils.js](https://github.com/mmotel/pz-to-do-lists/wiki/utils-js)
