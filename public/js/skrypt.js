@@ -19,7 +19,6 @@ $(document).ready(function () {
 		else {
 			console.log('%%%%&&&&NOT loggedin!');
 			//actions if user is not loggedin
-			// loginCallback();
 			GUI.showNotLoggedin();
 		}
 	});
@@ -55,9 +54,4 @@ $(document).ready(function () {
 		});
 	};
 
-	//actions if user is not loggedin
-	// var loginCallback = function (){
-	// 	//show content to login with fb
-	// 	GUI.showNotLoggedin();
-	// };
 });
