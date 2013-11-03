@@ -73,6 +73,14 @@ app.get('/logout', function(req, res){
 	res.redirect('/');
 });
 
+app.get('/deleteAccount', function(req, res){
+	//TO DO: remove user from loggedin users list
+	appUser.removeAccout(req.sessionID, function () {
+		req.logout();
+		res.redirect('/');
+	});
+});
+
 app.get('/getLogin', function(req, res){
 	var sid = req.sessionID;
 	
