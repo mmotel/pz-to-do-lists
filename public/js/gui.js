@@ -81,11 +81,15 @@ var GUI = {
 			$('#user-lists-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
 				'<td><button type="button" class="btn btn-default pull-right" id="editList'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Edytuj</button></td>'+
-				'<td><button type="button" class="btn btn-danger pull-right" id="rmList'+ tab[i].id +'">'+
+				'<td><button type="button" class="btn btn-danger pull-right rmList" id="rmList'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Usuń</button></td>'+
 				'<td><button type="button" class="btn btn-primary pull-right" id="addTaskBig'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
 				'</tr>');
 		}
+
+		$('.rmList').click(function () {
+			$("#user-delete-list-modal").modal('show');
+		});
 	}
 };
