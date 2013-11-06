@@ -79,6 +79,11 @@ $(document).ready(function () {
 			console.log(newuser);
 			socket.emit('updateUser', newuser);
 		});
+
+		$('#show-all-lists-button').click(function (){
+			GUI.hideAll();
+			GUI.allListButtonClick();
+		});
 	};
 
 });

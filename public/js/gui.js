@@ -6,11 +6,13 @@ var GUI = {
 		$('#loggedin-panel').hide();
 		$('#user-lists-small-panel').hide();
 		$('#add-list-button').hide();
+		$('#show-all-lists-button').hide();
 	},
 	hideAll: function () {
 		$('#user-settings').hide();
 		$('#adding-lists').hide();
 		$('#editing-lists').hide();
+		$('#show-all-lists').hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
@@ -27,6 +29,7 @@ var GUI = {
 		$('#loggedin-panel').show();
 		$('#user-lists-small-panel').show();
 		$('#add-list-button').show();
+		$('#show-all-lists-button').show();
 	},
 	showNotLoggedin: function (){
 		$('#login-link').show();
@@ -58,7 +61,6 @@ var GUI = {
 		return newuser;
 	},
 	fillUserListsSmall: function (tab){
-
 		$('#user-lists-small').children().remove();
 
 		for(var i = 0; i < tab.length; i++){
@@ -67,5 +69,8 @@ var GUI = {
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>'+
 				'</td></tr>');
 		}
+	},
+	allListButtonClick: function(){
+		$('#show-all-lists').slideDown('fast');
 	}
 };

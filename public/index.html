@@ -53,8 +53,10 @@
 	      </div>
 	      <button type="submit" class="btn btn-default">Submit</button>
 	    </form> -->
+	    <button type="button" id="show-all-lists-button" class="btn btn-primary navbar-btn">
+	      	<span class="glyphicon glyphicon-list"></span> Moje listy</button>  
 		<button type="button" id="add-list-button" class="btn btn-primary navbar-btn">
-	      	<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button>  
+	      	<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button>
 	    <ul class="nav navbar-nav navbar-right">
 	      <li id="login-link"><a href="/auth/facebook">Zaloguj się przez Facebooka</a></li>
 	      <li id="logout-link"><a href="/logout">Wyloguj</a></li>
@@ -166,6 +168,16 @@
 			</form>
 		</div>
 		<!-- Koniec formularza edytowania listy -->
+		<div id="show-all-lists">
+		  	<h2><span class="glyphicon glyphicon-list"></span> Moje listy</h2>
+		  		<table class="table table-hover table-striped" id="user-lists-big">
+		  			<tr>
+		  				<th>Nazwa</th>
+		  				<th>Opis</th>
+		  				<th colspan="3">Opcje</th>
+		  			</tr>
+				</table>
+		</div>
 	  </div>
 	</div>
 </div>
