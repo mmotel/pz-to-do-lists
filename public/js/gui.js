@@ -70,7 +70,22 @@ var GUI = {
 				'</td></tr>');
 		}
 	},
-	allListButtonClick: function(){
+	allListButtonClick: function (tab){
 		$('#show-all-lists').slideDown('fast');
+
+		$('#user-lists-big').children().remove();
+		$('#user-lists-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+
+
+		for(var i = 0; i < tab.length; i++){
+			$('#user-lists-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
+				'<td><button type="button" class="btn btn-default pull-right" id="editList'+ tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Edytuj</button></td>'+
+				'<td><button type="button" class="btn btn-danger pull-right" id="rmList'+ tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Usuń</button></td>'+
+				'<td><button type="button" class="btn btn-primary pull-right" id="addTaskBig'+ tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
+				'</tr>');
+		}
 	}
 };
