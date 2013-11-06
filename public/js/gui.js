@@ -4,6 +4,8 @@ var GUI = {
 		$('#logout-link').hide();
 		$('#login-panel').hide();
 		$('#loggedin-panel').hide();
+		$('#user-lists-small-panel').hide();
+		$('#add-list-button').hide();
 	},
 	hideAll: function () {
 		$('#user-settings').hide();
@@ -23,6 +25,8 @@ var GUI = {
 		$('#logout-link').show();
 		$('#login-panel').hide();
 		$('#loggedin-panel').show();
+		$('#user-lists-small-panel').show();
+		$('#add-list-button').show();
 	},
 	showNotLoggedin: function (){
 		$('#login-link').show();
