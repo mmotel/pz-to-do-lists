@@ -18,7 +18,7 @@ var GUI = {
 	},
 	showLoggedin: function (){
 		//hide & show elements
-	 	$('#login-link').hide();
+		$('#login-link').hide();
 		$('#logout-link').show();
 		$('#login-panel').hide();
 		$('#loggedin-panel').show();
