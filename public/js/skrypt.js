@@ -53,6 +53,10 @@ $(document).ready(function () {
 			GUI.userSettingsButtonClick(user);
 		});	
 
+		$('#add-list-button').click(function (){
+			GUI.addListButtonClick();
+		});
+
 		$('#user-settings-delete-button').click(function (){
 			$('#user-delete-account-modal').modal('show');
 		});

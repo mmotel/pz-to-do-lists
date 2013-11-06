@@ -7,6 +7,7 @@ var GUI = {
 	},
 	hideAll: function () {
 		$('#user-settings').hide();
+		$('#adding-lists').hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
@@ -32,6 +33,9 @@ var GUI = {
 		$('#user-settings-middlename').val(user.profile.name.middleName);
 		$('#user-settings-familyname').val(user.profile.name.familyName);
 		$('#user-settings').slideDown('fast');
+	},
+	addListButtonClick: function (user){
+		$('#adding-lists').slideDown('fast');
 	},
 	userSettingsFill: function (user){
 		$('#user-settings-displayname').val(user.profile.displayName);
