@@ -1,6 +1,6 @@
 {
 	"name": "pz-to-do-lists",
-	"version": "0.1.0",
+	"version": "0.1.7",
 	"description": "projekt zespołowy - listy zadań",
 	"scripts": {
 		"start": "node app.js"
