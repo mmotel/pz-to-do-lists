@@ -40,11 +40,18 @@ $(document).ready(function () {
 		});
 		//Update user
 		socket.on('updatedUser', function (data) {
-			console.log(data);
-			user = data;
-			GUI.userSettingsFill(user);
+			if(data.id === user.id){
+				console.log(data);
+				user = data;
+				GUI.userSettingsFill(user);
+			}
 		});
-		//---
+		//Add list
+		socket.on('addedList', function (data) {
+			if(data.fbid === user.id){
+				//add new list into lists' tabels
+			}
+		});
 
 
 		//user-settings button click
