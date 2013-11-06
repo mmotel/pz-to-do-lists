@@ -50,10 +50,12 @@ $(document).ready(function () {
 		//user-settings button click
 
 		$('#settings-button').click(function (){
+			GUI.hideAll();
 			GUI.userSettingsButtonClick(user);
 		});	
 
 		$('#add-list-button').click(function (){
+			GUI.hideAll();
 			GUI.addListButtonClick();
 		});
 
