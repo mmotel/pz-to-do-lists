@@ -8,6 +8,7 @@ var GUI = {
 	hideAll: function () {
 		$('#user-settings').hide();
 		$('#adding-lists').hide();
+		$('#editing-lists').hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
