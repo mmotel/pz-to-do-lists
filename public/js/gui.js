@@ -52,5 +52,16 @@ var GUI = {
 		newuser.profile.name.familyName = $('#user-settings-familyname').val();
 		// console.log(newuser);
 		return newuser;
+	},
+	fillUserListsSmall: function (tab){
+
+		$('#user-lists-small').children().remove();
+
+		for(var i = 0; i < tab.length; i++){
+			$('#user-lists-small').append('<tr><td>'+ tab[i].name +'</td><td>'+
+				'<button type="button" class="btn btn-link pull-right" id="addTask'+ tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>'+
+				'</td></tr>');
+		}
 	}
 };
