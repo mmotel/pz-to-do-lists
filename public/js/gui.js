@@ -91,5 +91,13 @@ var GUI = {
 		$('.rmList').click(function () {
 			$("#user-delete-list-modal").modal('show');
 		});
+	},
+	addListSaveClick: function (user){
+		var newlist = { fbid: user.id };
+		newlist.name = $('#add-list-name').val();
+		$('#add-list-name').val("");
+		newlist.descr = $('#add-list-description').val();
+		$('#add-list-description').val("");
+		return newlist;
 	}
 };

@@ -55,6 +55,8 @@ $(document).ready(function () {
 		socket.on('addedList', function (data) {
 			if(data.fbid === user.id){
 				//add new list into lists' tabels
+				lists.push(item);
+				GUI.fillUserListsSmall(lists);
 			}
 		});
 
@@ -95,6 +97,14 @@ $(document).ready(function () {
 		// 	{id: 5, name: "pierwsza 5", descr: "opis"},
 		// ];
 			GUI.allListButtonClick(lists);
+		});
+
+		$('#add-list-save-button').click(function () {
+			var newlist = GUI.addListSaveClick(user);
+			console.log(newlist);
+			socket.emit('addList', newlist);
+			GUI.hideAll();
+			//show created list (probably form socket callback)
 		});
 	};
 
