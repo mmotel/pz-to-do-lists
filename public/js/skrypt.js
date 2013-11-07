@@ -48,9 +48,14 @@ $(document).ready(function () {
 
 
 		//user-settings button click
+
 		$('#settings-button').click(function (){
 			GUI.userSettingsButtonClick(user);
 		});	
+
+		$('#user-settings-delete-button').click(function (){
+			$('#user-delete-account-modal').modal('show');
+		});
 
 		$('#user-settings-cancel-button').click(function (){
 			GUI.userSettingsFill(user);
