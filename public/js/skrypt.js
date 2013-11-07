@@ -14,7 +14,7 @@ $(document).ready(function () {
 		if(data !== null) {
 			console.log('####@@@@loggedin!');
 			//actions if user is loggedin
-			loggedinCallback(data); 
+			loggedinCallback(data.user, data.lists); 
 		}
 		else {
 			console.log('%%%%&&&&NOT loggedin!');
@@ -24,8 +24,11 @@ $(document).ready(function () {
 	});
 
 	//actions if user is loggedin
-	var loggedinCallback = function (user){
+	var loggedinCallback = function (user, lists){
 		//object 'user' contains all data about current loggedin user
+
+		console.log(lists);
+
 		GUI.fillLoginPanel(user);
 		// hide & show elements
 		GUI.showLoggedin();
@@ -37,6 +40,11 @@ $(document).ready(function () {
 
 		socket.on('connect', function () {
 			console.log('Połączony!');
+		});
+		//setLists
+		socket.on('setLists', function (data) {
+			lists = data;
+			GUI.fillUserListsSmall(lists);
 		});
 		//Update user
 		socket.on('updatedUser', function (data) {
@@ -82,14 +90,14 @@ $(document).ready(function () {
 
 		$('#show-all-lists-button').click(function (){
 			GUI.hideAll();
-			var tab = [
-			{id: 1, name: "pierwsza", descr: "opis"},
-			{id: 2, name: "pierwsza 2", descr: "opis"},
-			{id: 3, name: "pierwsza 3", descr: "opis"},
-			{id: 4, name: "pierwsza 4", descr: "opis"},
-			{id: 5, name: "pierwsza 5", descr: "opis"},
-		];
-			GUI.allListButtonClick(tab);
+		// 	var tab = [
+		// 	{id: 1, name: "pierwsza", descr: "opis"},
+		// 	{id: 2, name: "pierwsza 2", descr: "opis"},
+		// 	{id: 3, name: "pierwsza 3", descr: "opis"},
+		// 	{id: 4, name: "pierwsza 4", descr: "opis"},
+		// 	{id: 5, name: "pierwsza 5", descr: "opis"},
+		// ];
+			GUI.allListButtonClick(lists);
 		});
 	};
 
