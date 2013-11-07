@@ -28,6 +28,8 @@ $(document).ready(function () {
 		//object 'user' contains all data about current loggedin user
 
 		console.log(lists);
+		//setLists
+		GUI.fillUserListsSmall(lists);
 
 		GUI.fillLoginPanel(user);
 		// hide & show elements
@@ -40,11 +42,6 @@ $(document).ready(function () {
 
 		socket.on('connect', function () {
 			console.log('Połączony!');
-		});
-		//setLists
-		socket.on('setLists', function (data) {
-			lists = data;
-			GUI.fillUserListsSmall(lists);
 		});
 		//Update user
 		socket.on('updatedUser', function (data) {
