@@ -79,11 +79,11 @@ var GUI = {
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-lists-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
-				'<td><button type="button" class="btn btn-default pull-right" id="editList'+ tab[i].id +'">'+
+				'<td><button type="button" class="btn btn-default btn-sm pull-right" id="editList'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Edytuj</button></td>'+
-				'<td><button type="button" class="btn btn-danger pull-right rmList" id="rmList'+ tab[i].id +'">'+
+				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary pull-right" id="addTaskBig'+ tab[i].id +'">'+
+				'<td><button type="button" class="btn btn-primary btn-sm pull-right" id="addTaskBig'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
 				'</tr>');
 		}
