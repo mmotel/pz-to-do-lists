@@ -55,7 +55,8 @@ $(document).ready(function () {
 		socket.on('addedList', function (data) {
 			if(data.fbid === user.id){
 				//add new list into lists' tabels
-				lists.push(item);
+				console.log(data);
+				lists.push(data);
 				GUI.fillUserListsSmall(lists);
 			}
 		});
