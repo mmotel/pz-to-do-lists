@@ -60,6 +60,12 @@ $(document).ready(function () {
 				GUI.fillUserListsSmall(lists);
 			}
 		});
+		//Rm list
+		socket.on('rmedList', function (data) {
+			lists = data;
+			GUI.fillUserListsSmall(lists);
+			GUI.allListButtonClick(lists);
+		});
 
 
 		//user-settings button click
@@ -108,9 +114,11 @@ $(document).ready(function () {
 
 		$('.rmListConfirm').click(function () {
 			var listId = $(this).attr('id');
-			listId = listId.substring(13, listId.length);
-			listId = parseInt(listId);
+			listId = parseInt(listId.substring(13, listId.length));
 			console.log(listId);
+			socket.emit('rmList', {id: listId, fbid: user.id});
+			$('#user-delete-list-modal').modal('hide');
+			GUI.hideAll();
 		});
 	};
 
