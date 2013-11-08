@@ -65,7 +65,7 @@ var GUI = {
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-lists-small').append('<tr><td>'+ tab[i].name +'</td><td>'+
-				'<button type="button" class="btn btn-link pull-right" id="addTask'+ tab[i].id +'">'+
+				'<button type="button" class="btn btn-link btn-sm pull-right" id="addTask'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>'+
 				'</td></tr>');
 		}
@@ -80,9 +80,9 @@ var GUI = {
 		for(var i = 0; i < tab.length; i++){
 			$('#user-lists-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
 				'<td><button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Edytuj</button></td>'+
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Usuń</button></td>'+
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
 				'<td><button type="button" class="btn btn-primary btn-sm pull-right" id="addTaskBig'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
 				'</tr>');
