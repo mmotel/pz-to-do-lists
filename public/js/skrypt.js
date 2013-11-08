@@ -90,13 +90,6 @@ $(document).ready(function () {
 
 		$('#show-all-lists-button').click(function (){
 			GUI.hideAll();
-		// 	var tab = [
-		// 	{id: 1, name: "pierwsza", descr: "opis"},
-		// 	{id: 2, name: "pierwsza 2", descr: "opis"},
-		// 	{id: 3, name: "pierwsza 3", descr: "opis"},
-		// 	{id: 4, name: "pierwsza 4", descr: "opis"},
-		// 	{id: 5, name: "pierwsza 5", descr: "opis"},
-		// ];
 			GUI.allListButtonClick(lists);
 		});
 

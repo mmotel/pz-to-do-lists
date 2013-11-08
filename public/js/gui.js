@@ -92,15 +92,11 @@ var GUI = {
 			var listId = $(this).attr('id');
 			listId = listId.substring(6, listId.length);
 			listId = parseInt(listId);
-			console.log(listId);
 
 			for(var i =0; i < tab.length; i++){
-				console.log(tab[i]);
 				if(tab[i].id === listId){
-					console.log(tab[i]);
 					$('#user-delete-list-modal-name').text(tab[i].name);
 					$('.rmListConfirm').attr('id', 'rmListConfirm' + listId);
-					console.log($('.rmListConfirm').attr('id'));
 					break;
 				}
 			}
