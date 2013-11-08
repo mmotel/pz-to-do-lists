@@ -107,6 +107,18 @@ $(document).ready(function () {
 			GUI.hideAll();
 			//show created list (probably form socket callback)
 		});
+
+		$('#add-list-cancel-button').click(function () {
+			GUI.clearAddListForm();
+			GUI.hideAll();
+		});
+
+		$('.rmListConfirm').click(function () {
+			var listId = $(this).attr('id');
+			listId = listId.substring(13, listId.length);
+			listId = parseInt(listId);
+			console.log(listId);
+		});
 	};
 
 });
