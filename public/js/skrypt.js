@@ -120,6 +120,11 @@ $(document).ready(function () {
 			$('#user-delete-list-modal').modal('hide');
 			GUI.hideAll();
 		});
+
+		$('#edit-list-cancel-button').click (function () {
+			GUI.clearEditListForm();
+			GUI.hideAll();
+		});
 	};
 
 });

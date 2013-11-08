@@ -79,7 +79,7 @@ var GUI = {
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-lists-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
-				'<td><button type="button" class="btn btn-default btn-sm pull-right" id="editList'+ tab[i].id +'">'+
+				'<td><button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Edytuj</button></td>'+
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Usuń</button></td>'+
@@ -87,11 +87,10 @@ var GUI = {
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
 				'</tr>');
 		}
-
+		//rmList button click
 		$('.rmList').click(function () {
 			var listId = $(this).attr('id');
-			listId = listId.substring(6, listId.length);
-			listId = parseInt(listId);
+			listId = parseInt(listId.substring(6, listId.length));
 
 			for(var i =0; i < tab.length; i++){
 				if(tab[i].id === listId){
@@ -102,6 +101,22 @@ var GUI = {
 			}
 
 			$("#user-delete-list-modal").modal('show');
+		});
+		//editList button click
+		$('.editList').click(function () {
+			var listId = $(this).attr('id');
+			listId = parseInt(listId.substring(8, listId.length));
+
+			for(var i =0; i < tab.length; i++){
+				if(tab[i].id === listId){
+					$('#edit-list-id').val(tab[i].id);
+					$('#edit-list-name').val(tab[i].name);
+					$('#edit-list-description').val(tab[i].descr);
+					$('#show-all-lists').hide();
+					$('#editing-lists').show();
+					break;
+				}
+			}
 		});
 	},
 	addListSaveClick: function (user){
@@ -115,5 +130,10 @@ var GUI = {
 	clearAddListForm: function (){
 		$('#add-list-name').val("");
 		$('#add-list-description').val("");
+	},
+	clearEditListForm: function (){
+		$('#edit-list-id').val("");
+		$('#edit-list-name').val("");
+		$('#edit-list-description').val("");
 	}
 };
