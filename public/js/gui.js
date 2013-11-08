@@ -135,5 +135,15 @@ var GUI = {
 		$('#edit-list-id').val("");
 		$('#edit-list-name').val("");
 		$('#edit-list-description').val("");
+	},
+	editListSaveClick: function (user){
+		var editedList = { fbid: user.id };
+		editedList.id = parseInt($('#edit-list-id').val());
+		$('#edit-list-id').val("");
+		editedList.name = $('#edit-list-name').val();
+		$('#edit-list-name').val("");
+		editedList.descr = $('#edit-list-description').val();
+		$('#edit-list-description').val("");
+		return editedList;
 	}
 };

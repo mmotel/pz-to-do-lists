@@ -66,6 +66,12 @@ $(document).ready(function () {
 			GUI.fillUserListsSmall(lists);
 			GUI.allListButtonClick(lists);
 		});
+		//Edit list
+		socket.on('editedList', function (data) {
+			lists = data;
+			GUI.fillUserListsSmall(lists);
+			GUI.allListButtonClick(lists);
+		});
 
 
 		//user-settings button click
@@ -121,8 +127,15 @@ $(document).ready(function () {
 			GUI.hideAll();
 		});
 
-		$('#edit-list-cancel-button').click (function () {
+		$('#edit-list-cancel-button').click(function () {
 			GUI.clearEditListForm();
+			GUI.hideAll();
+		});
+
+		$('#edit-list-save-button').click(function () {
+			var editedList = GUI.editListSaveClick(user);
+			console.log(editedList);
+			socket.emit('editList', editedList);
 			GUI.hideAll();
 		});
 	};
