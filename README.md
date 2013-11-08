@@ -23,9 +23,9 @@ How to install `Node.JS` version `0.10`:
 #Work schedule
 
 ###Task 1 
-Users' managment `27.10.2013 16:00` `new deadline`
+Users' managment `27.10.2013 16:00` `DONE`
 ###Task 2 
-Lists' managment `14.11.2013 18:00` `new deadline (+7days)`
+Lists' managment `14.11.2013 18:00` `DONE`
 ###Task 3 
 Tasks' managment `28.11.2013 18:00` `new deadline (+7days)`
 ###Task 4 
