@@ -99,5 +99,9 @@ var GUI = {
 		newlist.descr = $('#add-list-description').val();
 		$('#add-list-description').val("");
 		return newlist;
+	},
+	clearAddListForm: function (){
+		$('#add-list-name').val("");
+		$('#add-list-description').val("");
 	}
 };
