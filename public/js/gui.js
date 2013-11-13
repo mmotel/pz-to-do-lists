@@ -194,5 +194,12 @@ var GUI = {
 		neweditlist.name = $('#edit-list-name').val();
 		neweditlist.descr = $('#edit-list-description').val();
 		return neweditlist;
+	},
+	fillDeleteListModal: function (list){
+		$('#user-delete-list-modal-id').val(list.id);
+		$('#user-delete-list-modal-name').text("Nazwa listy: " + list.name);
+	},
+	getDeleteListModal: function (){
+		return $('#user-delete-list-modal-id').val();
 	}
 };
