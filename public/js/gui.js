@@ -162,5 +162,20 @@ var GUI = {
 	},
 	getDeleteListModal: function (){
 		return $('#user-delete-list-modal-id').val();
+	},
+	showUsersSettings: function (){
+		$('#user-settings').slideDown('fast');
+	},
+	showAddingListForm: function (){
+		$('#adding-lists').slideDown('fast');
+	},
+	showEditingListForm: function (){
+		$('#editing-lists').slideDown('fast');
+	},
+	showDeleteAccountModal: function (){
+		$('#user-delete-account-modal').slideDown('fast');
+	},
+	showDeleteListModal: function (){
+		$('#user-delete-list-modal').slideDown('fast');
 	}
 };
