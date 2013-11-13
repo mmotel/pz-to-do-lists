@@ -48,7 +48,7 @@ $(document).ready(function () {
 			if(data.id === user.id){
 				console.log(data);
 				user = data;
-				GUI.userSettingsFill(user);
+				GUI.fillUserForm(user);
 			}
 		});
 		//Add list
@@ -78,26 +78,32 @@ $(document).ready(function () {
 
 		$('#settings-button').click(function (){
 			GUI.hideAll();
-			GUI.userSettingsButtonClick(user);
+			GUI.fillUserForm(user);
+			$('#user-settings').slideDown('fast'); //temp
 		});	
-
-		$('#add-list-button').click(function (){
-			GUI.hideAll();
-			GUI.addListButtonClick();
-		});
 
 		$('#user-settings-delete-button').click(function (){
 			$('#user-delete-account-modal').modal('show');
 		});
 
 		$('#user-settings-cancel-button').click(function (){
-			GUI.userSettingsFill(user);
+			GUI.fillUserForm(user);
 		});
 
 		$('#user-settings-save-button').click(function (){
-			var newuser = GUI.userSettingsSaveClick(user);
-			console.log(newuser);
+			var data = GUI.getUserForm();
+			console.log(data);
+			var newuser = {id: user.id, "profile": {"name": {}}};
+			newuser.profile.displayName = data.displayName;
+			newuser.profile.name.givenName = data.givenName;
+			newuser.profile.name.middleName = data.middleName;
+			newuser.profile.name.familyName = data.familyName;
 			socket.emit('updateUser', newuser);
+		});
+
+		$('#add-list-button').click(function (){
+			GUI.hideAll();
+			GUI.addListButtonClick();
 		});
 
 		$('#show-all-lists-button').click(function (){
