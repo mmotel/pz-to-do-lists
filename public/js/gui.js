@@ -145,5 +145,25 @@ var GUI = {
 		editedList.descr = $('#edit-list-description').val();
 		$('#edit-list-description').val("");
 		return editedList;
+	},
+	fillUserForm: function (user){
+		$('#user-settings-displayname').val(user.profile.displayName);
+		$('#user-settings-givenname').val(user.profile.name.givenName);
+		$('#user-settings-middlename').val(user.profile.name.middleName);
+		$('#user-settings-familyname').val(user.profile.name.familyName);
+	},
+	clearUserForm: function (){
+		$('#user-settings-displayname').val("");
+		$('#user-settings-givenname').val("");
+		$('#user-settings-middlename').val("");
+		$('#user-settings-familyname').val("");
+	},
+	getUserForm: function (){
+		var newuser = {};
+		newuser.displayName = $('#user-settings-displayname').val();
+		newuser.givenName = $('#user-settings-givenname').val();
+		newuser.middleName = $('#user-settings-middlename').val();
+		newuser.familyName = $('#user-settings-familyname').val();
+		return newuser;
 	}
 };
