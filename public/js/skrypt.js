@@ -74,8 +74,7 @@ $(document).ready(function () {
 		});
 
 
-		//user-settings button click
-
+		//user-settings
 		$('#settings-button').click(function (){
 			GUI.hideAll();
 			GUI.fillUserForm(user);
@@ -100,30 +99,12 @@ $(document).ready(function () {
 			newuser.profile.name.familyName = data.familyName;
 			socket.emit('updateUser', newuser);
 		});
-
-		$('#add-list-button').click(function (){
-			GUI.hideAll();
-			GUI.addListButtonClick();
-		});
-
+		//---
+		//all-lists
 		$('#show-all-lists-button').click(function (){
 			GUI.hideAll();
 			GUI.allListButtonClick(lists);
 		});
-
-		$('#add-list-save-button').click(function () {
-			var newlist = GUI.addListSaveClick(user);
-			console.log(newlist);
-			socket.emit('addList', newlist);
-			GUI.hideAll();
-			//show created list (probably form socket callback)
-		});
-
-		$('#add-list-cancel-button').click(function () {
-			GUI.clearAddListForm();
-			GUI.hideAll();
-		});
-
 		$('.rmListConfirm').click(function () {
 			var listId = $(this).attr('id');
 			listId = parseInt(listId.substring(13, listId.length));
@@ -132,18 +113,41 @@ $(document).ready(function () {
 			$('#user-delete-list-modal').modal('hide');
 			GUI.hideAll();
 		});
+		//add-list
+		$('#add-list-button').click(function (){
+			GUI.hideAll();
+			GUI.clearAddListForm();
+			$('#adding-lists').slideDown('fast');
+		});
+
+		$('#add-list-save-button').click(function () {
+			var newlist = GUI.getAddListForm();
+			newlist.fbid = user.id;
+			console.log(newlist);
+			socket.emit('addList', newlist);
+			GUI.clearAddListForm();
+			GUI.hideAll();
+			//show created list (probably form socket callback)
+		});
+
+		$('#add-list-cancel-button').click(function () {
+			GUI.clearAddListForm();
+			GUI.hideAll();
+		});
+		//edit-list
+		$('#edit-list-save-button').click(function () {
+			var editedList = GUI.getEditUserForm();
+			editedList.fbid = user.id;
+			console.log(editedList);
+			socket.emit('editList', editedList);
+			GUI.hideAll();
+		});
 
 		$('#edit-list-cancel-button').click(function () {
 			GUI.clearEditListForm();
 			GUI.hideAll();
 		});
-
-		$('#edit-list-save-button').click(function () {
-			var editedList = GUI.editListSaveClick(user);
-			console.log(editedList);
-			socket.emit('editList', editedList);
-			GUI.hideAll();
-		});
+		//---
 	};
 
 });

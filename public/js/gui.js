@@ -35,9 +35,9 @@ var GUI = {
 		$('#login-link').show();
 		$('#login-panel').show();
 	},
-	addListButtonClick: function (user){
-		$('#adding-lists').slideDown('fast');
-	},
+	// addListButtonClick: function (user){
+	// 	$('#adding-lists').slideDown('fast');
+	// },
 	fillUserListsSmall: function (tab){
 		$('#user-lists-small').children().remove();
 
@@ -97,23 +97,23 @@ var GUI = {
 			}
 		});
 	},
-	addListSaveClick: function (user){
-		var newlist = { fbid: user.id };
-		newlist.name = $('#add-list-name').val();
-		$('#add-list-name').val("");
-		newlist.descr = $('#add-list-description').val();
-		$('#add-list-description').val("");
-		return newlist;
-	},
-	clearAddListForm: function (){
-		$('#add-list-name').val("");
-		$('#add-list-description').val("");
-	},
-	clearEditListForm: function (){
-		$('#edit-list-id').val("");
-		$('#edit-list-name').val("");
-		$('#edit-list-description').val("");
-	},
+	// addListSaveClick: function (user){
+	// 	var newlist = { fbid: user.id };
+	// 	newlist.name = $('#add-list-name').val();
+	// 	$('#add-list-name').val("");
+	// 	newlist.descr = $('#add-list-description').val();
+	// 	$('#add-list-description').val("");
+	// 	return newlist;
+	// },
+	// clearAddListForm: function (){
+	// 	$('#add-list-name').val("");
+	// 	$('#add-list-description').val("");
+	// },
+	// clearEditListForm: function (){
+	// 	$('#edit-list-id').val("");
+	// 	$('#edit-list-name').val("");
+	// 	$('#edit-list-description').val("");
+	// },
 	editListSaveClick: function (user){
 		var editedList = { fbid: user.id };
 		editedList.id = parseInt($('#edit-list-id').val());
@@ -160,15 +160,18 @@ var GUI = {
 		return newaddlist;
 	},
 	fillEditListForm: function (list){
+		$('#edit-list-id').val(list.id)
 		$('#edit-list-name').val(list.name);
 		$('#edit-list-description').val(list.descr);
 	},
 	clearEditListForm: function (){
+		$('#edit-list-id').val("")
 		$('#edit-list-name').val("");
 		$('#edit-list-description').val("");
 	},
 	getEditUserForm: function (){
 		var neweditlist = {};
+		neweditlist.id = parseInt($('#edit-list-id').val());
 		neweditlist.name = $('#edit-list-name').val();
 		neweditlist.descr = $('#edit-list-description').val();
 		return neweditlist;
