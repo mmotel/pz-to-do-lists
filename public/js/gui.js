@@ -146,6 +146,7 @@ var GUI = {
 		$('#edit-list-description').val("");
 		return editedList;
 	},
+	//functions after code-refactoring
 	fillUserForm: function (user){
 		$('#user-settings-displayname').val(user.profile.displayName);
 		$('#user-settings-givenname').val(user.profile.name.givenName);
@@ -165,5 +166,33 @@ var GUI = {
 		newuser.middleName = $('#user-settings-middlename').val();
 		newuser.familyName = $('#user-settings-familyname').val();
 		return newuser;
+	},
+	fillAddListForm: function (list){
+		$('#add-list-name').val(list.name);
+		$('#add-list-description').val(list.descr);
+	},
+	clearAddListForm: function (){
+		$('#add-list-name').val("");
+		$('#add-list-description').val("");
+	},
+	getAddListForm: function (){
+		var newaddlist = {};
+		newaddlist.name = $('#add-list-name').val();
+		newaddlist.descr = $('#add-list-description').val();
+		return newaddlist;
+	},
+	fillEditListForm: function (list){
+		$('#edit-list-name').val(list.name);
+		$('#edit-list-description').val(list.descr);
+	},
+	clearEditListForm: function (){
+		$('#edit-list-name').val("");
+		$('#edit-list-description').val("");
+	},
+	getEditUserForm: function (){
+		var neweditlist = {};
+		neweditlist.name = $('#edit-list-name').val();
+		neweditlist.descr = $('#edit-list-description').val();
+		return neweditlist;
 	}
 };
