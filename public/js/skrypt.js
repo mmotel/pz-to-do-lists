@@ -54,7 +54,6 @@ $(document).ready(function () {
 		//Add list
 		socket.on('addedList', function (data) {
 			if(data.fbid === user.id){
-				//add new list into lists' tabels
 				console.log(data);
 				lists.push(data);
 				GUI.fillUserListsSmall(lists);
@@ -127,7 +126,6 @@ $(document).ready(function () {
 			socket.emit('addList', newlist);
 			GUI.clearAddListForm();
 			GUI.hideAll();
-			//show created list (probably form socket callback)
 		});
 
 		$('#add-list-cancel-button').click(function () {

@@ -35,9 +35,6 @@ var GUI = {
 		$('#login-link').show();
 		$('#login-panel').show();
 	},
-	// addListButtonClick: function (user){
-	// 	$('#adding-lists').slideDown('fast');
-	// },
 	fillUserListsSmall: function (tab){
 		$('#user-lists-small').children().remove();
 
@@ -97,23 +94,6 @@ var GUI = {
 			}
 		});
 	},
-	// addListSaveClick: function (user){
-	// 	var newlist = { fbid: user.id };
-	// 	newlist.name = $('#add-list-name').val();
-	// 	$('#add-list-name').val("");
-	// 	newlist.descr = $('#add-list-description').val();
-	// 	$('#add-list-description').val("");
-	// 	return newlist;
-	// },
-	// clearAddListForm: function (){
-	// 	$('#add-list-name').val("");
-	// 	$('#add-list-description').val("");
-	// },
-	// clearEditListForm: function (){
-	// 	$('#edit-list-id').val("");
-	// 	$('#edit-list-name').val("");
-	// 	$('#edit-list-description').val("");
-	// },
 	editListSaveClick: function (user){
 		var editedList = { fbid: user.id };
 		editedList.id = parseInt($('#edit-list-id').val());
