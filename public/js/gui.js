@@ -13,6 +13,8 @@ var GUI = {
 		$('#adding-lists').hide();
 		$('#editing-lists').hide();
 		$('#show-all-lists').hide();
+		$('#editing-tasks').hide();
+		$('#adding-tasks').hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
