@@ -96,16 +96,16 @@ var GUI = {
 			}
 		});
 	},
-	editListSaveClick: function (user){
-		var editedList = { fbid: user.id };
-		editedList.id = parseInt($('#edit-list-id').val());
-		$('#edit-list-id').val("");
-		editedList.name = $('#edit-list-name').val();
-		$('#edit-list-name').val("");
-		editedList.descr = $('#edit-list-description').val();
-		$('#edit-list-description').val("");
-		return editedList;
-	},
+	// editListSaveClick: function (user){
+	// 	var editedList = { fbid: user.id };
+	// 	editedList.id = parseInt($('#edit-list-id').val());
+	// 	$('#edit-list-id').val("");
+	// 	editedList.name = $('#edit-list-name').val();
+	// 	$('#edit-list-name').val("");
+	// 	editedList.descr = $('#edit-list-description').val();
+	// 	$('#edit-list-description').val("");
+	// 	return editedList;
+	// },
 	//functions after code-refactoring
 	fillUserForm: function (user){
 		$('#user-settings-displayname').val(user.profile.displayName);
@@ -179,7 +179,7 @@ var GUI = {
 		$('#edit-list-name').val("");
 		$('#edit-list-description').val("");
 	},
-	getEditUserForm: function (){
+	getEditListForm: function (){
 		var neweditlist = {};
 		neweditlist.id = parseInt($('#edit-list-id').val());
 		neweditlist.name = $('#edit-list-name').val();
@@ -209,9 +209,9 @@ var GUI = {
 		$('#editing-tasks').slideDown('fast');
 	},
 	showDeleteAccountModal: function (){
-		$('#user-delete-account-modal').slideDown('fast');
+		$('#user-delete-account-modal').modal('show');
 	},
 	showDeleteListModal: function (){
-		$('#user-delete-list-modal').slideDown('fast');
+		$('#user-delete-list-modal').modal('show');
 	}
 };

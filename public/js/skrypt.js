@@ -77,11 +77,11 @@ $(document).ready(function () {
 		$('#settings-button').click(function (){
 			GUI.hideAll();
 			GUI.fillUserForm(user);
-			$('#user-settings').slideDown('fast'); //temp
+			GUI.showUsersSettings();
 		});	
 
 		$('#user-settings-delete-button').click(function (){
-			$('#user-delete-account-modal').modal('show');
+			GUI.showDeleteAccountModal();
 		});
 
 		$('#user-settings-cancel-button').click(function (){
@@ -109,14 +109,14 @@ $(document).ready(function () {
 			listId = parseInt(listId.substring(13, listId.length));
 			console.log(listId);
 			socket.emit('rmList', {id: listId, fbid: user.id});
-			$('#user-delete-list-modal').modal('hide');
+			$('#user-delete-list-modal').modal('hide'); //temp
 			GUI.hideAll();
 		});
 		//add-list
 		$('#add-list-button').click(function (){
 			GUI.hideAll();
 			GUI.clearAddListForm();
-			$('#adding-lists').slideDown('fast');
+			GUI.showAddingListForm();
 		});
 
 		$('#add-list-save-button').click(function () {
