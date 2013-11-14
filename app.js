@@ -75,7 +75,7 @@ app.get('/logout', function(req, res){
 
 app.get('/deleteAccount', function(req, res){
 	//TO DO: remove user from loggedin users list
-	appUser.removeAccout(req.sessionID, function () {
+	appUser.removeAccount(req.sessionID, function () {
 		req.logout();
 		res.redirect('/');
 	});
