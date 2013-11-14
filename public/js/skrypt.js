@@ -134,7 +134,7 @@ $(document).ready(function () {
 		});
 		//edit-list
 		$('#edit-list-save-button').click(function () {
-			var editedList = GUI.getEditUserForm();
+			var editedList = GUI.getEditListForm();
 			editedList.fbid = user.id;
 			console.log(editedList);
 			socket.emit('editList', editedList);
