@@ -26,12 +26,13 @@ $(document).ready(function () {
 	//actions if user is loggedin
 	var loggedinCallback = function (user, lists){
 		//object 'user' contains all data about current loggedin user
-
+		//array 'lists' contains all user's lists
+		
 		console.log(lists);
-		//setLists
-		GUI.fillUserListsSmall(lists);
-
+		//fill user data
 		GUI.fillLoginPanel(user);
+		//fill small list's list
+		GUI.fillUserListsSmall(lists);
 		// hide & show elements
 		GUI.showLoggedin();
 
@@ -59,11 +60,11 @@ $(document).ready(function () {
 				GUI.fillUserListsSmall(lists);
 			}
 		});
-		//Rm list
+		//Remove list
 		socket.on('rmedList', function (data) {
 			lists = data;
 			GUI.fillUserListsSmall(lists);
-			GUI.allListButtonClick(lists);
+			GUI.fillUserAllLists(lists, rmListClick, editListClick);
 		});
 		//Edit list
 		socket.on('editedList', function (data) {
@@ -71,7 +72,7 @@ $(document).ready(function () {
 			GUI.fillUserListsSmall(lists);
 			GUI.allListButtonClick(lists);
 		});
-
+		//---
 
 		//user-settings
 		$('#settings-button').click(function (){
@@ -100,13 +101,39 @@ $(document).ready(function () {
 		});
 		//---
 		//all-lists
+		var rmListClick = function (that) {
+			var listId = $(that).attr('id');
+			listId = parseInt(listId.substring(6, listId.length));
+
+			for(var i =0; i < lists.length; i++){
+				if(lists[i].id === listId){
+					GUI.fillDeleteListModal(lists[i]);
+					GUI.showDeleteListModal();
+					break;
+				}
+			}
+		};
+
+		var editListClick = function (that) {
+			var listId = $(that).attr('id');
+			listId = parseInt(listId.substring(8, listId.length));
+
+			for(var i =0; i < lists.length; i++){
+				if(lists[i].id === listId){
+					GUI.fillEditListForm(lists[i]);
+					GUI.hideAll();
+					GUI.showEditingListForm();
+					break;
+				}
+			}
+		};
+
 		$('#show-all-lists-button').click(function (){
 			GUI.hideAll();
-			GUI.allListButtonClick(lists);
+			GUI.fillUserAllLists(lists, rmListClick, editListClick);
 		});
 		$('.rmListConfirm').click(function () {
-			var listId = $(this).attr('id');
-			listId = parseInt(listId.substring(13, listId.length));
+			var listId = GUI.getDeleteListModal();
 			console.log(listId);
 			socket.emit('rmList', {id: listId, fbid: user.id});
 			$('#user-delete-list-modal').modal('hide'); //temp

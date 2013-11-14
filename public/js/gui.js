@@ -47,54 +47,30 @@ var GUI = {
 				'</td></tr>');
 		}
 	},
-	allListButtonClick: function (tab){
+	fillUserAllLists: function (tab, rmClick, editClick){
 		$('#show-all-lists').slideDown('fast');
 
 		$('#user-lists-big').children().remove();
 		$('#user-lists-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
 
-
 		for(var i = 0; i < tab.length; i++){
 			$('#user-lists-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
-				'<td><button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ tab[i].id +'">'+
+				'<td><button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ 
+					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
-				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ tab[i].id +'">'+
+				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
+					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right" id="addTaskBig'+ tab[i].id +'">'+
+				'<td><button type="button" class="btn btn-primary btn-sm pull-right" id="addTaskBig'+ 
+					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
 				'</tr>');
 		}
 		//rmList button click
-		$('.rmList').click(function () {
-			var listId = $(this).attr('id');
-			listId = parseInt(listId.substring(6, listId.length));
+		$('.rmList').click(function() { rmClick(this); });
 
-			for(var i =0; i < tab.length; i++){
-				if(tab[i].id === listId){
-					$('#user-delete-list-modal-name').text(tab[i].name);
-					$('.rmListConfirm').attr('id', 'rmListConfirm' + listId);
-					break;
-				}
-			}
-
-			$("#user-delete-list-modal").modal('show');
-		});
 		//editList button click
-		$('.editList').click(function () {
-			var listId = $(this).attr('id');
-			listId = parseInt(listId.substring(8, listId.length));
-
-			for(var i =0; i < tab.length; i++){
-				if(tab[i].id === listId){
-					$('#edit-list-id').val(tab[i].id);
-					$('#edit-list-name').val(tab[i].name);
-					$('#edit-list-description').val(tab[i].descr);
-					$('#show-all-lists').hide();
-					$('#editing-lists').show();
-					break;
-				}
-			}
-		});
+		$('.editList').click(function () { editClick(this); });
 	},
 	//functions after code-refactoring
 	fillUserForm: function (user){
@@ -160,7 +136,7 @@ var GUI = {
 		return newedittask;
 	},
 	fillEditListForm: function (list){
-		$('#edit-list-id').val(list.id)
+		$('#edit-list-id').val(list.id);
 		$('#edit-list-name').val(list.name);
 		$('#edit-list-description').val(list.descr);
 	},
@@ -181,7 +157,8 @@ var GUI = {
 		$('#user-delete-list-modal-name').text("Nazwa listy: " + list.name);
 	},
 	getDeleteListModal: function (){
-		return $('#user-delete-list-modal-id').val();
+		var listId = parseInt($('#user-delete-list-modal-id').val());
+		return listId;
 	},
 	showUsersSettings: function (){
 		$('#user-settings').slideDown('fast');
