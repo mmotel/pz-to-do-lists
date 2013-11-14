@@ -43,6 +43,4 @@ One week just in case `16.01.2014 18:00`
 
 ###[User.js](https://github.com/mmotel/pz-to-do-lists/wiki/user-js)
 
-###Server.js
-
 ###[Utils.js](https://github.com/mmotel/pz-to-do-lists/wiki/utils-js)
