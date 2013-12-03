@@ -37,17 +37,20 @@ var GUI = {
 		$('#login-link').show();
 		$('#login-panel').show();
 	},
-	fillUserListsSmall: function (tab){
+	fillUserListsSmall: function (tab, addTaskClick){
 		$('#user-lists-small').children().remove();
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-lists-small').append('<tr><td>'+ tab[i].name +'</td><td>'+
-				'<button type="button" class="btn btn-link btn-sm pull-right" id="addTask'+ tab[i].id +'">'+
+				'<button type="button" class="btn btn-link btn-sm pull-right addTaskSmall" id="addTask'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>'+
 				'</td></tr>');
 		}
+
+		//addTaskSmall button click
+		$('.addTaskSmall').click(function () { addTaskClick(this); });
 	},
-	fillUserAllLists: function (tab, rmClick, editClick){
+	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick){
 		$('#show-all-lists').slideDown('fast');
 
 		$('#user-lists-big').children().remove();
@@ -61,7 +64,7 @@ var GUI = {
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right" id="addTaskBig'+ 
+				'<td><button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
 				'</tr>');
@@ -71,6 +74,9 @@ var GUI = {
 
 		//editList button click
 		$('.editList').click(function () { editClick(this); });
+
+		//addListAll button click
+		$('.addTaskAll').click(function () { addTaskClick(this); });
 	},
 	//functions after code-refactoring
 	fillUserForm: function (user){
@@ -107,35 +113,38 @@ var GUI = {
 		newaddlist.descr = $('#add-list-description').val();
 		return newaddlist;
 	},
-	fillAddTaskForm: function (task){
-		$('#add-list-id').val(task.id);
-		$('#add-task-name').val(task.name);
-		$('#add-task-description').val(task.descr);
+	fillAddTaskForm: function (listId, task){
+		$('#add-task-list-id').val(listId);
+		// $('#add-task-name').val(task.name);
+		// $('#add-task-description').val(task.descr);
 	},
 	clearAddTaskForm: function (){
-		$('#add-task-id').val("");
+		$('#add-task-list-id').val("");
 		$('#add-task-name').val("");
 		$('#add-task-description').val("");
 	},
 	getAddTaskForm: function (){
 		var newaddtask = {};
-		newaddtask.id = $('#edit-task-id').val();
-		newaddtask.name = $('#edit-task-name').val();
-		newaddtask.descr = $('#edit-task-description').val();
+		newaddtask.id = $('#add-task-list-id').val();
+		newaddtask.name = $('#add-task-name').val();
+		newaddtask.descr = $('#add-task-description').val();
 		return newaddtask;
 	},
-	fillEditTaskForm: function (task){
-		$('#edit-list-id').val(task.id);
+	fillEditTaskForm: function (task, list){
+		$('#edit-task-id').val(task.id);
+		$('#edit-task-list-id').val(list.id);
 		$('#edit-task-name').val(task.name);
 		$('#edit-task-description').val(task.descr);
 	},
 	clearEditTaskForm: function (){
 		$('#edit-task-id').val("");
+		$('#edit-task-list-id').val("");
 		$('#edit-task-name').val("");
 		$('#edit-task-description').val("");
 	},
 	getEditTaskForm: function (){
 		var editedtask = {};
+		editedtask.listid = $('#edit-task-list-id').val();
 		editedtask.id = $('#edit-task-id').val();
 		editedtask.name = $('#edit-task-name').val();
 		editedtask.descr = $('#edit-task-description').val();

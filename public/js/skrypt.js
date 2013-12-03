@@ -27,12 +27,23 @@ $(document).ready(function () {
 	var loggedinCallback = function (user, lists){
 		//object 'user' contains all data about current loggedin user
 		//array 'lists' contains all user's lists
+
+		//add-list
+		var addTaskClick = function (that) {
+			var id = $(that).attr('id');
+			id = id.substring(7, id.length);
+			console.log(id);
+
+			GUI.fillAddTaskForm(id);
+			GUI.hideAll();
+			GUI.showAddingTaskForm();
+		};
 		
 		console.log(lists);
 		//fill user data
 		GUI.fillLoginPanel(user);
 		//fill small list's list
-		GUI.fillUserListsSmall(lists);
+		GUI.fillUserListsSmall(lists, addTaskClick);
 		// hide & show elements
 		GUI.showLoggedin();
 
@@ -130,7 +141,7 @@ $(document).ready(function () {
 
 		$('#show-all-lists-button').click(function (){
 			GUI.hideAll();
-			GUI.fillUserAllLists(lists, rmListClick, editListClick);
+			GUI.fillUserAllLists(lists, rmListClick, editListClick, addTaskClick);
 		});
 		$('.rmListConfirm').click(function () {
 			var listId = GUI.getDeleteListModal();
