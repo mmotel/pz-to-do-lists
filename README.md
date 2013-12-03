@@ -10,15 +10,27 @@ How to install `Node.JS` version `0.10`:
 	sudo apt-get update
 	sudo apt-get install nodejs
 
-##Install
-
-	npm install
-
 ##Database notes
 
-##Run
+##Deployment
 
-	node app.js
+To deploy and redeploy application use scripts. 
+
+####Build new deploy
+
+Script installs node packages, drops collections from database and then runs application.
+
+```sh
+deploy.sh
+```
+
+####Redeploy application:
+
+Script runs application.
+
+```
+redeploy.sh
+```
 
 #Work schedule
 
