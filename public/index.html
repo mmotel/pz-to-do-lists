@@ -173,17 +173,21 @@
 		<div id="adding-tasks">
 		  	<h2><span class="glyphicon glyphicon-plus"></span> Dodawanie zadania</h2>
 			<ul class="nav nav-pills nav-justified">
-			  <li id="add-task-save-button"><a><span class="glyphicon glyphicon-ok"></span> Dodaj</a></li>
-			  <li id="add-task-cancel-button"><a><span class="glyphicon glyphicon-minus"></span> Anuluj</a></li>
+			  <li id="add-task-save-button">
+			  	<a><span class="glyphicon glyphicon-ok"></span> Dodaj</a></li>
+			  <li id="add-task-cancel-button">
+			  	<a><span class="glyphicon glyphicon-minus"></span> Anuluj</a></li>
 			</ul>
 			<form role="form">
+				<input type="hidden" id="add-tash-id">
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Nazwa</label>
 			    <input type="text" class="form-control" id="add-task-name" placeholder="Nazwa">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Opis</label>
-				<textarea class="form-control" rows="4" id="add-task-description" placeholder="Opis"></textarea>
+				<textarea class="form-control" rows="4" id="add-task-description" placeholder="Opis">
+				</textarea>
 			  </div>
 			</form>
 		</div>
@@ -196,6 +200,7 @@
 			  <li id="add-task-cancel-button"><a><span class="glyphicon glyphicon-minus"></span> Anuluj</a></li>
 			</ul>
 			<form role="form">
+				<input type="hidden" id="edit-task-id">
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Nazwa</label>
 			    <input type="text" class="form-control" id="edit-task-name" placeholder="Nazwa">

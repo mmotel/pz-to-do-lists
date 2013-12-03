@@ -108,32 +108,38 @@ var GUI = {
 		return newaddlist;
 	},
 	fillAddTaskForm: function (task){
+		$('#add-list-id').val(task.id);
 		$('#add-task-name').val(task.name);
 		$('#add-task-description').val(task.descr);
 	},
 	clearAddTaskForm: function (){
+		$('#add-task-id').val("");
 		$('#add-task-name').val("");
 		$('#add-task-description').val("");
 	},
 	getAddTaskForm: function (){
 		var newaddtask = {};
-		newaddtask.name = $('#add-task-name').val();
-		newaddtask.descr = $('#add-task-description').val();
+		newaddtask.id = $('#edit-task-id').val();
+		newaddtask.name = $('#edit-task-name').val();
+		newaddtask.descr = $('#edit-task-description').val();
 		return newaddtask;
 	},
 	fillEditTaskForm: function (task){
+		$('#edit-list-id').val(task.id);
 		$('#edit-task-name').val(task.name);
 		$('#edit-task-description').val(task.descr);
 	},
 	clearEditTaskForm: function (){
+		$('#edit-task-id').val("");
 		$('#edit-task-name').val("");
 		$('#edit-task-description').val("");
 	},
 	getEditTaskForm: function (){
-		var newedittask = {};
-		newedittask.name = $('#edit-task-name').val();
-		newedittask.descr = $('#edit-task-description').val();
-		return newedittask;
+		var editedtask = {};
+		editedtask.id = $('#edit-task-id').val();
+		editedtask.name = $('#edit-task-name').val();
+		editedtask.descr = $('#edit-task-description').val();
+		return editedtask;
 	},
 	fillEditListForm: function (list){
 		$('#edit-list-id').val(list.id);
