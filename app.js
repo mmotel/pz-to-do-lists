@@ -3,6 +3,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var app = express();
+var routes = require('./routes');
 //passport
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
@@ -64,34 +65,10 @@ passport.use(new FacebookStrategy({
 app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback', 
-passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
+	passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
 
-app.get('/logout', function(req, res){
-	//TO DO: remove user from loggedin users list
-	appUser.logout(req.sessionID);
-	req.logout();
-	res.redirect('/');
-});
+app.get('/logout', function(req, res){ routes.logout(req, res, appUser); });
 
-app.get('/deleteAccount', function(req, res){
-	//TO DO: remove user from loggedin users list
-	appUser.removeAccount(req.sessionID, function () {
-		req.logout();
-		res.redirect('/');
-	});
-});
+app.get('/deleteAccount', function (req, res) { routes.deleteAccount(req, res, appUser); });
 
-app.get('/getLogin', function(req, res){
-	var sid = req.sessionID;
-	
-	console.log("sid: " + sid);
-
-	//TO DO: find user on loggedin users list by session id
-	appUser.getLogin(sid, function (user){
-		res.writeHead(200, {
-			'Content-Type': 'application/json; charset=utf8'
-		});
-		res.end(JSON.stringify(user));
-	});
-	//}
-});
+app.get('/getLogin', function (req, res) { routes.getLogin(req, res, appUser); });
