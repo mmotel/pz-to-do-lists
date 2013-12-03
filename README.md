@@ -24,6 +24,8 @@ Script installs node packages, drops collections from database and then runs app
 deploy.sh
 ```
 
+Scrpit: [here](./deploy.sh).
+
 ####Redeploy application:
 
 Script runs application.
@@ -31,6 +33,7 @@ Script runs application.
 ```
 redeploy.sh
 ```
+Scrpit: [here](./redeploy.sh).
 
 #Work schedule
 
