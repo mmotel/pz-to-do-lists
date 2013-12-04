@@ -6,7 +6,7 @@ npm install
 
 #drop database
 echo "***### DROP DATABASE ###***"
-mongo test dropDb.js
+mongo toDoLists dropDb.js
 
 #run tests
 #echo "***### RUN TESTS ###***"

@@ -33,7 +33,7 @@ var server = http.createServer(app).listen(app.get('port'), function () {
     console.log("Serwer nasłuchuje na porcie " + app.get('port'));
 });
 
-var appData = require('./lib/data.js')();
+var appData = require('./lib/data.js')('toDoLists');
 var appUser = require('./lib/user.js')(appData);
 var appServer = require('./lib/server.js');
 
