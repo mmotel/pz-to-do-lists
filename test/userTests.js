@@ -17,25 +17,57 @@ var profile = function(id, displayName, familyName, givenName, middleName){
     return this;
 };
 
-var demoProfile = profile(1, 'Testowy Profil', "Profil", "Test", "Testowy");
+describe('User.login', function (){
+  it('should login user without error', function (done){
 
-describe('AddLoggedinUser', function(){
-    it('should add user without error', function(done){
+    var demoProfile = profile(1, 'Testowy Profil', "Profil", "Test", "Testowy");
 
-    	appUser.login(1, demoProfile, function (user) {
-    		if(user === undefined){
-    			throw err;
-    		}
-    		else{
-    			console.log(user);
-    			assert.notStrictEqual(undefined, user._id);
-    			assert.strictEqual(demoProfile.id, user.id);
-    			assert.strictEqual(demoProfile.displayName, user.profile.displayName);
-    			assert.strictEqual(demoProfile.name.familyName, user.profile.name.familyName);
-    			assert.strictEqual(demoProfile.name.givenName, user.profile.name.givenName);
-    			assert.strictEqual(demoProfile.name.middleName, user.profile.name.middleName);
-    			done();
-    		}
-    	});
+    appUser.login(1, demoProfile, function (user) {
+      if(user === undefined){
+        throw err;
+      }
+      else{
+        // console.log(user);
+        assert.notStrictEqual(undefined, user._id);
+        assert.strictEqual(demoProfile.id, user.id);
+        assert.strictEqual(demoProfile.displayName, user.profile.displayName);
+        assert.strictEqual(demoProfile.name.familyName, user.profile.name.familyName);
+        assert.strictEqual(demoProfile.name.givenName, user.profile.name.givenName);
+        assert.strictEqual(demoProfile.name.middleName, user.profile.name.middleName);
+        done();
+      }
     });
+
+  });
+});
+
+describe('User.logout', function (){
+  it('should return userId when user is loggedin', function (done){
+
+    var demoProfile = profile(2, 'Testowy Profil', "Profil", "Test", "Testowy");
+
+    appUser.login(2, demoProfile, function (user){
+      if(user === undefined){
+        throw err;
+      }
+      else{
+        // console.log(user);
+        assert.notStrictEqual(undefined, user._id);
+        assert.strictEqual(demoProfile.id, user.id);
+        assert.strictEqual(demoProfile.displayName, user.profile.displayName);
+        assert.strictEqual(demoProfile.name.familyName, user.profile.name.familyName);
+        assert.strictEqual(demoProfile.name.givenName, user.profile.name.givenName);
+        assert.strictEqual(demoProfile.name.middleName, user.profile.name.middleName);
+      
+        assert.strictEqual(demoProfile.id, appUser.logout(2));
+        done();
+      }
+    });
+
+  });
+  it('should return null when user is notloggedin', function (){
+
+    assert.strictEqual(null, appUser.logout(3));
+
+  });
 });
