@@ -1,6 +1,9 @@
 #REDEPLOY APP
 
 #run tests
+echo "***### CLEAN BEFORE TESTS ###***"
+mongo test ./scripts/dropDb.js
+
 echo "***### RUN TESTS ###***"
 mocha
 

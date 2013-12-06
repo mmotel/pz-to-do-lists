@@ -9,6 +9,9 @@ echo "***### DROP DATABASE ###***"
 mongo toDoLists ./scripts/dropDb.js
 
 #run tests
+echo "***### CLEAN BEFORE TESTS ###***"
+mongo test ./scripts/dropDb.js
+
 echo "***### RUN TESTS ###***"
 mocha
 
