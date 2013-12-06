@@ -17,3 +17,27 @@ describe('Data.insertData', function (){
 
   });
 });
+
+describe('Data.findData', function (){
+  it('should return data if it exists', function (done){
+
+    var itemToInser = {"value": "test", "trash": false};
+
+    Data.insertData("test", itemToInser, function (data){
+      console.log(data);
+      assert.notStrictEqual(null, data._id);
+      assert.strictEqual(itemToInser.value, data.value);
+      
+      Data.findData("test", {"_id": data._id}, function (foundData){
+        console.log(foundData);
+        // assert.equal(data._id, foundData._id); //throws exception
+        assert.equal(data._id.toString(), foundData._id.toString()); //works, leo why?!
+        assert.strictEqual(data.value, foundData.value);
+        done();
+      });
+
+    });
+
+  });
+
+});
