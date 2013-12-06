@@ -10,13 +10,13 @@ mongo toDoLists ./scripts/dropDb.js
 
 #run tests
 echo "***### CLEAN BEFORE TESTS ###***"
-mongo test ./scripts/dropDb.js
+mongo test ./scripts/dropTestDb.js
 
 echo "***### RUN TESTS ###***"
 mocha
 
 echo "***### CLEAN AFTER TESTS ###***"
-mongo test ./scripts/dropDb.js
+mongo test ./scripts/dropTestDb.js
 
 #run app
 echo "***### RUN APPLICATION ###***"
