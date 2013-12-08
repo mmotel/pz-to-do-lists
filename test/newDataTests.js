@@ -7,11 +7,16 @@ describe('Data.insertData', function (){
 
     var itemToInser = {"value": "test"};
 
-    Data.insertData("test", itemToInser, function (data){
+    Data.insertData("test", itemToInser, function (err, data){
       // console.log(data);
-      assert.notStrictEqual(null, data._id);
-      assert.strictEqual(itemToInser.value, data.value);
-      done();
+      if(err){
+        done(err);
+      }
+      else{
+        assert.notStrictEqual(null, data._id);
+        assert.strictEqual(itemToInser.value, data.value);
+        done();
+      }
     });
   });
 
@@ -22,18 +27,23 @@ describe('Data.findData', function (){
 
     var itemToInser = {"value": "test", "trash": false};
 
-    Data.insertData("test", itemToInser, function (data){
-      // console.log(data);
-      assert.notStrictEqual(null, data._id);
-      assert.strictEqual(itemToInser.value, data.value);
-      
-      Data.findData("test", {"_id": data._id}, function (foundData){
-        // console.log(foundData);
-        // assert.equal(data._id, foundData._id); //throws exception
-        assert.equal(data._id.toString(), foundData._id.toString()); //works, leo why?!
-        assert.strictEqual(data.value, foundData.value);
-        done();
-      });
+    Data.insertData("test", itemToInser, function (err, data){
+      if(err){
+        done(err);
+      }
+      else{
+        // console.log(data);
+        assert.notStrictEqual(null, data._id);
+        assert.strictEqual(itemToInser.value, data.value);
+        
+        Data.findData("test", {"_id": data._id}, function (foundData){
+          // console.log(foundData);
+          // assert.equal(data._id, foundData._id); //throws exception
+          assert.equal(data._id.toString(), foundData._id.toString()); //works, leo why?!
+          assert.strictEqual(data.value, foundData.value);
+          done();
+        });
+      }
     });
   });
   
@@ -52,24 +62,29 @@ describe('Data.updateData', function (){
 
     var itemToInser = {"value": "test", "trash": false};
 
-    Data.insertData("test", itemToInser, function (data){
-      // console.log(data);
-      assert.notStrictEqual(null, data._id);
-      assert.strictEqual(itemToInser.value, data.value);
+    Data.insertData("test", itemToInser, function (err, data){
+      if(err){
+        done(err);
+      }
+      else{
+        // console.log(data);
+        assert.notStrictEqual(null, data._id);
+        assert.strictEqual(itemToInser.value, data.value);
 
-      var itemUpdateValue = "updated";
+        var itemUpdateValue = "updated";
 
-      Data.updateData("test", {"_id": data._id}, {"value": itemUpdateValue} , function (result){
-        // console.log(result);
-        assert.strictEqual(1, result);
+        Data.updateData("test", {"_id": data._id}, {"value": itemUpdateValue} , function (result){
+          // console.log(result);
+          assert.strictEqual(1, result);
 
-        Data.findData("test", {"_id": data._id}, function (foundData){
-          // console.log(foundData);
-          assert.strictEqual(data._id.toString(), foundData._id.toString());
-          assert.strictEqual(itemUpdateValue, foundData.value);
-          done();
+          Data.findData("test", {"_id": data._id}, function (foundData){
+            // console.log(foundData);
+            assert.strictEqual(data._id.toString(), foundData._id.toString());
+            assert.strictEqual(itemUpdateValue, foundData.value);
+            done();
+          });
         });
-      });
+      }
     });
   });
 
@@ -77,18 +92,23 @@ describe('Data.updateData', function (){
 
     var itemToInser = {"value": "test", "trash": false};
 
-    Data.insertData("test", itemToInser, function (data){
-      // console.log(data);
-      assert.notStrictEqual(null, data._id);
-      assert.strictEqual(itemToInser.value, data.value);
+    Data.insertData("test", itemToInser, function (err, data){
+      if(err){
+        done(err);
+      }
+      else{
+        // console.log(data);
+        assert.notStrictEqual(null, data._id);
+        assert.strictEqual(itemToInser.value, data.value);
 
-      var itemUpdateValue = "updated";
+        var itemUpdateValue = "updated";
 
-      Data.updateData("test", {"_id": 0}, {"value": itemUpdateValue} , function (result){
-        // console.log(result);
-        assert.strictEqual(0, result);
-        done();
-      });
+        Data.updateData("test", {"_id": 0}, {"value": itemUpdateValue} , function (result){
+          // console.log(result);
+          assert.strictEqual(0, result);
+          done();
+        });
+      }
     });
   });
 
@@ -100,19 +120,24 @@ describe('Data.removeData', function (){
 
     var itemToInser = {"value": "test", "trash": false};
 
-    Data.insertData("test", itemToInser, function (data){
-      // console.log(data);
-      assert.notStrictEqual(null, data._id);
-      assert.strictEqual(itemToInser.value, data.value);
+    Data.insertData("test", itemToInser, function (err, data){
+      if(err){
+        done(err);
+      }
+      else{
+        // console.log(data);
+        assert.notStrictEqual(null, data._id);
+        assert.strictEqual(itemToInser.value, data.value);
 
-      Data.removeData("test", {"_id": data._id}, function (result){
-        assert.strictEqual(1, result);
+        Data.removeData("test", {"_id": data._id}, function (result){
+          assert.strictEqual(1, result);
 
-        Data.findData("test", {"_id": data._id}, function (foundData){
-          assert.strictEqual(null, foundData);
-          done();
+          Data.findData("test", {"_id": data._id}, function (foundData){
+            assert.strictEqual(null, foundData);
+            done();
+          });
         });
-      });
+      }
     });
   });
 
