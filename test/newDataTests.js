@@ -155,27 +155,37 @@ describe('Data.removeData', function (){
         assert.notStrictEqual(null, data._id);
         assert.strictEqual(itemToInser.value, data.value);
 
-        Data.removeData("test", {"_id": data._id}, function (result){
-          assert.strictEqual(1, result);
+        Data.removeData("test", {"_id": data._id}, function (err, result){
+          if(err){
+            done(err);
+          }
+          else{
+            assert.strictEqual(1, result);
 
-          Data.findData("test", {"_id": data._id}, function (err, foundData){
-            if(err){
-              done(err);
-            }
-            else{
-              assert.strictEqual(null, foundData);
-              done();
-            }
-          });
+            Data.findData("test", {"_id": data._id}, function (err, foundData){
+              if(err){
+                done(err);
+              }
+              else{
+                assert.strictEqual(null, foundData);
+                done();
+              }
+            });
+          }
         });
       }
     });
   });
 
   it('should return 0 if data do not exists', function (done){
-    Data.removeData("test", {"_id": 0}, function (result){
-      assert.strictEqual(0, result);
-      done();
+    Data.removeData("test", {"_id": 0}, function (err, result){
+      if(err){
+        done(err);
+      }
+      else{
+        assert.strictEqual(0, result);
+        done();
+      }
     });
   });
 
