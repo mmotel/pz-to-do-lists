@@ -83,21 +83,27 @@ describe('Data.updateData', function (){
 
         var itemUpdateValue = "updated";
 
-        Data.updateData("test", {"_id": data._id}, {"value": itemUpdateValue} , function (result){
-          // console.log(result);
-          assert.strictEqual(1, result);
+        Data.updateData("test", {"_id": data._id}, {"value": itemUpdateValue},
+         function (err, result){
+          if(err){
+            done(err);
+          }
+          else{
+            // console.log(result);
+            assert.strictEqual(1, result);
 
-          Data.findData("test", {"_id": data._id}, function (err, foundData){
-            if(err){
-              done(err);
-            }
-            else{
-              // console.log(foundData);
-              assert.strictEqual(data._id.toString(), foundData._id.toString());
-              assert.strictEqual(itemUpdateValue, foundData.value);
-              done();
-            }
-          });
+            Data.findData("test", {"_id": data._id}, function (err, foundData){
+              if(err){
+                done(err);
+              }
+              else{
+                // console.log(foundData);
+                assert.strictEqual(data._id.toString(), foundData._id.toString());
+                assert.strictEqual(itemUpdateValue, foundData.value);
+                done();
+              }
+            });
+          }
         });
       }
     });
@@ -118,10 +124,15 @@ describe('Data.updateData', function (){
 
         var itemUpdateValue = "updated";
 
-        Data.updateData("test", {"_id": 0}, {"value": itemUpdateValue} , function (result){
-          // console.log(result);
-          assert.strictEqual(0, result);
-          done();
+        Data.updateData("test", {"_id": 0}, {"value": itemUpdateValue}, function (err, result){
+          if(err){
+            done(err);
+          }
+          else{
+            // console.log(result);
+            assert.strictEqual(0, result);
+            done();
+          }
         });
       }
     });
