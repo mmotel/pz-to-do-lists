@@ -49,3 +49,52 @@ describe('Data.findData', function (){
   });
 
 });
+
+describe('Data.updateData', function (){
+  it('should return 1 if data exists', function (done){
+
+    var itemToInser = {"value": "test", "trash": false};
+
+    Data.insertData("test", itemToInser, function (data){
+      // console.log(data);
+      assert.notStrictEqual(null, data._id);
+      assert.strictEqual(itemToInser.value, data.value);
+
+      var itemUpdateValue = "updated";
+
+      Data.updateData("test", {"_id": data._id}, {"value": itemUpdateValue} , function (result){
+        // console.log(result);
+        assert.strictEqual(1, result);
+
+        Data.findData("test", {"_id": data._id}, function (foundData){
+          // console.log(foundData);
+          assert.strictEqual(data._id.toString(), foundData._id.toString());
+          assert.strictEqual(itemUpdateValue, foundData.value);
+          done();
+        });
+      });
+
+    });
+  });
+
+  it('should return 0 if data do not exists', function (done){
+
+    var itemToInser = {"value": "test", "trash": false};
+
+    Data.insertData("test", itemToInser, function (data){
+      // console.log(data);
+      assert.notStrictEqual(null, data._id);
+      assert.strictEqual(itemToInser.value, data.value);
+
+      var itemUpdateValue = "updated";
+
+      Data.updateData("test", {"_id": 0}, {"value": itemUpdateValue} , function (result){
+        console.log(result);
+        assert.strictEqual(0, result);
+        done();
+      });
+    });
+  });
+
+});
+
