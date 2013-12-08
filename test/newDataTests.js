@@ -12,10 +12,9 @@ describe('Data.insertData', function (){
       assert.notStrictEqual(null, data._id);
       assert.strictEqual(itemToInser.value, data.value);
       done();
-
     });
-
   });
+
 });
 
 describe('Data.findData', function (){
@@ -35,9 +34,7 @@ describe('Data.findData', function (){
         assert.strictEqual(data.value, foundData.value);
         done();
       });
-
     });
-
   });
   
   it('should return null if data dose not exists', function (done){
@@ -51,7 +48,7 @@ describe('Data.findData', function (){
 });
 
 describe('Data.updateData', function (){
-  it('should return 1 if data exists', function (done){
+  it('should return 1 and update data if it exists', function (done){
 
     var itemToInser = {"value": "test", "trash": false};
 
@@ -73,7 +70,6 @@ describe('Data.updateData', function (){
           done();
         });
       });
-
     });
   });
 
@@ -89,7 +85,7 @@ describe('Data.updateData', function (){
       var itemUpdateValue = "updated";
 
       Data.updateData("test", {"_id": 0}, {"value": itemUpdateValue} , function (result){
-        console.log(result);
+        // console.log(result);
         assert.strictEqual(0, result);
         done();
       });
@@ -98,3 +94,33 @@ describe('Data.updateData', function (){
 
 });
 
+describe('Data.removeData', function (){
+
+  it('should remove data and return 1 if it exists', function (done){
+
+    var itemToInser = {"value": "test", "trash": false};
+
+    Data.insertData("test", itemToInser, function (data){
+      // console.log(data);
+      assert.notStrictEqual(null, data._id);
+      assert.strictEqual(itemToInser.value, data.value);
+
+      Data.removeData("test", {"_id": data._id}, function (result){
+        assert.strictEqual(1, result);
+
+        Data.findData("test", {"_id": data._id}, function (foundData){
+          assert.strictEqual(null, foundData);
+          done();
+        });
+      });
+    });
+  });
+
+  it('should return 0 if data do not exists', function (done){
+    Data.removeData("test", {"_id": 0}, function (result){
+      assert.strictEqual(0, result);
+      done();
+    });
+  });
+
+});
