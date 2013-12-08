@@ -36,22 +36,32 @@ describe('Data.findData', function (){
         assert.notStrictEqual(null, data._id);
         assert.strictEqual(itemToInser.value, data.value);
         
-        Data.findData("test", {"_id": data._id}, function (foundData){
-          // console.log(foundData);
-          // assert.equal(data._id, foundData._id); //throws exception
-          assert.equal(data._id.toString(), foundData._id.toString()); //works, leo why?!
-          assert.strictEqual(data.value, foundData.value);
-          done();
+        Data.findData("test", {"_id": data._id}, function (err, foundData){
+          if(err){
+            done(err);
+          }
+          else{
+            // console.log(foundData);
+            // assert.equal(data._id, foundData._id); //throws exception
+            assert.equal(data._id.toString(), foundData._id.toString()); //works, leo why?!
+            assert.strictEqual(data.value, foundData.value);
+            done();
+          }
         });
       }
     });
   });
   
   it('should return null if data dose not exists', function (done){
-    Data.findData("test", {"_id": 0}, function (foundData2){
-      // console.log(foundData2);
-      assert.strictEqual(null, foundData2);
-      done();
+    Data.findData("test", {"_id": 0}, function (err, foundData2){
+      if(err){
+        done(err);
+      }
+      else{
+        // console.log(foundData2);
+        assert.strictEqual(null, foundData2);
+        done();
+      }
     });
   });
 
@@ -77,11 +87,16 @@ describe('Data.updateData', function (){
           // console.log(result);
           assert.strictEqual(1, result);
 
-          Data.findData("test", {"_id": data._id}, function (foundData){
-            // console.log(foundData);
-            assert.strictEqual(data._id.toString(), foundData._id.toString());
-            assert.strictEqual(itemUpdateValue, foundData.value);
-            done();
+          Data.findData("test", {"_id": data._id}, function (err, foundData){
+            if(err){
+              done(err);
+            }
+            else{
+              // console.log(foundData);
+              assert.strictEqual(data._id.toString(), foundData._id.toString());
+              assert.strictEqual(itemUpdateValue, foundData.value);
+              done();
+            }
           });
         });
       }
@@ -132,9 +147,14 @@ describe('Data.removeData', function (){
         Data.removeData("test", {"_id": data._id}, function (result){
           assert.strictEqual(1, result);
 
-          Data.findData("test", {"_id": data._id}, function (foundData){
-            assert.strictEqual(null, foundData);
-            done();
+          Data.findData("test", {"_id": data._id}, function (err, foundData){
+            if(err){
+              done(err);
+            }
+            else{
+              assert.strictEqual(null, foundData);
+              done();
+            }
           });
         });
       }
