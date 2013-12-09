@@ -16,26 +16,33 @@ sudo apt-get install nodejs
 
 ##Deployment
 
-To deploy and redeploy application use scripts. 
+To deploy and redeploy application use [Makefile](./Makefile). 
 
 ####Build new deploy
 
-Script installs node packages, drops collections from database and then runs application.
+Makefile drops collections from database, installs node packages, runs tests and then starts application.
+
+Use:
 
 ```sh
-./scripts/deploy.sh
+make deploy
 ```
-
-Script: [here](./scripts/deploy.sh).
 
 ####Redeploy application
 
-Script runs application.
+Makefile runs tests and then starts application.
+
+Use:
 
 ```
-./scripts/redeploy.sh
+make redeploy
 ```
-Script: [here](./scripts/redeploy.sh).
+
+Or just:
+
+```
+make
+```
 
 #Work schedule
 
