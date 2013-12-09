@@ -23,7 +23,7 @@ To deploy and redeploy application use scripts.
 Script installs node packages, drops collections from database and then runs application.
 
 ```sh
-deploy.sh
+./scripts/deploy.sh
 ```
 
 Script: [here](./scripts/deploy.sh).
@@ -33,7 +33,7 @@ Script: [here](./scripts/deploy.sh).
 Script runs application.
 
 ```
-redeploy.sh
+./scripts/redeploy.sh
 ```
 Script: [here](./scripts/redeploy.sh).
 
