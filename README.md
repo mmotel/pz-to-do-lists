@@ -51,13 +51,13 @@ Users' managment `27.10.2013 16:00` `DONE`
 ###Task 2 
 Lists' managment `14.11.2013 18:00` `DONE`
 ###Task 3 
-Tasks' managment `28.11.2013 18:00` `new deadline (+7days)`
+Tasks' managment `12.12.2013 18:00` `new deadline`
 ###Task 4 
-Groups' managment `12.12.2013 18:00` `new deadline (+7days)`
+Groups' managment `19.12.2013 18:00` `new deadline`
 ###Task 5 
-Group's lists' and tasks' management `26.12.2013 18:00` `new deadline (+7days)`
+Group's lists' and tasks' management `02.01.2014 18:00` `new deadline`
 ###Task 6 
-Incoming tasks etc. `09.01.2014 18:00` `new deadline (+7days)`
+Incoming tasks etc. `09.01.2014 18:00` `new deadline`
 ###Extra time 
 One week just in case `16.01.2014 18:00`
 
