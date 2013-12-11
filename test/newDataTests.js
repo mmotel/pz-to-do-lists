@@ -265,3 +265,70 @@ describe('Data.findAllData', function (){
   });
 
 });
+
+describe('Data.removeAllData', function (){
+
+  it('should remove all objects matching query without error', function (done){
+
+    var itemToInser = {"value": "test", "class": "3rd", "trash": false};
+
+    Data.insertData("test", itemToInser, function (err, data){
+      if(err){
+        done(err);
+      }
+      else{
+        assert.notStrictEqual(null, data._id);
+        assert.strictEqual(itemToInser.value, data.value);
+        assert.strictEqual(itemToInser.class, data.class);
+
+        var itemToInser2 = {"value": "test2", "class": "3rd", "trash": false};
+
+        Data.insertData("test", itemToInser2, function (err, data2){
+          if(err){
+            done(err);
+          }
+          else{
+            assert.notStrictEqual(null, data2._id);
+            assert.strictEqual(itemToInser2.value, data2.value);
+            assert.strictEqual(itemToInser2.class, data2.class);
+
+            Data.removeAllData("test", {"class": "3rd"}, function (err, result){
+              if(err){
+                done(err);
+              }
+              else{
+                assert.strictEqual(2, result);
+
+                Data.findAllData("test", {"class": "3rd"}, function (err, items){
+                  if(err){
+                    done(err);
+                  }
+                  else{
+                    assert.strictEqual(0, items.length);
+                    done();
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+
+  });
+
+  it('should not remove data if there is not data matching query', function (done){
+
+    Data.removeAllData("test", {"class": "4th"}, function (err, result){
+      if(err){
+        done(err);
+      }
+      else{
+        assert.strictEqual(0, result);
+        done();
+      }
+    });
+
+  });
+
+});
