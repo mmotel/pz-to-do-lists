@@ -27,17 +27,6 @@ $(document).ready(function () {
 	var loggedinCallback = function (user, lists){
 		//object 'user' contains all data about current loggedin user
 		//array 'lists' contains all user's lists
-
-		//add-list
-		var addTaskClick = function (that) {
-			var id = $(that).attr('id');
-			id = id.substring(7, id.length);
-			console.log(id);
-
-			GUI.fillAddTaskForm(id);
-			GUI.hideAll();
-			GUI.showAddingTaskForm();
-		};
 		
 		console.log(lists);
 		//fill user data
@@ -183,7 +172,29 @@ $(document).ready(function () {
 			GUI.clearEditListForm();
 			GUI.hideAll();
 		});
-		//---
+		//add-task
+		var addTaskClick = function (that) {
+			var id = $(that).attr('id');
+			id = id.substring(7, id.length);
+			console.log(id);
+
+			GUI.fillAddTaskForm(id);
+			GUI.hideAll();
+			GUI.showAddingTaskForm();
+		};
+
+		$('#add-task-cancel-button').click(function (){
+			GUI.clearAddTaskForm();
+			GUI.hideAll();
+		});
+
+		$('#add-task-save-button').click(function (){
+			var newTask = GUI.getAddTaskForm();
+			newTask.fbid = user.id;
+			console.log(newTask);
+			socket.emit('addTask', newTask);
+			GUI.hideAll();
+		});
 	};
 
 });
