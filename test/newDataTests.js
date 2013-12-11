@@ -190,3 +190,78 @@ describe('Data.removeData', function (){
   });
 
 });
+
+describe('Data.findAllData', function (){
+
+  it('should find all specified objects without error', function (done){
+
+    var itemToInser = {"value": "test", "class": "first", "trash": false};
+
+    Data.insertData("test", itemToInser, function (err, data){
+      if(err){
+        done(err);
+      }
+      else{
+        assert.notStrictEqual(null, data._id);
+        assert.strictEqual(itemToInser.value, data.value);
+        assert.strictEqual(itemToInser.class, data.class);
+
+        var itemToInser2 = {"value": "test2", "class": "first", "trash": false};
+
+        Data.insertData("test", itemToInser2, function (err, data2){
+          if(err){
+            done(err);
+          }
+          else{
+            assert.notStrictEqual(null, data2._id);
+            assert.strictEqual(itemToInser2.value, data2.value);
+            assert.strictEqual(itemToInser2.class, data2.class);
+
+            Data.findAllData("test", {"class": "first"}, function (err, items){
+              if(err){
+                done(err);
+              }
+              else{
+                assert.strictEqual(2, items.length);
+                
+                items.sort(function (a, b){ 
+                  if (a.value < b.value){ return -1; } 
+                  else if(a.value === b.value){ return 0; }
+                  else{ return 1; }
+                });
+
+                assert.strictEqual(items[0]._id.toString(), data._id.toString());
+                assert.strictEqual(items[0].value, data.value);
+                assert.strictEqual(items[0].class, data.class);
+
+                assert.strictEqual(items[1]._id.toString(), data2._id.toString());
+                assert.strictEqual(items[1].value, data2.value);
+                assert.strictEqual(items[1].class, data2.class);
+
+                console.log(items);
+
+                done();
+              }
+            });
+          }
+        });
+      }
+    });
+
+  });
+
+  it('should not find objects if query is unsatisfiable', function (done){
+
+    Data.findAllData("test", {"class": "2nd"}, function (err, items){
+      if(err){
+        done(err);
+      }
+      else{
+        assert.strictEqual(0, items.length);
+        done();
+      }
+    });
+
+  });
+
+});
