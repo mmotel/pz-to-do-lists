@@ -250,7 +250,7 @@ describe('Data.findAllData', function (){
 
   });
 
-  it('should not find objects if query is unsatisfiable', function (done){
+  it('should not find objects if there is not data matching query', function (done){
 
     Data.findAllData("test", {"class": "2nd"}, function (err, items){
       if(err){
