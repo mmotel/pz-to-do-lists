@@ -125,7 +125,7 @@ var GUI = {
 	},
 	getAddTaskForm: function (){
 		var newaddtask = {};
-		newaddtask.id = $('#add-task-list-id').val();
+		newaddtask.listid = $('#add-task-list-id').val();
 		newaddtask.name = $('#add-task-name').val();
 		newaddtask.descr = $('#add-task-description').val();
 		return newaddtask;
