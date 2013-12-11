@@ -27,6 +27,21 @@ $(document).ready(function () {
 	var loggedinCallback = function (user, lists){
 		//object 'user' contains all data about current loggedin user
 		//array 'lists' contains all user's lists
+
+		//add task button click
+		var addTaskClick = function (that) {
+			var id = $(that).attr('id');
+			if(id.substring(0,10) === "addTaskBig"){
+				id = id.substring(10, id.length);
+			}else if(id.substring(0, 7) === "addTask"){
+				id = id.substring(7, id.length);
+			}
+			console.log(id);
+
+			GUI.fillAddTaskForm(id);
+			GUI.hideAll();
+			GUI.showAddingTaskForm();
+		};
 		
 		console.log(lists);
 		//fill user data
@@ -71,6 +86,11 @@ $(document).ready(function () {
 			lists = data;
 			GUI.fillUserListsSmall(lists);
 			GUI.allListButtonClick(lists);
+		});
+		//Add task
+		socket.on('addedTask', function (data) {
+			console.log(data);
+			//TO-DO: update tasks' array and show new task on task list
 		});
 		//---
 
@@ -173,16 +193,6 @@ $(document).ready(function () {
 			GUI.hideAll();
 		});
 		//add-task
-		var addTaskClick = function (that) {
-			var id = $(that).attr('id');
-			id = id.substring(7, id.length);
-			console.log(id);
-
-			GUI.fillAddTaskForm(id);
-			GUI.hideAll();
-			GUI.showAddingTaskForm();
-		};
-
 		$('#add-task-cancel-button').click(function (){
 			GUI.clearAddTaskForm();
 			GUI.hideAll();
