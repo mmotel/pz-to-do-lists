@@ -5,6 +5,11 @@ clean-start: app.js ./scripts/dropDb.js
 	mongo toDoLists ./scripts/dropDb.js
 	node app.js
 
+tests: ./scripts/dropTestDb.js
+	mongo test ./scripts/dropTestDb.js
+	mocha
+	mongo test ./scripts/dropTestDb.js
+
 deploy: app.js ./scripts/dropDb.js ./scripts/dropTestDb.js
 	mongo toDoLists ./scripts/dropDb.js
 	npm install
