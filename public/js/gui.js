@@ -135,7 +135,7 @@ var GUI = {
 		$('#edit-task-id').val(task.id);
 		$('#edit-task-list-id').val(list.id);
 		$('#edit-task-name').val(task.name);
-		$('#edit-task-deadline').val(list.deadline);
+		$('#edit-task-deadline').val(task.deadline);
 		$('#edit-task-description').val(task.descr);
 	},
 	clearEditTaskForm: function (){
