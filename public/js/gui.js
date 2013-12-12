@@ -99,7 +99,7 @@ var GUI = {
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
 				'<td><button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Wykonaj</button></td>'+
+				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button></td>'+
 				'</tr>');
 		}
 		//rmList button click
@@ -160,7 +160,8 @@ var GUI = {
 		var newaddtask = {};
 		newaddtask.listid = $('#add-task-list-id').val();
 		newaddtask.name = $('#add-task-name').val();
-		newaddtask.deadline = $('#add-task-deadline').val();
+		var date = $('#add-task-deadline').val().split('-');
+		newaddtask.deadline = new Date(date[0], date[1], date[2]);
 		newaddtask.descr = $('#add-task-description').val();
 		return newaddtask;
 	},
@@ -168,7 +169,8 @@ var GUI = {
 		$('#edit-task-id').val(task.id);
 		$('#edit-task-list-id').val(list.id);
 		$('#edit-task-name').val(task.name);
-		$('#edit-task-deadline').val(task.deadline);
+		$('#edit-task-deadline').val(task.deadline.getFullYear()+'-'+task.deadline.getMonth()+
+			'-'+task.deadline.getDay());
 		$('#edit-task-description').val(task.descr);
 		if(task.status){ $('#done').prop('checked', true); }
 	},
@@ -185,7 +187,8 @@ var GUI = {
 		editedtask.listid = $('#edit-task-list-id').val();
 		editedtask.id = $('#edit-task-id').val();
 		editedtask.name = $('#edit-task-name').val();
-		editedtask.deadline = $('#edit-task-deadline').val();
+		var date = $('#edit-task-deadline').val().split('-');
+		editedtask.deadline = new Date(date[0], date[1], date[2]);
 		editedtask.descr = $('#edit-task-description').val();
 		if($( "input:radio[name=optionsRadios]:checked").val() === "true"){
 			editedtask.status = true;
