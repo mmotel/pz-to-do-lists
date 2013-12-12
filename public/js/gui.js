@@ -236,4 +236,10 @@ var GUI = {
 	showDeleteListModal: function (){
 		$('#user-delete-list-modal').modal('show');
 	}
+	showDeleteTaskModal: function (){
+		$('#user-delete-task-modal').modal('show');
+	},
+	showDoneListModal: function (){
+		$('#user-done-task-modal').modal('show');
+	}
 };
