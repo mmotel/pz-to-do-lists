@@ -76,11 +76,45 @@ describe('Manager.findUser', function (){
       if(err){ done(err); }
       else{
         assert.strictEqual(null, item);
-        done();
+        done(); 
       }
 
     });
 
   });
 
+});
+
+describe('Manager.removeUser', function (){
+
+  it('should remove user if exists', function (done){
+
+    var demoProfile = profile(3, 'Testowy Profil', "Profil", "Test", "Testowy");
+
+    Manager.createUser(demoProfile, function (err, item){
+      if(err){ done(err); }
+      else{
+        assert.notStrictEqual(undefined, item._id); //if(undefined !== item._id)
+        assert.strictEqual(demoProfile.id, item.id);
+        assert.strictEqual(demoProfile.displayName, item.profile.displayName);
+        assert.strictEqual(demoProfile.name.familyName, item.profile.name.familyName);
+        assert.strictEqual(demoProfile.name.givenName, item.profile.name.givenName);
+        assert.strictEqual(demoProfile.name.middleName, item.profile.name.middleName);
+
+        Manager.removeUser(item.id, function (err, result){
+          if(err){ done(err); }
+          else{
+            assert.strictEqual(1, result);
+             Manager.findUser(3, function (err, item){
+              if(err){ done(err); }
+              else{
+                assert.strictEqual(null, item);
+                done(); 
+              }
+            });
+          }
+        });
+      }
+    });
+  });
 });
