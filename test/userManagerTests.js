@@ -117,4 +117,14 @@ describe('Manager.removeUser', function (){
       }
     });
   });
+
+  it('should not remove user if it not exist', function (done){
+    Manager.removeUser(0, function (err, result){
+      if(err){ done(err); }
+      else{
+        assert.strictEqual(0, result);
+        done();
+      }
+    });
+  });
 });
