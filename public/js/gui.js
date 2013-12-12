@@ -13,6 +13,7 @@ var GUI = {
 		$('#adding-lists').hide();
 		$('#editing-lists').hide();
 		$('#show-all-lists').hide();
+		$('#show-all-tasks').hide();
 		$('#editing-tasks').hide();
 		$('#adding-tasks').hide();
 	},
@@ -77,6 +78,34 @@ var GUI = {
 
 		//addListAll button click
 		$('.addTaskAll').click(function () { addTaskClick(this); });
+	},
+	fillUserAllTasks: function (tab, rmClick, editClick, addTaskClick){
+		$('#show-all-tasks').slideDown('fast');
+
+		$('#user-tasks-big').children().remove();
+		$('#user-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+
+		for(var i = 0; i < tab.length; i++){
+			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].deadline +'</td><td>'+ tab[i].descr +'</td>'+
+				'<td><button type="button" class="btn btn-default btn-sm pull-right editTask" id="editList'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
+				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmList'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
+				'<td><button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="addTaskBig'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Wykonaj</button></td>'+
+				'</tr>');
+		}
+		//rmList button click
+		$('.rmTask').click(function() { rmClick(this); });
+
+		//editList button click
+		$('.editTask').click(function () { editClick(this); });
+
+		//addListAll button click
+		$('.taskDone').click(function () { taskDoneClick(this); });
 	},
 	//functions after code-refactoring
 	fillUserForm: function (user){
