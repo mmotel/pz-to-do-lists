@@ -127,6 +127,7 @@ var GUI = {
 		var newaddtask = {};
 		newaddtask.listid = $('#add-task-list-id').val();
 		newaddtask.name = $('#add-task-name').val();
+		newaddtask.deadline = $('#add-task-deadline').val();
 		newaddtask.descr = $('#add-task-description').val();
 		return newaddtask;
 	},
@@ -134,12 +135,14 @@ var GUI = {
 		$('#edit-task-id').val(task.id);
 		$('#edit-task-list-id').val(list.id);
 		$('#edit-task-name').val(task.name);
+		$('#edit-task-deadline').val(list.deadline);
 		$('#edit-task-description').val(task.descr);
 	},
 	clearEditTaskForm: function (){
 		$('#edit-task-id').val("");
 		$('#edit-task-list-id').val("");
 		$('#edit-task-name').val("");
+		$('#edit-task-deadline').val("");
 		$('#edit-task-description').val("");
 	},
 	getEditTaskForm: function (){
@@ -147,6 +150,7 @@ var GUI = {
 		editedtask.listid = $('#edit-task-list-id').val();
 		editedtask.id = $('#edit-task-id').val();
 		editedtask.name = $('#edit-task-name').val();
+		editedtask.deadline = $('#edit-task-deadline').val();
 		editedtask.descr = $('#edit-task-description').val();
 		return editedtask;
 	},
