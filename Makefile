@@ -1,3 +1,5 @@
+all: redeploy
+
 start: app.js
 	node app.js
 
@@ -24,4 +26,4 @@ redeploy: app.js ./scripts/dropTestDb.js
 	mongo test ./scripts/dropTestDb.js
 	node app.js
 
-all: redeploy
+#all: redeploy
