@@ -137,6 +137,7 @@ var GUI = {
 		$('#edit-task-name').val(task.name);
 		$('#edit-task-deadline').val(task.deadline);
 		$('#edit-task-description').val(task.descr);
+		if(task.status){ $('#done').prop('checked', true); }
 	},
 	clearEditTaskForm: function (){
 		$('#edit-task-id').val("");
@@ -144,6 +145,7 @@ var GUI = {
 		$('#edit-task-name').val("");
 		$('#edit-task-deadline').val("");
 		$('#edit-task-description').val("");
+		$('#notDone').prop('checked', true);
 	},
 	getEditTaskForm: function (){
 		var editedtask = {};
@@ -152,6 +154,11 @@ var GUI = {
 		editedtask.name = $('#edit-task-name').val();
 		editedtask.deadline = $('#edit-task-deadline').val();
 		editedtask.descr = $('#edit-task-description').val();
+		if($( "input:radio[name=optionsRadios]:checked").val() === "true"){
+			editedtask.status = true;
+		}else{
+			editedtask.status = false;
+		}
 		return editedtask;
 	},
 	fillEditListForm: function (list){
