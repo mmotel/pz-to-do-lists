@@ -235,7 +235,7 @@ var GUI = {
 	},
 	showDeleteListModal: function (){
 		$('#user-delete-list-modal').modal('show');
-	}
+	},
 	showDeleteTaskModal: function (){
 		$('#user-delete-task-modal').modal('show');
 	},
