@@ -83,17 +83,21 @@ var GUI = {
 		$('#show-all-tasks').slideDown('fast');
 
 		$('#user-tasks-big').children().remove();
-		$('#user-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+		$('#user-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Termin</th><th>Status</th>'+
+			'<th colspan="3">Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
-			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].deadline +'</td><td>'+ tab[i].descr +'</td>'+
+			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
+				'<td>'+ tab[i].deadline.getDay() + '.' + tab[i].deadline.getMonth() + '.' + 
+				tab[i].deadline.getYear() +'</td>'+
+				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td>'+
 				'<td><button type="button" class="btn btn-default btn-sm pull-right editTask" id="editList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="addTaskBig'+ 
+				'<td><button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Wykonaj</button></td>'+
 				'</tr>');
