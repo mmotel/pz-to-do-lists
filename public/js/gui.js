@@ -211,6 +211,14 @@ var GUI = {
 		$('#user-delete-list-modal-id').val(list.id);
 		$('#user-delete-list-modal-name').text("Nazwa listy: " + list.name);
 	},
+	fillDeleteTaskModal: function (task){
+		$('#user-delete-task-modal-id').val(task.id);
+		$('#user-delete-task-modal-name').text("Nazwa listy: " + task.name);
+	},
+	fillDoneTaskModal: function (task){
+		$('#user-done-task-modal-id').val(task.id);
+		$('#user-done-task-modal-name').text("Nazwa listy: " + task.name);
+	},
 	getDeleteListModal: function (){
 		var listId = parseInt($('#user-delete-list-modal-id').val());
 		return listId;
