@@ -29,7 +29,7 @@ $(document).ready(function () {
 		//array 'lists' contains all user's lists
 
 		//add task button click
-		var addTaskClick = function (that) {
+		var addTaskClick = function (that){
 			var id = $(that).attr('id');
 			if(id.substring(0,10) === "addTaskBig"){
 				id = id.substring(10, id.length);
@@ -72,19 +72,19 @@ $(document).ready(function () {
 			if(data.fbid === user.id){
 				console.log(data);
 				lists.push(data);
-				GUI.fillUserListsSmall(lists);
+				GUI.fillUserListsSmall(lists, addTaskClick);
 			}
 		});
 		//Remove list
 		socket.on('rmedList', function (data) {
 			lists = data;
-			GUI.fillUserListsSmall(lists);
+			GUI.fillUserListsSmall(lists, addTaskClick);
 			GUI.fillUserAllLists(lists, rmListClick, editListClick);
 		});
 		//Edit list
 		socket.on('editedList', function (data) {
 			lists = data;
-			GUI.fillUserListsSmall(lists);
+			GUI.fillUserListsSmall(lists, addTaskClick);
 			GUI.allListButtonClick(lists);
 		});
 		//Add task
