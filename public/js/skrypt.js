@@ -90,10 +90,28 @@ $(document).ready(function () {
 			GUI.showAddingTaskForm();
 		};
 
+		var showListClick = function (that){
+			var listid = $(that).attr('id');
+			var listName = $(that).html();
+			console.log(listid);
+			if(listid.substring(0,11) === "showListBig"){
+				listid = listid.substring(11, listid.length);
+			}
+			else if(listid.substring(0,8) === "showList"){
+				listid = listid.substring(8, listid.length);
+			}
+
+			$.getJSON('http://localhost:3000/data/get/tasks/'+listid+'/', function (tasks){
+				GUI.hideAll();
+				GUI.fillUserAllTasks(listName, tasks);
+			});
+
+		};
+
 		$('#show-all-lists-button').click(function (){
 			$.getJSON('http://localhost:3000/data/get/lists/', function (lists){
 				GUI.hideAll();
-				GUI.fillUserAllLists(lists, rmListClick, editListClick, addTaskClick);
+				GUI.fillUserAllLists(lists, rmListClick, editListClick, addTaskClick, showListClick);
 			});
 		});
 		$('.rmListConfirm').click(function () {
@@ -167,24 +185,24 @@ $(document).ready(function () {
 		});
 		//Add list
 		socket.on('addedList', function (data) {
-			GUI.fillUserListsSmall(data, addTaskClick);
+			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
 		});
 		//Remove list
 		socket.on('rmedList', function (data) {
 			// lists = data;
-			GUI.fillUserListsSmall(data, addTaskClick);
-			GUI.fillUserAllLists(data, rmListClick, editListClick);
+			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
+			GUI.fillUserAllLists(data, rmListClick, editListClick, showListClick);
 		});
 		//Edit list
 		socket.on('editedList', function (data) {
 			// lists = data;
-			GUI.fillUserListsSmall(data, addTaskClick);
-			GUI.fillUserAllLists(data, rmListClick, editListClick);
+			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
+			GUI.fillUserAllLists(data, rmListClick, editListClick, showListClick);
 		});
 		//Add task
 		socket.on('addedTask', function (data) {
 			console.log(data);
-			GUI.fillUserAllTasks(data);
+			GUI.fillUserAllTasks(data.list.name, data.tasks);
 			//TO-DO: update tasks' array and show new task on task list
 		});
 		//---
@@ -198,7 +216,7 @@ $(document).ready(function () {
 		GUI.showLoggedin();
 		//get & show lists' panel
 		$.getJSON('http://localhost:3000/data/get/lists/', function (lists){
-			GUI.fillUserListsSmall(lists, addTaskClick);
+			GUI.fillUserListsSmall(lists, addTaskClick, showListClick);
 		});
 
 	};

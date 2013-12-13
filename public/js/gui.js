@@ -38,27 +38,36 @@ var GUI = {
 		$('#login-link').show();
 		$('#login-panel').show();
 	},
-	fillUserListsSmall: function (tab, addTaskClick){
+	fillUserListsSmall: function (tab, addTaskClick, showListClick){
 		$('#user-lists-small').children().remove();
 
 		for(var i = 0; i < tab.length; i++){
-			$('#user-lists-small').append('<tr><td>'+ tab[i].name +'</td><td>'+
-				'<button type="button" class="btn btn-link btn-sm pull-right addTaskSmall" id="addTask'+ tab[i].id +'">'+
+			$('#user-lists-small').append('<tr>'+
+				'<td><button type="button" class="btn btn-link btn-sm showListSmall"'+
+				'id="showList'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
+				'<td><button type="button" class="btn btn-link btn-sm pull-right addTaskSmall"'+
+				' id="addTask'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>'+
 				'</td></tr>');
 		}
 
 		//addTaskSmall button click
 		$('.addTaskSmall').click(function () { addTaskClick(this); });
+
+		//showList button click
+		$('.showListSmall').click(function () { showListClick(this); });
 	},
-	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick){
+	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick, showListClick){
 		$('#show-all-lists').slideDown('fast');
 
 		$('#user-lists-big').children().remove();
 		$('#user-lists-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
-			$('#user-lists-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
+			$('#user-lists-big').append('<tr>'+
+				'<td><button type="button" class="btn btn-link btn-sm showListBig"'+
+				'id="showListBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
+				'<td>'+ tab[i].descr +'</td>'+
 				'<td><button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
@@ -78,10 +87,12 @@ var GUI = {
 
 		//addListAll button click
 		$('.addTaskAll').click(function () { addTaskClick(this); });
-	},
-	fillUserAllTasks: function (tab, rmClick, editClick, addTaskClick){
-		$('#show-all-tasks').slideDown('fast');
 
+		//showList button click
+		$('.showListBig').click(function () { showListClick(this); });
+	},
+	fillUserAllTasks: function (listName, tab, rmClick, editClick, taskDoneClick){
+		$('#show-all-tasks-list-name').html(listName);
 		$('#user-tasks-big').children().remove();
 		$('#user-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Termin</th><th>Status</th>'+
 			'<th colspan="3">Opcje</th></tr>');
@@ -101,14 +112,16 @@ var GUI = {
 				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button></td>'+
 				'</tr>');
 		}
-		//rmList button click
+		//rmTask button click
 		$('.rmTask').click(function() { rmClick(this); });
 
-		//editList button click
+		//editTask button click
 		$('.editTask').click(function () { editClick(this); });
 
-		//addListAll button click
+		//taskDOne button click
 		$('.taskDone').click(function () { taskDoneClick(this); });
+
+		$('#show-all-tasks').slideDown('fast');
 	},
 	//functions after code-refactoring
 	fillUserForm: function (user){
@@ -157,7 +170,7 @@ var GUI = {
 	},
 	getAddTaskForm: function (){
 		var newaddtask = {};
-		newaddtask.listid = $('#add-task-list-id').val();
+		newaddtask.listid = parseInt($('#add-task-list-id').val());
 		newaddtask.name = $('#add-task-name').val();
 		var date = $('#add-task-deadline').val().split('-');
 		newaddtask.deadline = new Date(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]));
@@ -183,8 +196,8 @@ var GUI = {
 	},
 	getEditTaskForm: function (){
 		var editedtask = {};
-		editedtask.listid = $('#edit-task-list-id').val();
-		editedtask.id = $('#edit-task-id').val();
+		editedtask.listid = parseInt($('#edit-task-list-id').val());
+		editedtask.id = parseInt($('#edit-task-id').val());
 		editedtask.name = $('#edit-task-name').val();
 		var date = $('#edit-task-deadline').val().split('-');
 		editedtask.deadline = new Date(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]));
