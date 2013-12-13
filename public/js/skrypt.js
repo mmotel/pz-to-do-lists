@@ -101,7 +101,12 @@ $(document).ready(function () {
 		};
 		//remove task button click
 		var rmTaskClick = function (that){
-
+			var taskid = $(that).attr('id');
+			taskid = taskid.substring(6,taskid.length);
+			$.getJSON('http://localhost:3000/data/get/task/'+taskid+'/', function (task){
+				GUI.fillDeleteTaskModal(task);
+				GUI.showDeleteTaskModal();
+			});
 		};
 		//show list buton click
 		var showListClick = function (that){
@@ -128,7 +133,7 @@ $(document).ready(function () {
 				GUI.fillUserAllLists(lists, rmListClick, editListClick, addTaskClick, showListClick);
 			});
 		});
-		$('.rmListConfirm').click(function () {
+		$('#rmListConfirm').click(function () {
 			var listId = GUI.getDeleteListModal();
 			// console.log(listId);
 			socket.emit('rmList', {id: listId, fbid: user.id});
@@ -194,6 +199,15 @@ $(document).ready(function () {
 			socket.emit('editTask', editedTask);
 			GUI.hideAll();
 		});
+		//remove task confirm
+		$('#rmTaskConfirm').click(function () {
+			console.log('rmTask');
+			var rmedTask = GUI.getDeleteTaskModal();
+			console.log(rmedTask);
+			socket.emit('rmTask', {id: rmedTask.id, listid: rmedTask.listid, fbid: user.id});
+			$('#user-delete-task-modal').modal('hide'); //temp
+			GUI.hideAll();
+		});
 
 
 		//sockets.io
@@ -231,6 +245,11 @@ $(document).ready(function () {
 		});
 		//Edit task
 		socket.on('editedTask', function (data) {
+			console.log(data);
+			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick);
+		});
+		//Remove task
+		socket.on('rmedTask', function (data) {
 			console.log(data);
 			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick);
 		});

@@ -283,11 +283,11 @@
       <div class="modal-body">
       	<form><input type="hidden" id="user-delete-list-modal-id"></form>
 	    <h4 id="user-delete-list-modal-name"></h4>
-        <p>Usunięcie listy jest nieodwracalne, lista oraz wszystie zadania zostaną usunięte?</p>
+        <p>Usunięcie listy jest nieodwracalne, lista oraz wszystie zadania zostaną usunięte.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-danger rmListConfirm" id="">Tak, usuń listę</button>
+        <button type="button" class="btn btn-danger" id="rmListConfirm">Tak, usuń listę</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -301,13 +301,16 @@
         <h4 class="modal-title"><span class="glyphicon glyphicon-remove"></span> Czy jesteś pewien?</h4>
       </div>
       <div class="modal-body">
-      	<form><input type="hidden" id="user-delete-task-modal-id"></form>
+      	<form>
+      		<input type="hidden" id="user-delete-task-modal-id">
+      		<input type="hidden" id="user-delete-task-modal-list-id">
+      	</form>
 	    <h4 id="user-delete-task-modal-name"></h4>
-        <p>Usunięcie zadania jest nieodwracalne?</p>
+        <p>Usunięcie zadania jest nieodwracalne.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-danger rmTaskConfirm" id="">Tak, usuń zadanie</button>
+        <button type="button" class="btn btn-danger" id="rmTaskConfirm">Tak, usuń zadanie</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -327,7 +330,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-danger doneTaskConfirm" id="">Tak, wykonaj zadanie</button>
+        <button type="button" class="btn btn-danger" id="doneTaskConfirm">Tak, wykonaj zadanie</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

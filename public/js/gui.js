@@ -232,15 +232,21 @@ var GUI = {
 	},
 	fillDeleteTaskModal: function (task){
 		$('#user-delete-task-modal-id').val(task.id);
-		$('#user-delete-task-modal-name').text("Nazwa listy: " + task.name);
+		$('#user-delete-task-modal-list-id').val(task.listid);
+		$('#user-delete-task-modal-name').text("Nazwa zadania: " + task.name);
 	},
 	fillDoneTaskModal: function (task){
 		$('#user-done-task-modal-id').val(task.id);
-		$('#user-done-task-modal-name').text("Nazwa listy: " + task.name);
+		$('#user-done-task-modal-name').text("Nazwa zadania: " + task.name);
 	},
 	getDeleteListModal: function (){
 		var listId = parseInt($('#user-delete-list-modal-id').val());
 		return listId;
+	},
+	getDeleteTaskModal: function (){
+		var taskId = parseInt($('#user-delete-task-modal-id').val());
+		var listId = parseInt($('#user-delete-task-modal-list-id').val());
+		return {"id": taskId, "listid": listId};
 	},
 	showUsersSettings: function (){
 		$('#user-settings').slideDown('fast');
