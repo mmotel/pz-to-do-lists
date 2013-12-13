@@ -104,3 +104,26 @@ exports.getTask = function (req, res, appUser, Data){
 		res.end(JSON.stringify(undefined));
 	}
 };
+
+exports.getTasks = function (req, res, appUser, Data){
+	var sid = req.sessionID;
+	var fbid = appUser.checkLogin(sid);
+
+	if(fbid !== null){
+		var listId = req.params[0];
+		Data.findAllTasks(listId, function (tasks){
+			if(!tasks[0] || tasks[0].fbid == fbid){
+				res.writeHead(200, {
+					'Content-Type': 'application/json; charset=utf8'
+				});
+				res.end(JSON.stringify(tasks));
+			}
+		});
+	}
+	else{
+		res.writeHead(404, {
+			'Content-Type': 'application/json; charset=utf8'
+		});
+		res.end(JSON.stringify(undefined));
+	}
+};

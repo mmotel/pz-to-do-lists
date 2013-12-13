@@ -78,3 +78,5 @@ app.get(/data\/get\/list\/(\d+)/, function (req, res) { routes.getList(req, res,
 app.get('/data/get/lists/', function (req, res) { routes.getLists(req, res, appUser, appData); });
 
 app.get(/data\/get\/task\/(\d+)/, function (req, res) { routes.getTask(req, res, appUser, appData); });
+
+app.get(/data\/get\/tasks\/(\d+)/, function (req, res) { routes.getTasks(req, res, appUser, appData); });
