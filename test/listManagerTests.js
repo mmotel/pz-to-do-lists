@@ -64,7 +64,7 @@ describe('Manager.findList', function(){
 				assert.strictEqual(null, item);
 				done();
 			}
-		})
+		});
 	});
 });
 
@@ -160,7 +160,7 @@ describe('Manager.removeList', function(){
 							if (err){ done(err); }
 							else{
 								assert.strictEqual(null, item);
-                				done(); 
+								done(); 
 							}
 						});
 					}
@@ -178,4 +178,49 @@ describe('Manager.removeList', function(){
 		});
 	});
 		
+});
+
+describe('Manager.removeAllLists', function(){
+	it('should remove all user lists', function (done){
+		var newList = new List(6, 'Moja Lista', 'Moj opis');
+		Manager.addList(newList, function (err, item){
+			if (err) { done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newList.fbid, item.fbid);
+				assert.strictEqual(newList.name, item.name);
+				assert.strictEqual(newList.descr, item.descr);
+				assert.strictEqual(newList.trash, item.trash);
+
+				var newList2 = new List(6, 'Moja Lista2', 'Moj opis2');
+				Manager.addList(newList2, function(err, item2){
+					if (err){ done(); }
+					else{
+						assert.notStrictEqual(undefined, item._id);
+						assert.notStrictEqual(undefined, item.id);
+						assert.strictEqual(newList.fbid, item.fbid);
+						assert.strictEqual(newList.name, item.name);
+						assert.strictEqual(newList.descr, item.descr);
+						assert.strictEqual(newList.trash, item.trash);
+
+						Manager.removeAllLists(6, function (err, result){
+							if(err){ done(err); }
+							else{
+								assert.strictEqual(2, result);
+
+								Manager.findAllLists(6, function (err, items){
+									if (err){ done(); }
+									else{
+										assert.strictEqual(0, items.length);
+										done();
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		});
+	});
 });
