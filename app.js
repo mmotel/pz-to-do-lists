@@ -72,3 +72,7 @@ app.get('/logout', function(req, res){ routes.logout(req, res, appUser); });
 app.get('/deleteAccount', function (req, res) { routes.deleteAccount(req, res, appUser); });
 
 app.get('/getLogin', function (req, res) { routes.getLogin(req, res, appUser); });
+// REST API
+app.get(/data\/get\/list\/(\d+)/, function (req, res) { routes.getList(req, res, appUser, appData); });
+
+app.get('/data/get/lists/', function (req, res) { routes.getLists(req, res, appUser, appData); });
