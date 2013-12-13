@@ -150,11 +150,32 @@ describe('Manager.updateUser', function (){
           if (err){ done(err); }
           else{
             assert.strictEqual(1, result); //if(undefined !== item._id)
-            done();
+             done();
+            Manager.findUser(item.id, function (err, item2){
+              if(err){ done(err); }
+              else{
+                assert.strictEqual(item._id.toString(), item2._id.toString());
+                assert.strictEqual(item.id, item2.id);
+                assert.strictEqual(item.profile.displayName, item2.profile.displayName);
+                assert.strictEqual(item.profile.name.familyName, item2.profile.name.familyName);
+                assert.strictEqual(item.profile.name.givenName, item2.profile.name.givenName);
+                assert.strictEqual(item.profile.name.middleName, item2.profile.name.middleName);
+                done();
+              }
+            });
           }
         });
       }
     });
   });
-
+  
+  it('should not update user if it does not exist', function (done){
+    Manager.updateUser(0, function (err, result){
+      if (err) { done(err); }
+      else{
+        assert.strictEqual(0, result)
+        done();
+      }
+    });
+  });
 });
