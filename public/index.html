@@ -324,13 +324,16 @@
         <h4 class="modal-title"><span class="glyphicon glyphicon-remove"></span> Czy jesteś pewien?</h4>
       </div>
       <div class="modal-body">
-      	<form><input type="hidden" id="user-done-task-modal-id"></form>
+      	<form>
+      		<input type="hidden" id="user-done-task-modal-id">
+      		<input type="hidden" id="user-done-task-modal-list-id">
+      	</form>
 	    <h4 id="user-done-task-modal-name"></h4>
         <p>Czy na pewno chcesz wykonać zadanie?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-danger" id="doneTaskConfirm">Tak, wykonaj zadanie</button>
+        <button type="button" class="btn btn-success" id="doneTaskConfirm">Tak, wykonaj zadanie</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
