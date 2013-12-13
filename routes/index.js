@@ -111,7 +111,7 @@ exports.getTasks = function (req, res, appUser, Data){
 	var fbid = appUser.checkLogin(sid);
 
 	if(fbid !== null){
-		var listId = req.params[0];
+		var listId = parseInt(req.params[0]);
 		Data.findAllTasks(listId, function (tasks){
 			if(!tasks[0] || tasks[0].fbid == fbid){
 				res.writeHead(200, {
