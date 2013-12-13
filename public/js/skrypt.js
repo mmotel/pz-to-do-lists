@@ -9,12 +9,12 @@ $(document).ready(function () {
 	//---
 
 	//starting front-end
-	$.getJSON('http://localhost:3000/getLogin', function(data){ 
+	$.getJSON('http://localhost:3000/getLogin', function (data){ 
 		console.log("data [ " + data + " ]"); 
 		if(data !== null) {
 			console.log('####@@@@loggedin!');
 			//actions if user is loggedin
-			loggedinCallback(data.user, data.lists); 
+			loggedinCallback(data); 
 		}
 		else {
 			console.log('%%%%&&&&NOT loggedin!');
@@ -24,75 +24,8 @@ $(document).ready(function () {
 	});
 
 	//actions if user is loggedin
-	var loggedinCallback = function (user, lists){
+	var loggedinCallback = function (user){
 		//object 'user' contains all data about current loggedin user
-		//array 'lists' contains all user's lists
-
-		//add task button click
-		var addTaskClick = function (that){
-			var id = $(that).attr('id');
-			if(id.substring(0,10) === "addTaskBig"){
-				id = id.substring(10, id.length);
-			}else if(id.substring(0, 7) === "addTask"){
-				id = id.substring(7, id.length);
-			}
-			console.log(id);
-
-			GUI.fillAddTaskForm(id);
-			GUI.hideAll();
-			GUI.showAddingTaskForm();
-		};
-		
-		console.log(lists);
-		//fill user data
-		GUI.fillLoginPanel(user);
-		//fill small list's list
-		GUI.fillUserListsSmall(lists, addTaskClick);
-		// hide & show elements
-		GUI.showLoggedin();
-
-		//sockets.io
-		var socket = io.connect('http://localhost:3000');
-
-		console.log('connecting…');
-
-		socket.on('connect', function () {
-			console.log('Połączony!');
-		});
-		//Update user
-		socket.on('updatedUser', function (data) {
-			if(data.id === user.id){
-				console.log(data);
-				user = data;
-				GUI.fillUserForm(user);
-			}
-		});
-		//Add list
-		socket.on('addedList', function (data) {
-			if(data.fbid === user.id){
-				console.log(data);
-				lists.push(data);
-				GUI.fillUserListsSmall(lists, addTaskClick);
-			}
-		});
-		//Remove list
-		socket.on('rmedList', function (data) {
-			lists = data;
-			GUI.fillUserListsSmall(lists, addTaskClick);
-			GUI.fillUserAllLists(lists, rmListClick, editListClick);
-		});
-		//Edit list
-		socket.on('editedList', function (data) {
-			lists = data;
-			GUI.fillUserListsSmall(lists, addTaskClick);
-			GUI.fillUserAllLists(lists, rmListClick, editListClick);
-		});
-		//Add task
-		socket.on('addedTask', function (data) {
-			console.log(data);
-			//TO-DO: update tasks' array and show new task on task list
-		});
-		//---
 
 		//user-settings
 		$('#settings-button').click(function (){
@@ -125,32 +58,60 @@ $(document).ready(function () {
 			var listId = $(that).attr('id');
 			listId = parseInt(listId.substring(6, listId.length));
 
-			for(var i =0; i < lists.length; i++){
-				if(lists[i].id === listId){
-					GUI.fillDeleteListModal(lists[i]);
-					GUI.showDeleteListModal();
-					break;
-				}
-			}
+			$.getJSON('http://localhost:3000/data/get/list/'+listId+'/', function (list){
+				GUI.fillDeleteListModal(list);
+				GUI.showDeleteListModal();
+			});
+
+			// for(var i =0; i < lists.length; i++){
+			// 	if(lists[i].id === listId){
+			// 		GUI.fillDeleteListModal(lists[i]);
+			// 		GUI.showDeleteListModal();
+			// 		break;
+			// 	}
+			// }
 		};
 
 		var editListClick = function (that) {
 			var listId = $(that).attr('id');
 			listId = parseInt(listId.substring(8, listId.length));
 
-			for(var i =0; i < lists.length; i++){
-				if(lists[i].id === listId){
-					GUI.fillEditListForm(lists[i]);
-					GUI.hideAll();
-					GUI.showEditingListForm();
-					break;
-				}
+			$.getJSON('http://localhost:3000/data/get/list/'+listId+'/', function (list){
+				GUI.fillEditListForm(list);
+				GUI.hideAll();
+				GUI.showEditingListForm();
+			});
+
+			// for(var i =0; i < lists.length; i++){
+			// 	if(lists[i].id === listId){
+			// 		GUI.fillEditListForm(lists[i]);
+			// 		GUI.hideAll();
+			// 		GUI.showEditingListForm();
+			// 		break;
+			// 	}
+			// }
+		};
+
+		//add task button click
+		var addTaskClick = function (that){
+			var id = $(that).attr('id');
+			if(id.substring(0,10) === "addTaskBig"){
+				id = id.substring(10, id.length);
+			}else if(id.substring(0, 7) === "addTask"){
+				id = id.substring(7, id.length);
 			}
+			console.log(id);
+
+			GUI.fillAddTaskForm(id);
+			GUI.hideAll();
+			GUI.showAddingTaskForm();
 		};
 
 		$('#show-all-lists-button').click(function (){
-			GUI.hideAll();
-			GUI.fillUserAllLists(lists, rmListClick, editListClick, addTaskClick);
+			$.getJSON('http://localhost:3000/data/get/lists/', function (lists){
+				GUI.hideAll();
+				GUI.fillUserAllLists(lists, rmListClick, editListClick, addTaskClick);
+			});
 		});
 		$('.rmListConfirm').click(function () {
 			var listId = GUI.getDeleteListModal();
@@ -205,6 +166,58 @@ $(document).ready(function () {
 			socket.emit('addTask', newTask);
 			GUI.hideAll();
 		});
+
+
+		//sockets.io
+		var socket = io.connect('http://localhost:3000');
+
+		console.log('connecting…');
+
+		socket.on('connect', function () {
+			console.log('Połączony!');
+		});
+		//Update user
+		socket.on('updatedUser', function (data) {
+			console.log(data);
+			user = data;
+			GUI.fillUserForm(user);
+		});
+		//Add list
+		socket.on('addedList', function (data) {
+			GUI.fillUserListsSmall(data, addTaskClick);
+		});
+		//Remove list
+		socket.on('rmedList', function (data) {
+			// lists = data;
+			GUI.fillUserListsSmall(data, addTaskClick);
+			GUI.fillUserAllLists(data, rmListClick, editListClick);
+		});
+		//Edit list
+		socket.on('editedList', function (data) {
+			// lists = data;
+			GUI.fillUserListsSmall(data, addTaskClick);
+			GUI.fillUserAllLists(data, rmListClick, editListClick);
+		});
+		//Add task
+		socket.on('addedTask', function (data) {
+			console.log(data);
+			GUI.fillUserAllTasks(data);
+			//TO-DO: update tasks' array and show new task on task list
+		});
+		//---
+
+		//start-up actions
+
+		
+		//fill user data
+		GUI.fillLoginPanel(user);
+		// hide & show elements
+		GUI.showLoggedin();
+		//get & show lists' panel
+		$.getJSON('http://localhost:3000/data/get/lists/', function (lists){
+			GUI.fillUserListsSmall(lists, addTaskClick);
+		});
+
 	};
 
 });

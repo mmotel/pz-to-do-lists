@@ -88,8 +88,7 @@ var GUI = {
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
-				'<td>'+ tab[i].deadline.getDay() + '.' + tab[i].deadline.getMonth() + '.' + 
-				tab[i].deadline.getYear() +'</td>'+
+				'<td>'+ tab[i].deadline.substring(0,10) +'</td>'+
 				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td>'+
 				'<td><button type="button" class="btn btn-default btn-sm pull-right editTask" id="editList'+ 
 					tab[i].id +'">'+

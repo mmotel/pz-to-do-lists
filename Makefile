@@ -9,7 +9,7 @@ clean-start: app.js ./scripts/dropDb.js
 
 tests: ./scripts/dropTestDb.js
 	mongo test ./scripts/dropTestDb.js
-	mocha ./test/userManagerTests.js
+	mocha ./test/listManagerTests.js
 	mongo test ./scripts/dropTestDb.js
 
 deploy: app.js ./scripts/dropDb.js ./scripts/dropTestDb.js
