@@ -51,7 +51,7 @@ Users' managment `27.10.2013 16:00` `DONE`
 ###Task 2 
 Lists' managment `14.11.2013 18:00` `DONE`
 ###Task 3 
-Tasks' managment `12.12.2013 18:00` `new deadline`
+Tasks' managment `12.12.2013 18:00` `DONE`
 ###Task 4 
 Groups' managment `19.12.2013 18:00` `new deadline`
 ###Task 5 
