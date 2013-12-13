@@ -186,6 +186,7 @@ $(document).ready(function () {
 		//Add list
 		socket.on('addedList', function (data) {
 			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
+			GUI.fillUserAllLists(data, rmListClick, editListClick, showListClick);
 		});
 		//Remove list
 		socket.on('rmedList', function (data) {
