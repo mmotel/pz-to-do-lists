@@ -31,7 +31,7 @@ exports.getList = function (req, res, appUser, Data){
 	if(fbid !== null){
 		var listId = parseInt(req.params[0]);
 		Data.findList(listId, function (list){
-			if(fbid === list.fbid){
+			if(list === null || fbid === list.fbid){
 				res.writeHead(200, {
 					'Content-Type': 'application/json; charset=utf8'
 				});
@@ -55,7 +55,9 @@ exports.getList = function (req, res, appUser, Data){
 
 exports.getLists = function (req, res, appUser, Data){
 	var sid = req.sessionID;
+	console.log(sid);
 	var fbid = appUser.checkLogin(sid);
+	console.log(fbid);
 
 	if(fbid !== null){
 		Data.findAllLists(fbid, function (lists){
