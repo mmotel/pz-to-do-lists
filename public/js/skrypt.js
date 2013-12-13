@@ -62,14 +62,6 @@ $(document).ready(function () {
 				GUI.fillDeleteListModal(list);
 				GUI.showDeleteListModal();
 			});
-
-			// for(var i =0; i < lists.length; i++){
-			// 	if(lists[i].id === listId){
-			// 		GUI.fillDeleteListModal(lists[i]);
-			// 		GUI.showDeleteListModal();
-			// 		break;
-			// 	}
-			// }
 		};
 
 		var editListClick = function (that) {
@@ -81,15 +73,6 @@ $(document).ready(function () {
 				GUI.hideAll();
 				GUI.showEditingListForm();
 			});
-
-			// for(var i =0; i < lists.length; i++){
-			// 	if(lists[i].id === listId){
-			// 		GUI.fillEditListForm(lists[i]);
-			// 		GUI.hideAll();
-			// 		GUI.showEditingListForm();
-			// 		break;
-			// 	}
-			// }
 		};
 
 		//add task button click
