@@ -85,7 +85,7 @@ $(document).ready(function () {
 		socket.on('editedList', function (data) {
 			lists = data;
 			GUI.fillUserListsSmall(lists, addTaskClick);
-			GUI.allListButtonClick(lists);
+			GUI.fillUserAllLists(lists, rmListClick, editListClick);
 		});
 		//Add task
 		socket.on('addedTask', function (data) {
