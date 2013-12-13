@@ -194,15 +194,15 @@ describe('Manager.removeAllLists', function(){
 				assert.strictEqual(newList.trash, item.trash);
 
 				var newList2 = new List(6, 'Moja Lista2', 'Moj opis2');
-				Manager.addList(newList2, function(err, item2){
+				Manager.addList(newList2, function (err, item2){
 					if (err){ done(); }
 					else{
-						assert.notStrictEqual(undefined, item._id);
-						assert.notStrictEqual(undefined, item.id);
-						assert.strictEqual(newList.fbid, item.fbid);
-						assert.strictEqual(newList.name, item.name);
-						assert.strictEqual(newList.descr, item.descr);
-						assert.strictEqual(newList.trash, item.trash);
+						assert.notStrictEqual(undefined, item2._id);
+						assert.notStrictEqual(undefined, item2.id);
+						assert.strictEqual(newList2.fbid, item2.fbid);
+						assert.strictEqual(newList2.name, item2.name);
+						assert.strictEqual(newList2.descr, item2.descr);
+						assert.strictEqual(newList2.trash, item2.trash);
 
 						Manager.removeAllLists(6, function (err, result){
 							if(err){ done(err); }
@@ -223,4 +223,52 @@ describe('Manager.removeAllLists', function(){
 			}
 		});
 	});
+});
+
+describe('Manager.updateList', function(){
+	it('should update list', function (done){
+		var newList = new List(1, 'Moja Lista', 'Moj opis');
+		var updatedList = new List(1, 'Moja lista po zmianach', 'moj opis po zmianach');
+		Manager.addList(newList, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newList.fbid, item.fbid);
+				assert.strictEqual(newList.name, item.name);
+				assert.strictEqual(newList.descr, item.descr);
+				assert.strictEqual(newList.trash, item.trash);
+
+				Manager.updateList(item.id, function (err, result){
+					if(err){ done(err); }
+					else{
+						assert(1, result);
+						
+						Manager.findList(item.id, function (err, item2){
+							if (err){ done(err); }
+							else{
+								assert.strictEqual(item._id.toString(), item2._id.toString());
+								assert.strictEqual(item.id, item2.id);
+								assert.strictEqual(item.fbid, item2.fbid);
+								assert.strictEqual(item.name, item2.name);
+								assert.strictEqual(item.descr, item2.descr);
+								assert.strictEqual(item.trash, item2.trash);
+								done();
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+
+	it('should not update list if it does not exist', function (done){
+    Manager.updateList(0, function (err, result){
+      if (err) { done(err); }
+      else{
+        assert.strictEqual(0, result)
+        done();
+      }
+    });
+  });
 });
