@@ -108,6 +108,15 @@ $(document).ready(function () {
 				GUI.showDeleteTaskModal();
 			});
 		};
+		//make task done button click
+		var taskDoneClick = function (that){
+			var taskid = $(that).attr('id');
+			taskid = taskid.substring(8, taskid.length);
+			$.getJSON('http://localhost:3000/data/get/task/'+taskid+'/', function (task){
+				GUI.fillDoneTaskModal(task);
+				GUI.showDoneTaskModal();
+			});
+		};
 		//show list buton click
 		var showListClick = function (that){
 			var listid = $(that).attr('id');
@@ -122,7 +131,7 @@ $(document).ready(function () {
 
 			$.getJSON('http://localhost:3000/data/get/tasks/'+listid+'/', function (tasks){
 				GUI.hideAll();
-				GUI.fillUserAllTasks(listName, tasks, rmTaskClick, editTaskCLick);
+				GUI.fillUserAllTasks(listName, tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 			});
 
 		};
@@ -208,6 +217,15 @@ $(document).ready(function () {
 			$('#user-delete-task-modal').modal('hide'); //temp
 			GUI.hideAll();
 		});
+		//task done confirm
+		$('#doneTaskConfirm').click(function (){
+			var doneTask = GUI.getDoneTaskModal();
+			console.log(doneTask);
+			doneTask.fbid = user.id;
+			socket.emit('doneTask', doneTask);
+			$('#user-done-task-modal').modal('hide');
+			GUI.hideAll();
+		});
 
 
 		//sockets.io
@@ -241,17 +259,22 @@ $(document).ready(function () {
 		//Add task
 		socket.on('addedTask', function (data) {
 			console.log(data);
-			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick);
+			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 		});
 		//Edit task
 		socket.on('editedTask', function (data) {
 			console.log(data);
-			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick);
+			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 		});
 		//Remove task
 		socket.on('rmedTask', function (data) {
 			console.log(data);
-			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick);
+			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+		});
+		//Done task
+		socket.on('doneTask', function (data) {
+			console.log(data);
+			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 		});
 		//---
 

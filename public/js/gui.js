@@ -108,7 +108,7 @@ var GUI = {
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
 				'<td><button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
-					tab[i].id +'">'+
+					tab[i].id +'"'+ (tab[i].status ? 'disabled="disabled"' : ' ') +'>'+
 				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button></td>'+
 				'</tr>');
 		}
@@ -237,6 +237,7 @@ var GUI = {
 	},
 	fillDoneTaskModal: function (task){
 		$('#user-done-task-modal-id').val(task.id);
+		$('#user-done-task-modal-list-id').val(task.listid);
 		$('#user-done-task-modal-name').text("Nazwa zadania: " + task.name);
 	},
 	getDeleteListModal: function (){
@@ -246,6 +247,11 @@ var GUI = {
 	getDeleteTaskModal: function (){
 		var taskId = parseInt($('#user-delete-task-modal-id').val());
 		var listId = parseInt($('#user-delete-task-modal-list-id').val());
+		return {"id": taskId, "listid": listId};
+	},
+	getDoneTaskModal: function (){
+		var taskId = parseInt($('#user-done-task-modal-id').val());
+		var listId = parseInt($('#user-done-task-modal-list-id').val());
 		return {"id": taskId, "listid": listId};
 	},
 	showUsersSettings: function (){
@@ -272,7 +278,7 @@ var GUI = {
 	showDeleteTaskModal: function (){
 		$('#user-delete-task-modal').modal('show');
 	},
-	showDoneListModal: function (){
+	showDoneTaskModal: function (){
 		$('#user-done-task-modal').modal('show');
 	}
 };
