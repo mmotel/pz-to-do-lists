@@ -101,10 +101,10 @@ var GUI = {
 			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.substring(0,10) +'</td>'+
 				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td>'+
-				'<td><button type="button" class="btn btn-default btn-sm pull-right editTask" id="editList'+ 
+				'<td><button type="button" class="btn btn-default btn-sm pull-right editTask" id="editTask'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
-				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmList'+ 
+				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmTask'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
 				'<td><button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
@@ -167,22 +167,22 @@ var GUI = {
 		$('#add-task-list-id').val("");
 		$('#add-task-name').val("");
 		$('#add-task-description').val("");
+		$('#add-task-deadline').val("");
 	},
 	getAddTaskForm: function (){
 		var newaddtask = {};
 		newaddtask.listid = parseInt($('#add-task-list-id').val());
 		newaddtask.name = $('#add-task-name').val();
 		var date = $('#add-task-deadline').val().split('-');
-		newaddtask.deadline = new Date(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]));
+		newaddtask.deadline = new Date(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2])+1);
 		newaddtask.descr = $('#add-task-description').val();
 		return newaddtask;
 	},
-	fillEditTaskForm: function (task, list){
+	fillEditTaskForm: function (task){
 		$('#edit-task-id').val(task.id);
-		$('#edit-task-list-id').val(list.id);
+		$('#edit-task-list-id').val(task.listid);
 		$('#edit-task-name').val(task.name);
-		$('#edit-task-deadline').val(task.deadline.getFullYear()+'-'+task.deadline.getMonth()+
-			'-'+task.deadline.getDay());
+		$('#edit-task-deadline').val(task.deadline.substring(0,10));
 		$('#edit-task-description').val(task.descr);
 		if(task.status){ $('#done').prop('checked', true); }
 	},
@@ -200,7 +200,7 @@ var GUI = {
 		editedtask.id = parseInt($('#edit-task-id').val());
 		editedtask.name = $('#edit-task-name').val();
 		var date = $('#edit-task-deadline').val().split('-');
-		editedtask.deadline = new Date(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2]));
+		editedtask.deadline = new Date(parseInt(date[0]), parseInt(date[1])-1, parseInt(date[2])+1);
 		editedtask.descr = $('#edit-task-description').val();
 		if($( "input:radio[name=optionsRadios]:checked").val() === "true"){
 			editedtask.status = true;

@@ -83,12 +83,27 @@ $(document).ready(function () {
 			}else if(id.substring(0, 7) === "addTask"){
 				id = id.substring(7, id.length);
 			}
-			// console.log(id);
+			console.log(id);
 			GUI.fillAddTaskForm(id);
 			GUI.hideAll();
 			GUI.showAddingTaskForm();
 		};
+		//edit task button click
+		var editTaskCLick = function (that){
+			var taskid = $(that).attr('id');
+			taskid = taskid.substring(8, taskid.length);
 
+			$.getJSON('http://localhost:3000/data/get/task/'+taskid+'/', function (task){
+				GUI.fillEditTaskForm(task);
+				GUI.hideAll();
+				GUI.showEditingTaskForm();
+			});
+		};
+		//remove task button click
+		var rmTaskClick = function (that){
+
+		};
+		//show list buton click
 		var showListClick = function (that){
 			var listid = $(that).attr('id');
 			var listName = $(that).html();
@@ -102,7 +117,7 @@ $(document).ready(function () {
 
 			$.getJSON('http://localhost:3000/data/get/tasks/'+listid+'/', function (tasks){
 				GUI.hideAll();
-				GUI.fillUserAllTasks(listName, tasks);
+				GUI.fillUserAllTasks(listName, tasks, rmTaskClick, editTaskCLick);
 			});
 
 		};
@@ -166,6 +181,19 @@ $(document).ready(function () {
 			socket.emit('addTask', newTask);
 			GUI.hideAll();
 		});
+		//edit-task
+		$('#edit-task-cancel-button').click(function (){
+			GUI.clearEditTaskForm();
+			GUI.hideAll();
+		});
+
+		$('#edit-task-save-button').click(function (){
+			var editedTask = GUI.getEditTaskForm();
+			console.log(editedTask.deadline);
+			editedTask.fbid = user.id;
+			socket.emit('editTask', editedTask);
+			GUI.hideAll();
+		});
 
 
 		//sockets.io
@@ -184,22 +212,27 @@ $(document).ready(function () {
 		//Add list
 		socket.on('addedList', function (data) {
 			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
-			GUI.fillUserAllLists(data, rmListClick, editListClick, showListClick);
+			GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick);
 		});
 		//Remove list
 		socket.on('rmedList', function (data) {
 			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
-			GUI.fillUserAllLists(data, rmListClick, editListClick, showListClick);
+			GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick);
 		});
 		//Edit list
 		socket.on('editedList', function (data) {
 			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
-			GUI.fillUserAllLists(data, rmListClick, editListClick, showListClick);
+			GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick);
 		});
 		//Add task
 		socket.on('addedTask', function (data) {
 			console.log(data);
-			GUI.fillUserAllTasks(data.list.name, data.tasks);
+			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick);
+		});
+		//Edit task
+		socket.on('editedTask', function (data) {
+			console.log(data);
+			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick);
 		});
 		//---
 

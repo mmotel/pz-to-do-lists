@@ -200,11 +200,11 @@
 		<!-- Koniec formularza dodawania zadania -->
 		<!-- Poczatek formularza edytowania zadania -->
 		<div id="editing-tasks">
-		  	<h2><span class="glyphicon glyphicon-plus"></span> Edytowanie zadania</h2>
+		  	<h2><span class="glyphicon glyphicon-edit"></span> Edytowanie zadania</h2>
 			<ul class="nav nav-pills nav-justified">
-			  <li id="add-task-save-button">
+			  <li id="edit-task-save-button">
 			  	<a><span class="glyphicon glyphicon-ok"></span> Zapisz</a></li>
-			  <li id="add-task-cancel-button">
+			  <li id="edit-task-cancel-button">
 			  	<a><span class="glyphicon glyphicon-minus"></span> Anuluj</a></li>
 			</ul>
 			<form role="form">
@@ -216,7 +216,7 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Termin</label>
-			    <input type="data" class="form-control" id="edit-task-deadline" placeholder="Termin">
+			    <input type="date" class="form-control" id="edit-task-deadline" placeholder="Termin">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Opis</label>
@@ -224,17 +224,17 @@
 					placeholder="Opis"></textarea>
 			  </div>
 			  <div class="form-group">
-			    <label for="exampleInputEmail1">Status wykonania</label>
+			    <label for="exampleInputEmail1">Status</label>
 			    <div class="radio">
 				  <label>
 				    <input type="radio" name="optionsRadios" id="done" value="true">
-				    Zrobione
+				    Wykonane
 				  </label>
 				</div>
 				<div class="radio">
 				  <label>
 				    <input type="radio" name="optionsRadios" id="notDone" value="false" checked>
-				    Niezrobione
+				    Nie wykonane
 				  </label>
 				</div>
 			  </div>
