@@ -1,12 +1,10 @@
 exports.logout = function(req, res, appUser){
-	//TO DO: remove user from loggedin users list
 	appUser.logout(req.sessionID);
 	req.logout();
 	res.redirect('/');
 };
 
 exports.deleteAccount = function(req, res, appUser){
-	//TO DO: remove user from loggedin users list
 	appUser.removeAccount(req.sessionID, function () {
 		req.logout();
 		res.redirect('/');
