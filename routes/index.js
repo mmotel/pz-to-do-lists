@@ -28,11 +28,10 @@ exports.getList = function (req, res, appUser, Data){
 	var sid = req.sessionID;
 	var fbid = appUser.checkLogin(sid);
 
-	if(fbid !== null){ //true
+	if(fbid !== null){
 		var listId = parseInt(req.params[0]);
 		Data.findList(listId, function (list){
-			console.log(fbid + " : " + list.fbid + " ? " + fbid === list.fbid);
-			if(fbid === list.fbid){ //true
+			if(fbid === list.fbid){
 				res.writeHead(200, {
 					'Content-Type': 'application/json; charset=utf8'
 				});
@@ -58,7 +57,7 @@ exports.getLists = function (req, res, appUser, Data){
 	var sid = req.sessionID;
 	var fbid = appUser.checkLogin(sid);
 
-	if(fbid !== null){ //true
+	if(fbid !== null){
 		Data.findAllLists(fbid, function (lists){
 			console.log("lists:");
 			console.log(lists);
