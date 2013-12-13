@@ -76,3 +76,5 @@ app.get('/getLogin', function (req, res) { routes.getLogin(req, res, appUser); }
 app.get(/data\/get\/list\/(\d+)/, function (req, res) { routes.getList(req, res, appUser, appData); });
 
 app.get('/data/get/lists/', function (req, res) { routes.getLists(req, res, appUser, appData); });
+
+app.get(/data\/get\/task\/(\d+)/, function (req, res) { routes.getTask(req, res, appUser, appData); });
