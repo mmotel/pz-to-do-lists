@@ -64,7 +64,7 @@ describe('Manager.findList', function(){
 				assert.strictEqual(null, item);
 				done();
 			}
-		})
+		});
 	});
 });
 
@@ -160,7 +160,7 @@ describe('Manager.removeList', function(){
 							if (err){ done(err); }
 							else{
 								assert.strictEqual(null, item);
-                				done(); 
+								done(); 
 							}
 						});
 					}
