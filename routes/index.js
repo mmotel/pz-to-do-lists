@@ -28,19 +28,6 @@ exports.getList = function (req, res, appUser, Data){
 	var sid = req.sessionID;
 	var fbid = appUser.checkLogin(sid);
 
-	console.log(fbid);
-
-	// var resData = {
-	// 	"sid": sid,
-	// 	"fbid": fbid,
-	// 	"params": req.params
-	// };
-
-	// res.writeHead(200, {
-	// 	'Content-Type': 'application/json; charset=utf8'
-	// });
-	// res.end(JSON.stringify(resData));
-
 	if(fbid !== null){ //true
 		var listId = parseInt(req.params[0]);
 		Data.findList(listId, function (list){
@@ -64,5 +51,27 @@ exports.getList = function (req, res, appUser, Data){
 			'Content-Type': 'application/json; charset=utf8'
 		});
 		res.end(JSON.stringify(null));
+	}
+};
+
+exports.getLists = function (req, res, appUser, Data){
+	var sid = req.sessionID;
+	var fbid = appUser.checkLogin(sid);
+
+	if(fbid !== null){ //true
+		Data.findAllLists(fbid, function (lists){
+			console.log("lists:");
+			console.log(lists);
+			res.writeHead(200, {
+				'Content-Type': 'application/json; charset=utf8'
+			});
+			res.end(JSON.stringify(lists));
+		});
+	}
+	else{
+		res.writeHead(200, {
+			'Content-Type': 'application/json; charset=utf8'
+		});
+		res.end(JSON.stringify(undefined));
 	}
 };
