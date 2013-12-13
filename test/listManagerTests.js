@@ -129,3 +129,44 @@ describe('Manager.findAllLists', function (){
 		});
 	});
 });
+
+describe('Manager.removeList', function(){
+	it('should remove list if exist', function (done){
+		var newList = new List(1, 'Moja Lista', 'Moj opis');
+		Manager.addList(newList, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newList.fbid, item.fbid);
+				assert.strictEqual(newList.name, item.name);
+				assert.strictEqual(newList.descr, item.descr);
+				assert.strictEqual(newList.trash, item.trash);
+
+				Manager.removeList(item.id, function (err, result){
+					if (err) { done(); }
+					else{
+						assert.strictEqual(1, result);
+						Manager.findList(item.id, function (err, item){
+							if (err){ done(err); }
+							else{
+								assert.strictEqual(null, item);
+                				done(); 
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+	it('should not remove list if does not exist', function (done){
+		Manager.removeList(0, function (err, result){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(0, result);
+				done();
+			}
+		});
+	});
+		
+});
