@@ -128,6 +128,15 @@ describe('Manager.findAllLists', function (){
 			}
 		});
 	});
+	it('should not find lists if does not exist', function (done){
+		Manager.findAllLists(0, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(0, item.length);
+				done();
+			}
+		});
+	});
 });
 
 describe('Manager.removeList', function(){
