@@ -309,7 +309,6 @@ describe('Manager.removeAllUserTasks', function (){
 describe('Manager.updateTask', function (){
  it('should update task on list', function (done){
    var newTask = new Task(1, 1, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
-  // var updatedTask = new Task(1, 1, 'moje zadanieUP', 'moj opisUP', new Date(2015,10,15,14,0,0,0));
    Manager.addTask(newTask, function (err, item){
      if (err){ done(err); }
      else{
