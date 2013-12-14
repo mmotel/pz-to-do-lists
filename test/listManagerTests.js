@@ -237,7 +237,6 @@ describe('Manager.removeAllLists', function(){
 describe('Manager.updateList', function(){
 	it('should update list', function (done){
 		var newList = new List(1, 'Moja Lista', 'Moj opis');
-		var updatedList = new List(1, 'Moja lista po zmianach', 'moj opis po zmianach');
 		Manager.addList(newList, function (err, item){
 			if (err){ done(err); }
 			else{
@@ -248,7 +247,8 @@ describe('Manager.updateList', function(){
 				assert.strictEqual(newList.descr, item.descr);
 				assert.strictEqual(newList.trash, item.trash);
 
-				Manager.updateList(item.id, function (err, result){
+				var updatedData = {"id": item.id, "name": 'update zadanie', "descr": 'descr update'};
+				Manager.updateList(updatedData, function (err, result){
 					if(err){ done(err); }
 					else{
 						assert(1, result);
@@ -258,10 +258,8 @@ describe('Manager.updateList', function(){
 							else{
 								assert.strictEqual(item._id.toString(), item2._id.toString());
 								assert.strictEqual(item.id, item2.id);
-								assert.strictEqual(item.fbid, item2.fbid);
-								assert.strictEqual(item.name, item2.name);
-								assert.strictEqual(item.descr, item2.descr);
-								assert.strictEqual(item.trash, item2.trash);
+								assert.strictEqual(updatedData.name, item2.name);
+								assert.strictEqual(updatedData.descr, item2.descr);
 								done();
 							}
 						});
