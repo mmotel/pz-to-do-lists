@@ -191,3 +191,60 @@ describe('Manager.removeTask', function (){
 		});
 	});
 });
+
+describe('Manager.removeAllListTasks', function (){
+	it('should remove all tasks from list', function (done){
+		var newTask = new Task(1, 3, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
+		var newTask2 = new Task(1, 3, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
+		Manager.addTask(newTask, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newTask.fbid, item.fbid);
+				assert.strictEqual(newTask.listid, item.listid);
+				assert.strictEqual(newTask.name, item.name);
+				assert.strictEqual(newTask.descr, item.descr);
+				assert.strictEqual(newTask.deadline, item.deadline);
+
+				Manager.addTask(newTask2, function (err, item2){
+					if (err){ done(err); }
+					else{
+						assert.notStrictEqual(undefined, item2._id);
+						assert.notStrictEqual(undefined, item2.id);
+						assert.strictEqual(newTask2.fbid, item2.fbid);
+						assert.strictEqual(newTask2.listid, item2.listid);
+						assert.strictEqual(newTask2.name, item2.name);
+						assert.strictEqual(newTask2.descr, item2.descr);
+						assert.strictEqual(newTask2.deadline, item2.deadline);
+
+						Manager.removeAllListTasks(3, function (err, result){
+							if (err){ done(err); }
+							else{
+								assert.strictEqual(2, result);
+								
+
+								Manager.findAllTasks(3, function (err, items){
+									if (err){ done(err); }
+									else{
+										assert.strictEqual(0, items.length);
+										done();
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+	it('should not remove tasks from list if does not exist', function (done){
+		Manager.removeAllListTasks(0, function (err, result){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(0, result);
+				done();
+			}
+		});
+	});
+});
