@@ -306,3 +306,52 @@ describe('Manager.removeAllUserTasks', function (){
 	});
 });
 
+describe('Manager.updateTask', function (){
+ it('should update task on list', function (done){
+   var newTask = new Task(1, 1, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
+  // var updatedTask = new Task(1, 1, 'moje zadanieUP', 'moj opisUP', new Date(2015,10,15,14,0,0,0));
+   Manager.addTask(newTask, function (err, item){
+     if (err){ done(err); }
+     else{
+       assert.notStrictEqual(undefined, item._id);
+       assert.notStrictEqual(undefined, item.id);
+       assert.strictEqual(newTask.fbid, item.fbid);
+       assert.strictEqual(newTask.listid, item.listid);
+       assert.strictEqual(newTask.name, item.name);
+       assert.strictEqual(newTask.descr, item.descr);
+       assert.strictEqual(newTask.deadline, item.deadline);
+
+
+       var updatedData = {"id": item.id, "name": 'update zadanie', "descr": 'descr update', "deadline": new Date(2015,10,15,14,0,0,0), "status": true};
+       Manager.updateTask(updatedData, function (err, result){
+         if (err){ done(err); }
+         else{
+           assert.strictEqual(1, result);
+           
+           Manager.findTask(item.id, function (err, item2){
+           	if (err){ done(err); }
+           	else{
+           		assert.strictEqual(item._id.toString(), item2._id.toString());
+                assert.strictEqual(item.id, item2.id);
+                assert.strictEqual(updatedData.name, item2.name);
+                assert.strictEqual(updatedData.descr, item2.descr);
+                assert.strictEqual(updatedData.deadline.toString(), item2.deadline.toString());
+                assert.strictEqual(updatedData.status, item2.status);
+                done();
+           	}
+           });
+         }
+       });
+     }
+   });
+	});
+	it('should not update task if does not exist', function (done){
+		Manager.updateTask(0, function (err, result){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(0, result);
+				done();
+			}
+		});
+	});
+});
