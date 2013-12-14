@@ -223,6 +223,15 @@ describe('Manager.removeAllLists', function(){
 			}
 		});
 	});
+	it('should not remove all user lists if does not exist', function (done){
+		Manager.removeAllLists(0, function (err, result){
+			if(err){ done(err); }
+			else{
+				assert.strictEqual(0, result);
+				done();
+			}
+		});
+	});
 });
 
 describe('Manager.updateList', function(){
