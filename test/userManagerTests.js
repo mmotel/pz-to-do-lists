@@ -173,7 +173,7 @@ describe('Manager.updateUser', function (){
     Manager.updateUser(0, function (err, result){
       if (err) { done(err); }
       else{
-        assert.strictEqual(0, result)
+        assert.strictEqual(0, result);
         done();
       }
     });
