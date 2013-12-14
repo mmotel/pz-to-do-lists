@@ -149,3 +149,45 @@ describe('Manager.findAllTasks', function (){
 		});
 	});
 });
+
+describe('Manager.removeTask', function (){
+	it('should remove task from list', function (done){
+		var newTask = new Task(1, 1, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
+		Manager.addTask(newTask, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newTask.fbid, item.fbid);
+				assert.strictEqual(newTask.listid, item.listid);
+				assert.strictEqual(newTask.name, item.name);
+				assert.strictEqual(newTask.descr, item.descr);
+				assert.strictEqual(newTask.deadline, item.deadline);
+
+				Manager.removeTask(item.id, function (err, result){
+					if (err){ done(err); }
+					else{
+						assert.strictEqual(1, result);
+						
+						Manager.findTask(item.id, function (err, item){
+							if (err){ done(err); }
+							else{
+								assert.strictEqual(null, item);
+								done();
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+	it('should not remove task from list if does not exist', function (done){
+		Manager.removeTask(0, function (err, result){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(0, result);
+				done();
+			}
+		});
+	});
+});
