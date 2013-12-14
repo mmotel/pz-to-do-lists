@@ -44,7 +44,7 @@ $(document).ready(function () {
 
 		$('#user-settings-save-button').click(function (){
 			var data = GUI.getUserForm();
-			// console.log(data);
+
 			var newuser = {id: user.id, "profile": {"name": {}}};
 			newuser.profile.displayName = data.displayName;
 			newuser.profile.name.givenName = data.givenName;
@@ -83,7 +83,7 @@ $(document).ready(function () {
 			}else if(id.substring(0, 7) === "addTask"){
 				id = id.substring(7, id.length);
 			}
-			console.log(id);
+
 			GUI.fillAddTaskForm(id);
 			GUI.hideAll();
 			GUI.showAddingTaskForm();
@@ -121,7 +121,7 @@ $(document).ready(function () {
 		var showListClick = function (that){
 			var listid = $(that).attr('id');
 			var listName = $(that).html();
-			// console.log(listid);
+
 			if(listid.substring(0,11) === "showListBig"){
 				listid = listid.substring(11, listid.length);
 			}
@@ -144,9 +144,8 @@ $(document).ready(function () {
 		});
 		$('#rmListConfirm').click(function () {
 			var listId = GUI.getDeleteListModal();
-			// console.log(listId);
 			socket.emit('rmList', {id: listId, fbid: user.id});
-			$('#user-delete-list-modal').modal('hide'); //temp
+			$('#user-delete-list-modal').modal('hide');
 			GUI.hideAll();
 		});
 		//add-list
@@ -159,7 +158,6 @@ $(document).ready(function () {
 		$('#add-list-save-button').click(function () {
 			var newlist = GUI.getAddListForm();
 			newlist.fbid = user.id;
-			// console.log(newlist);
 			socket.emit('addList', newlist);
 			GUI.clearAddListForm();
 			GUI.hideAll();
@@ -173,7 +171,6 @@ $(document).ready(function () {
 		$('#edit-list-save-button').click(function () {
 			var editedList = GUI.getEditListForm();
 			editedList.fbid = user.id;
-			// console.log(editedList);
 			socket.emit('editList', editedList);
 			GUI.hideAll();
 		});
@@ -191,9 +188,6 @@ $(document).ready(function () {
 		$('#add-task-save-button').click(function (){
 			var newTask = GUI.getAddTaskForm();
 			newTask.fbid = user.id;
-			console.log(newTask.deadline);
-			// var date = newTask.deadline;
-			// newTask.deadline = { "year": date.getFullYear(), "month": date.getMonth(), "day": date.getDay() };
 			socket.emit('addTask', newTask);
 			GUI.hideAll();
 		});
@@ -205,18 +199,13 @@ $(document).ready(function () {
 
 		$('#edit-task-save-button').click(function (){
 			var editedTask = GUI.getEditTaskForm();
-			console.log(editedTask.deadline);
-			// var date = editedTask.deadline;
-			// editedTask.deadline = { "year": date.getFullYear(), "month": date.getMonth(), "day": date.getDay() };
 			editedTask.fbid = user.id;
 			socket.emit('editTask', editedTask);
 			GUI.hideAll();
 		});
 		//remove task confirm
 		$('#rmTaskConfirm').click(function () {
-			console.log('rmTask');
 			var rmedTask = GUI.getDeleteTaskModal();
-			console.log(rmedTask);
 			socket.emit('rmTask', {id: rmedTask.id, listid: rmedTask.listid, fbid: user.id});
 			$('#user-delete-task-modal').modal('hide'); //temp
 			GUI.hideAll();
@@ -224,7 +213,6 @@ $(document).ready(function () {
 		//task done confirm
 		$('#doneTaskConfirm').click(function (){
 			var doneTask = GUI.getDoneTaskModal();
-			console.log(doneTask);
 			doneTask.fbid = user.id;
 			socket.emit('doneTask', doneTask);
 			$('#user-done-task-modal').modal('hide');
@@ -266,17 +254,14 @@ $(document).ready(function () {
 		});
 		//Edit task
 		socket.on('editedTask', function (data) {
-			console.log(data);
 			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 		});
 		//Remove task
 		socket.on('rmedTask', function (data) {
-			console.log(data);
 			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 		});
 		//Done task
 		socket.on('doneTask', function (data) {
-			console.log(data);
 			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 		});
 		//---
