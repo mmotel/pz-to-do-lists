@@ -4,23 +4,23 @@ var Data = require('../lib/newData.js')("test");
 var Manager = require('../lib/dataManager.js')(Data);
 
 var Task = function(fbid, listid, name, descr, deadline){
-    this.fbid = fbid;
-    this.listid = listid;
-    this.name = name;
-    this.descr = descr;
-    this.deadline = deadline;
-    this.status = false;
-    this.trash = false;
-    return this;
+	this.fbid = fbid;
+	this.listid = listid;
+	this.name = name;
+	this.descr = descr;
+	this.deadline = deadline;
+	this.status = false;
+	this.trash = false;
+	return this;
   };
 
   describe('Manager.addTask', function (){
-  	it('should add new task on list', function (done){
-  		var newTask = new Task(1, 1, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
-  		Manager.addTask(newTask, function (err, item){
-  			if (err){ done(err); }
-  			else{
-  				assert.notStrictEqual(undefined, item._id);
+	it('should add new task on list', function (done){
+		var newTask = new Task(1, 1, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
+		Manager.addTask(newTask, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
 				assert.notStrictEqual(undefined, item.id);
 				assert.strictEqual(newTask.fbid, item.fbid);
 				assert.strictEqual(newTask.listid, item.listid);
@@ -28,18 +28,18 @@ var Task = function(fbid, listid, name, descr, deadline){
 				assert.strictEqual(newTask.descr, item.descr);
 				assert.strictEqual(newTask.deadline, item.deadline);
 				done();
-  			}
-  		});
-  	});
+			}
+		});
+	});
   });
 
   describe('Manager.findTask', function (){
-  	it('should find task on list if exist', function (done){
-  		var newTask = new Task(1, 1, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
-  		Manager.addTask(newTask, function (err, item){
-  			if (err){ done(err); }
-  			else{
-  				assert.notStrictEqual(undefined, item._id);
+	it('should find task on list if exist', function (done){
+		var newTask = new Task(1, 1, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
+		Manager.addTask(newTask, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
 				assert.notStrictEqual(undefined, item.id);
 				assert.strictEqual(newTask.fbid, item.fbid);
 				assert.strictEqual(newTask.listid, item.listid);
@@ -62,9 +62,9 @@ var Task = function(fbid, listid, name, descr, deadline){
 						done();
 					}
 				});
-  			}
-  		});
-  	});
+			}
+		});
+	});
 
 	it('should not find task if does not exist', function (done){
 		Manager.findTask(0, function (err, item){
@@ -76,3 +76,76 @@ var Task = function(fbid, listid, name, descr, deadline){
 		});
 	});
   });
+
+describe('Manager.findAllTasks', function (){
+	it('should find all tasks on list', function (done){
+		var newTask = new Task(1, 2, 'moje zadanie', 'moj opis', new Date(2014,10,15,14,0,0,0));
+		Manager.addTask(newTask, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newTask.fbid, item.fbid);
+				assert.strictEqual(newTask.listid, item.listid);
+				assert.strictEqual(newTask.name, item.name);
+				assert.strictEqual(newTask.descr, item.descr);
+				assert.strictEqual(newTask.deadline, item.deadline);
+
+				var newTask2 = new Task(1, 2, 'moje zadanie2', 'moj opis2', new Date(2014,10,15,14,0,0,0));
+				Manager.addTask(newTask2, function (err, item2){
+					if (err){ done(err); }
+					else{
+						assert.notStrictEqual(undefined, item2._id);
+						assert.notStrictEqual(undefined, item2.id);
+						assert.strictEqual(newTask2.fbid, item2.fbid);
+						assert.strictEqual(newTask2.listid, item2.listid);
+						assert.strictEqual(newTask2.name, item2.name);
+						assert.strictEqual(newTask2.descr, item2.descr);
+						assert.strictEqual(newTask2.deadline, item2.deadline);
+
+						Manager.findAllTasks(2, function (err, items){
+							if (err){ done(err); }
+							else{
+								assert.strictEqual(2, items.length);
+								items.sort(function (a, b){
+									if (a.id < b.id){
+										return -1;
+									}
+									else if(a.id === b.id){
+										return 0; 
+									}
+									else {
+										return 1;
+									}
+								});
+								assert.strictEqual(items[0]._id.toString(), item._id.toString());
+								assert.strictEqual(items[0].id, item.id);
+								assert.strictEqual(items[0].fbid, item.fbid);
+								assert.strictEqual(items[0].name, item.name);
+								assert.strictEqual(items[0].descr, item.descr);
+								assert.strictEqual(items[0].trash, item.trash);
+
+								assert.strictEqual(items[1]._id.toString(), item2._id.toString());
+								assert.strictEqual(items[1].id, item2.id);
+								assert.strictEqual(items[1].fbid, item2.fbid);
+								assert.strictEqual(items[1].name, item2.name);
+								assert.strictEqual(items[1].descr, item2.descr);
+								assert.strictEqual(items[1].trash, item2.trash);
+								done();
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+	it('should not find tasks on list if does not exist', function (done){
+		Manager.findAllTasks(0, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(0, item.length);
+				done();
+			}
+		});
+	});
+});
