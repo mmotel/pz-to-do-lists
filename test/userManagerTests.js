@@ -139,7 +139,7 @@ describe('Manager.updateUser', function (){
     Manager.createUser(demoProfile, function (err, item){
       if (err){ done(err); }
       else{
-        assert.notStrictEqual(undefined, item._id); //if(undefined !== item._id)
+        assert.notStrictEqual(undefined, item._id);
         assert.strictEqual(demoProfile.id, item.id);
         assert.strictEqual(demoProfile.displayName, item.profile.displayName);
         assert.strictEqual(demoProfile.name.familyName, item.profile.name.familyName);
@@ -149,17 +149,17 @@ describe('Manager.updateUser', function (){
         Manager.updateUser(updateData, function (err, result){
           if (err){ done(err); }
           else{
-            assert.strictEqual(1, result); //if(undefined !== item._id)
-             done();
+            assert.strictEqual(1, result);
+
             Manager.findUser(item.id, function (err, item2){
               if(err){ done(err); }
               else{
                 assert.strictEqual(item._id.toString(), item2._id.toString());
                 assert.strictEqual(item.id, item2.id);
-                assert.strictEqual(item.profile.displayName, item2.profile.displayName);
-                assert.strictEqual(item.profile.name.familyName, item2.profile.name.familyName);
-                assert.strictEqual(item.profile.name.givenName, item2.profile.name.givenName);
-                assert.strictEqual(item.profile.name.middleName, item2.profile.name.middleName);
+                assert.strictEqual(demoProfileUpdate.displayName, item2.profile.displayName);
+                assert.strictEqual(demoProfileUpdate.name.familyName, item2.profile.name.familyName);
+                assert.strictEqual(demoProfileUpdate.name.givenName, item2.profile.name.givenName);
+                assert.strictEqual(demoProfileUpdate.name.middleName, item2.profile.name.middleName);
                 done();
               }
             });
