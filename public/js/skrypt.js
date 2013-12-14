@@ -191,7 +191,9 @@ $(document).ready(function () {
 		$('#add-task-save-button').click(function (){
 			var newTask = GUI.getAddTaskForm();
 			newTask.fbid = user.id;
-			// console.log(newTask);
+			console.log(newTask.deadline);
+			// var date = newTask.deadline;
+			// newTask.deadline = { "year": date.getFullYear(), "month": date.getMonth(), "day": date.getDay() };
 			socket.emit('addTask', newTask);
 			GUI.hideAll();
 		});
@@ -204,6 +206,8 @@ $(document).ready(function () {
 		$('#edit-task-save-button').click(function (){
 			var editedTask = GUI.getEditTaskForm();
 			console.log(editedTask.deadline);
+			// var date = editedTask.deadline;
+			// editedTask.deadline = { "year": date.getFullYear(), "month": date.getMonth(), "day": date.getDay() };
 			editedTask.fbid = user.id;
 			socket.emit('editTask', editedTask);
 			GUI.hideAll();
@@ -258,7 +262,6 @@ $(document).ready(function () {
 		});
 		//Add task
 		socket.on('addedTask', function (data) {
-			console.log(data);
 			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 		});
 		//Edit task
@@ -280,6 +283,14 @@ $(document).ready(function () {
 
 
 		//start-up actions
+
+		$('#add-task-deadline').datepicker({
+			inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
+		});
+
+		$('#edit-task-deadline').datepicker({
+			inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
+		});
 
 		//fill user data
 		GUI.fillLoginPanel(user);
