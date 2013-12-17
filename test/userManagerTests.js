@@ -179,3 +179,38 @@ describe('Manager.updateUser', function (){
     });
   });
 });
+
+describe('Manager.findOrCreateUser', function (){
+
+  it('should create user if user dose not exist or find user if user does exist', function (done){
+
+    var demoProfile = new Profile(5, 'Testowy Profil', "Profil", "Test", "Testowy");
+
+    Manager.findOrCreateUser(demoProfile, function (err, item){
+      if(err){ done(err); }
+      else{
+        assert.notStrictEqual(undefined, item._id);
+        assert.strictEqual(demoProfile.id, item.id);
+        assert.strictEqual(demoProfile.displayName, item.profile.displayName);
+        assert.strictEqual(demoProfile.name.familyName, item.profile.name.familyName);
+        assert.strictEqual(demoProfile.name.givenName, item.profile.name.givenName);
+        assert.strictEqual(demoProfile.name.middleName, item.profile.name.middleName);
+
+        Manager.findOrCreateUser(demoProfile, function (err, item2){
+          if(err){ done(err); }
+          else{
+            assert.strictEqual(item._id.toString(), item2._id.toString());
+            assert.strictEqual(demoProfile.id, item2.id);
+            assert.strictEqual(demoProfile.displayName, item2.profile.displayName);
+            assert.strictEqual(demoProfile.name.familyName, item2.profile.name.familyName);
+            assert.strictEqual(demoProfile.name.givenName, item2.profile.name.givenName);
+            assert.strictEqual(demoProfile.name.middleName, item2.profile.name.middleName);
+            done();
+          }
+        });
+      }
+    });
+
+  });
+
+});
