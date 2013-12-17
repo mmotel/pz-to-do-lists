@@ -34,7 +34,9 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 });
 
 var appData = require('./lib/data.js')('toDoLists');
-var appUser = require('./lib/user.js')(appData);
+var Data = require('../lib/newData.js')('toDoLists');
+var Manager = require('../lib/dataManager.js')(Data);
+var appUser = require('./lib/user.js')(Data);
 var appServer = require('./lib/server.js');
 
 appServer.listen(server, appUser, appData);
@@ -51,10 +53,13 @@ passport.use(new FacebookStrategy({
 	},
 	function(req, accessToken, refreshToken, profile, done) {
 		//TO DO: add user into loggein users list / find or create user in db
-		appUser.login(req.sessionID, profile, function (user){
-			console.log("sid: " + req.sessionID);
-			console.log("id: " + user.id + " name: " + user.profile.displayName);
-			done(null, { id: user.id, name: user.profile.displayName });
+		appUser.login(req.sessionID, profile, function (err, user){
+			if(err){ done(err); }
+			else{
+				console.log("sid: " + req.sessionID);
+				console.log("id: " + user.id + " name: " + user.profile.displayName);
+				done(null, { id: user.id, name: user.profile.displayName });
+			}
 		});
 	}
 ));

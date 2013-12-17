@@ -5,9 +5,12 @@ exports.logout = function(req, res, appUser){
 };
 
 exports.deleteAccount = function(req, res, appUser){
-	appUser.removeAccount(req.sessionID, function () {
-		req.logout();
-		res.redirect('/');
+	appUser.removeAccount(req.sessionID, function (err, result) {
+		if(err){}
+		else{
+			req.logout();
+			res.redirect('/');
+		}
 	});
 };
 
