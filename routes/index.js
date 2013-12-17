@@ -19,11 +19,19 @@ exports.getLogin = function(req, res, appUser){
 	
 	console.log("sid: " + sid);
 
-	appUser.getLogin(sid, function (user){
-		res.writeHead(200, {
-			'Content-Type': 'application/json; charset=utf8'
-		});
-		res.end(JSON.stringify(user));
+	appUser.getLogin(sid, function (err, user){
+		if(err){
+			res.writeHead(200, {
+				'Content-Type': 'application/json; charset=utf8'
+			});
+			res.end(JSON.stringify(null));
+		}
+		else{
+			res.writeHead(200, {
+				'Content-Type': 'application/json; charset=utf8'
+			});
+			res.end(JSON.stringify(user));
+		}
 	});
 };
 

@@ -34,9 +34,9 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 });
 
 var appData = require('./lib/data.js')('toDoLists');
-var Data = require('../lib/newData.js')('toDoLists');
-var Manager = require('../lib/dataManager.js')(Data);
-var appUser = require('./lib/user.js')(Data);
+var Data = require('./lib/newData.js')('toDoLists');
+var Manager = require('./lib/dataManager.js')(Data);
+var appUser = require('./lib/user.js')(Manager);
 var appServer = require('./lib/server.js');
 
 appServer.listen(server, appUser, appData);
