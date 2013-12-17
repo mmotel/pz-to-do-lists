@@ -171,3 +171,33 @@ describe('User.removeAccount', function (){
 
   });
 });
+
+describe('User.checkLogin', function (){
+  it('should return user id if user is loggedin', function (done){
+
+    var demoProfile = profile(6, 'Testowy Profil', "Profil", "Test", "Testowy");
+
+    appUser.login(6, demoProfile, function (err, user) {
+      if(err){ done(err) ;}
+      else{
+        // console.log(user);
+        assert.notStrictEqual(undefined, user._id);
+        assert.strictEqual(demoProfile.id, user.id);
+        assert.strictEqual(demoProfile.displayName, user.profile.displayName);
+        assert.strictEqual(demoProfile.name.familyName, user.profile.name.familyName);
+        assert.strictEqual(demoProfile.name.givenName, user.profile.name.givenName);
+        assert.strictEqual(demoProfile.name.middleName, user.profile.name.middleName);
+        
+        var userId = appUser.checkLogin(6);
+        assert.strictEqual(user.id, userId);
+        done();
+      }
+    });
+  });
+
+  it('should result null if user is not loggedin', function (done){
+      var userId = appUser.checkLogin(0);
+      assert.strictEqual(null, userId);
+      done();
+  });
+});
