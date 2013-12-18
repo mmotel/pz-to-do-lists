@@ -1,4 +1,4 @@
-all: redeploy
+all: run
 
 start: app.js
 	node app.js
@@ -18,18 +18,11 @@ tests: ./scripts/dropTestDb.js
 	mocha ./test/userTests.js
 	mongo test ./scripts/dropTestDb.js
 
-deploy: app.js ./scripts/dropDb.js ./scripts/dropTestDb.js
-	mongo toDoLists ./scripts/dropDb.js
+install: package.json
 	npm install
-	mongo test ./scripts/dropTestDb.js
-	mocha
-	mongo test ./scripts/dropTestDb.js
-	node app.js
 
-redeploy: app.js ./scripts/dropTestDb.js
-	mongo test ./scripts/dropTestDb.js
-	mocha
-	mongo test ./scripts/dropTestDb.js
-	node app.js
+deploy: install tests clean-start
 
-#all: redeploy
+redeploy: tests clean-start
+
+run: tests start
