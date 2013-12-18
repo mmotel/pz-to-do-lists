@@ -30,17 +30,25 @@ make deploy
 
 ####Redeploy application
 
-Makefile runs tests and then starts application.
+Makefile drops collections from database, runs tests and then starts application.
 
 Use:
 
-```
+```sh
 make redeploy
+```
+
+####Run application
+
+Makefile runs tests and then starts application.
+
+```sh
+make run
 ```
 
 Or just:
 
-```
+```sh
 make
 ```
 
