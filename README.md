@@ -71,6 +71,8 @@ Incoming tasks etc. `16.01.2014 18:00` `new deadline`
 
 ###[Data.js](https://github.com/mmotel/pz-to-do-lists/wiki/data-js)
 
+###DataManager.js
+
 ###[User.js](https://github.com/mmotel/pz-to-do-lists/wiki/user-js)
 
 ###[Utils.js](https://github.com/mmotel/pz-to-do-lists/wiki/utils-js)
