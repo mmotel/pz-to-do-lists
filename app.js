@@ -39,7 +39,7 @@ var Manager = require('./lib/dataManager.js')(Data);
 var appUser = require('./lib/user.js')(Manager);
 var appServer = require('./lib/server.js');
 
-appServer.listen(server, appUser, appData);
+appServer.listen(server, appUser, Manager);
 
 //passport-facebook configuration
 var FACEBOOK_APP_ID = '637141929672070';
