@@ -236,11 +236,30 @@ $(document).ready(function () {
 		$('#add-group-cancel-button').click(function (){
 
 		});
+		//edit-group
+		var editGroupClick = function (that){
+			var groupid = $(that).attr('id');
+			groupid = groupid.substring(9, groupid.length);
+
+			$.getJSON('http://localhost:3000/data/get/group/'+groupid+'/', function (group){
+				GUI.fillEditGroupForm(group);
+				GUI.hideAll();
+				GUI.showEditingGroupForm();
+			});
+		};
+
+		$('#edit-group-save-button').click(function (){
+			var editedGroup = GUI.getEditGroupForm();
+			editedGroup.fbid = user.id;
+			socket.emit('editGroup', editedGroup);
+			GUI.hideAll();
+		});
+
 		//show user groups
 		$('#show-all-groups-button').click(function (){
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.hideAll();
-				GUI.fillUserAllGroups(groups);
+				GUI.fillUserAllGroups(groups, editGroupClick);
 				GUI.fillUserGroupsSmall(groups);
 			});
 		});
@@ -292,8 +311,13 @@ $(document).ready(function () {
 		});
 		//Add group
 		socket.on('addedGroup', function (data){
-			GUI.fillUserAllGroups(data);
+			GUI.fillUserAllGroups(data, editGroupClick);
 		});
+		//Edit group
+		socket.on('editedGroup', function (data){
+			GUI.fillUserAllGroups(data, editGroupClick);
+			GUI.fillUserGroupsSmall(data);
+		})
 		//---
 
 

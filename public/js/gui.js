@@ -120,7 +120,7 @@ var GUI = {
 		//showList button click
 		$('.showListBig').click(function () { showListClick(this); });
 	},
-	fillUserAllGroups: function (tab, rmClick, editClick, addListClick, showListClick){
+	fillUserAllGroups: function (tab, editClick, rmClick, addListClick, showListClick){
 		$('#show-all-groups').slideDown('fast');
 
 		$('#user-groups-big').children().remove();
