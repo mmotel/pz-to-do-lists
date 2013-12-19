@@ -232,7 +232,7 @@ exports.getMembers = function (req, res, appUser, Data){
   if(fbid !== null){
     var groupId = parseInt(req.params[0]);
     Data.findGroup(groupId, function (err, group){
-      if(!err && (group === null || containsObject(fbid, group.members) )){
+      if(!err && (group !== null || containsObject(fbid, group.members) )){
         Data.findGroupMembers(group.members, function (err, items){
           if(err){
             res.writeHead(404, {
