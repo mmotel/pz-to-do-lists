@@ -279,6 +279,15 @@ $(document).ready(function () {
 			$('#user-delete-group-modal').modal('hide');
 		});
 
+		//remove user from group
+		var removeUserFromGroupClick = function (that){
+			var userid = $(that).attr('id');
+			userid = userid.substring(6, userid.length);
+			var groupid = parseInt($('#show-group-id').val());
+
+			socket.emit('removeUserFromGroup', {"fbid": user.id, "user": userid, "group": groupid});		
+		};
+
 		var showGroupClick = function (that){
 			var groupid = $(that).attr('id');
 			if(groupid.substring(0, 12) === "showGroupBig"){
@@ -289,7 +298,7 @@ $(document).ready(function () {
 
 			$.getJSON('http://localhost:3000/data/get/members/'+groupid+'/', function (data){
 				GUI.hideAll();
-				GUI.fillGroupUsers(data.group, data.members);
+				GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
 				GUI.showUserSearchForm();
 			});
 		};
@@ -382,7 +391,12 @@ $(document).ready(function () {
 		});
 		//Add user to group
 		socket.on('addUserToGroup', function (data){
-			GUI.fillGroupUsers(data.group, data.members);
+			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
+		});
+
+		//Remove user from group
+		socket.on('removeUserFromGroup', function (data){
+			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
 		});
 		//---
 
