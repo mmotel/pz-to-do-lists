@@ -251,7 +251,7 @@ describe('Manager.updateList', function(){
 				Manager.updateList(updatedData, function (err, result){
 					if(err){ done(err); }
 					else{
-						assert(1, result);
+						assert.strictEqual(1, result);
 						
 						Manager.findList(item.id, function (err, item2){
 							if (err){ done(err); }

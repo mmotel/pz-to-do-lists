@@ -57,6 +57,15 @@ describe('Manager.findGroup', function (){
 			}
 		});
 	});
+	it('should not find group if does not exist', function (done){
+		Manager.findGroup(0, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(null, item);
+				done();
+			}
+		});
+	});
 });
 
 describe('Manager.removeGroup', function (){
@@ -86,6 +95,15 @@ describe('Manager.removeGroup', function (){
 						});
 					}
 				});
+			}
+		});
+	});
+	it('should not remove group if does not exist', function (done){
+		Manager.removeGroup(0, function (err, result){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(0, result);
+				done();
 			}
 		});
 	});
@@ -152,5 +170,59 @@ describe('Manager.findAllGroups', function (){
 			}
 		});
 	});
+	it('should not find groups if does not exist', function (done){
+			Manager.findAllGroups(0, function (err, item){
+				if (err){ done(err); }
+				else{
+					assert.strictEqual(0, item.length);
+					done();
+				}
+			});
+		});
+});
+
+describe('Manager.updateGroup', function (){
+	it('should update group', function (done){
+		var newGroup = new Group(1, 'Moja grupa', 'Opis mojej grupy');
+		Manager.createGroup(newGroup, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newGroup.owner, item.owner);
+				assert.strictEqual(newGroup.name, item.name);
+				assert.strictEqual(newGroup.descr, item.descr);
+				assert.strictEqual(newGroup.owner, item.members[0].fbid);
+				
+				var updatedData = {"id": item.id, "name": 'Moja Grupa Update', "descr": 'Opis mojej grupy update'};
+				Manager.updateGroup(updatedData, function (err, result){
+					if (err){ done(err); }
+					else{
+						assert.strictEqual(1, result);
+
+						Manager.findGroup(item.id, function (err, item2){
+							if (err){ done(err); }
+							else{
+								assert.strictEqual(item._id.toString(), item2._id.toString());
+								assert.strictEqual(item.id, item2.id);
+								assert.strictEqual(updatedData.name, item2.name);
+								assert.strictEqual(updatedData.descr, item2.descr);
+								done();
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+	it('should not update group if it does not exist', function (done){
+    Manager.updateGroup(0, function (err, result){
+      if (err) { done(err); }
+      else{
+        assert.strictEqual(0, result);
+        done();
+      }
+    });
+  });
 });
 

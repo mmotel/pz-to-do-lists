@@ -18,6 +18,7 @@ var GUI = {
 		$('#show-all-lists').hide();
 		$('#show-all-tasks').hide();
 		$('#show-all-groups').hide();
+		$('#show-groups').hide();
 		$('#editing-tasks').hide();
 		$('#adding-tasks').hide();
 		$('#adding-groups').hide();
@@ -152,6 +153,26 @@ var GUI = {
 
 		//showGroup button click
 		$('.showGroupBig').click(function () { showGroupClick(this); });
+	},
+	fillGroupUsers: function (group, tab, rmClick){
+		$('#show-groups').slideDown('fast');
+
+		$('#show-group-name').html(group.name);
+
+		$('#group-users').children().remove();
+		$('#group-users').append('<tr><th></th><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+
+		for(var i = 0; i < tab.length; i++){
+			$('#group-users').append('<tr><td></td>'+
+				'<td><button type="button" class="btn btn-link btn-sm showGroupBig"'+
+				'id="showGroupBig'+ tab[i].id+'">'+ tab[i].profile.displayName +'</button></td>'+
+				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-remove"></span> Usuń z grupy</button></td>'+
+				'</tr>');
+		}
+		//rmUser button click
+		$('.rmUser').click(function() { rmClick(this); });
 	},
 	fillUserAllTasks: function (listName, tab, rmClick, editClick, taskDoneClick){
 		$('#show-all-tasks-list-name').html(listName);
