@@ -293,6 +293,13 @@ $(document).ready(function () {
 				GUI.showUserSearchForm();
 			});
 		};
+		//search users
+		$('#search-user-button').click(function (){
+			var query = $('#search-user-query').val().replace(/\s/g,"%20");
+			$.getJSON('http://localhost:3000/data/search/users/'+query+'/', function (data){
+				GUI.fillSearchedUsers(data);
+			});
+		});
 
 		//show user groups
 		$('#show-all-groups-button').click(function (){

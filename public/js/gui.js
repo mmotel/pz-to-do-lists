@@ -175,7 +175,7 @@ var GUI = {
 		//rmUser button click
 		$('.rmUser').click(function() { rmClick(this); });
 	},
-	fillSearchedUsers: function (group, tab, addClick){
+	fillSearchedUsers: function (tab, addClick){
 		$('#user-search').slideDown('fast');
 
 		$('#searched-users').children().remove();
@@ -184,9 +184,9 @@ var GUI = {
 		for(var i = 0; i < tab.length; i++){
 			$('#searched-users').append('<tr><td></td>'+
 				'<td>'+ tab[i].profile.displayName +'</td>'+
-				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
+				'<td><button type="button" class="btn btn-success btn-sm pull-right rmUser" id="rmUser'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Usuń z grupy</button></td>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj do grupy</button></td>'+
 				'</tr>');
 		}
 		//addUser button click
