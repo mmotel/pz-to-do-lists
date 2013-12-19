@@ -267,7 +267,7 @@ $(document).ready(function () {
 
 			$.getJSON('http://localhost:3000/data/get/group/'+groupid+'/', function (group){
 				GUI.fillDeleteGroupModal(group);
-
+				GUI.showDeleteGroupModal();
 			});
 		};
 
