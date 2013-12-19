@@ -319,26 +319,17 @@
 				</table>
 		</div>
 		<div id="user-search">
-		  	<h2><span class="glyphicon glyphicon-list-search"></span> <em id="show-group-name">Wyszukaj użytkownika</em></h2>
+		  	<h2><em id="show-group-name"><span class="glyphicon glyphicon-search"></span> Wyszukaj użytkownika</em></h2>
 		  	<form class="form-inline" role="form">
 				  <div class="form-group">
-				    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-				    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+				    <label class="sr-only" for="exampleInputEmail2">Nazwa użytkownika</label>
+				    <input type="text" class="form-control" id="search-user-query" placeholder="Nazwa użytkownika">
 				  </div>
-				  <div class="form-group">
-				    <label class="sr-only" for="exampleInputPassword2">Password</label>
-				    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
-				  </div>
-				  <div class="checkbox">
-				    <label>
-				      <input type="checkbox"> Remember me
-				    </label>
-				  </div>
-				  <button type="submit" class="btn btn-default">Sign in</button>
+				  <button type="submit" class="btn btn-default" id="search-user-button">Wyszukaj</button>
 			</form>
-		</div>
-		<div id="user-search-result">
-			<table></table>
+			<div id="user-search-result">
+				<table class="table table-hover table-striped" id="searched-users"></table>
+			</div>
 		</div>
 	  </div>
 	</div>
@@ -444,7 +435,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-success" id="deleteGroupConfirm">Tak, usuń grupę</button>
+        <button type="button" class="btn btn-danger" id="deleteGroupConfirm">Tak, usuń grupę</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
