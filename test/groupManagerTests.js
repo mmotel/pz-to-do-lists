@@ -98,6 +98,15 @@ describe('Manager.removeGroup', function (){
 			}
 		});
 	});
+	it('should not remove group if does not exist', function (done){
+		Manager.removeGroup(0, function (err, result){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(0, result);
+				done();
+			}
+		});
+	});
 });
 
 describe('Manager.findAllGroups', function (){
