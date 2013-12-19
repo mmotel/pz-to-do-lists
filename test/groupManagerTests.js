@@ -215,5 +215,14 @@ describe('Manager.updateGroup', function (){
 			}
 		});
 	});
+	it('should not update group if it does not exist', function (done){
+    Manager.updateGroup(0, function (err, result){
+      if (err) { done(err); }
+      else{
+        assert.strictEqual(0, result);
+        done();
+      }
+    });
+  });
 });
 
