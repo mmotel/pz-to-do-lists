@@ -14,6 +14,7 @@ var GUI = {
 		$('#editing-lists').hide();
 		$('#show-all-lists').hide();
 		$('#show-all-tasks').hide();
+		$('#show-all-groups').hide();
 		$('#editing-tasks').hide();
 		$('#adding-tasks').hide();
 		$('#adding-groups').hide();
@@ -92,6 +93,40 @@ var GUI = {
 
 		//showList button click
 		$('.showListBig').click(function () { showListClick(this); });
+	},
+	fillUserAllGroups: function (tab, rmClick, editClick, addListClick, showListClick){
+		$('#show-all-groups').slideDown('fast');
+
+		$('#user-groups-big').children().remove();
+		$('#user-groups-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+
+		for(var i = 0; i < tab.length; i++){
+			$('#user-groups-big').append('<tr>'+
+				'<td><button type="button" class="btn btn-link btn-sm showGroupBig"'+
+				'id="showGroupBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
+				'<td>'+ tab[i].descr +'</td>'+
+				'<td><button type="button" class="btn btn-default btn-sm pull-right editGroup" id="editGroup'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
+				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmGroup" id="rmGroup'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
+				'<td><button type="button" class="btn btn-primary btn-sm pull-right addListAll" id="addListBig'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button></td>'+
+				'</tr>');
+		}
+		//rmGroup button click
+		$('.rmGroup').click(function() { rmClick(this); });
+
+		//editGroup button click
+		$('.editGroup').click(function () { editClick(this); });
+
+		//addListAll button click
+		$('.addListAll').click(function () { addListClick(this); });
+
+		//showGroup button click
+		$('.showGroupBig').click(function () { showGroupClick(this); });
 	},
 	fillUserAllTasks: function (listName, tab, rmClick, editClick, taskDoneClick){
 		$('#show-all-tasks-list-name').html(listName);
@@ -245,15 +280,18 @@ var GUI = {
 		return newaddgroup;
 	},
 	fillEditGroupForm: function (group){
+		 $('#edit-group-id').val(group.id);
 		 $('#edit-group-name').val(group.name);
 		 $('#edit-group-description').val(group.descr);
 	},
 	clearEditGroupForm: function (){
+		$('#edit-group-id').val("")
 		$('#edit-group-name').val("");
 		$('#edit-group-description').val("");
 	},
 	getEditGroupForm: function (){
 		var neweditgroup = {};
+		neweditgroup.id = parseInt($('#edit-group-id').val())
 		neweditgroup.name = $('#edit-group-name').val();
 		neweditgroup.descr = $('#edit-group-description').val();
 		return neweditgroup;
