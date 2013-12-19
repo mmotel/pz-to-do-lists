@@ -224,3 +224,42 @@ exports.getGroups = function (req, res, appUser, Data){
     res.end(JSON.stringify(undefined));
   }
 };
+
+exports.getMembers = function (req, res, appUser, Data){
+  var sid = req.sessionID;
+  var fbid = appUser.checkLogin(sid);
+
+  if(fbid !== null){
+    var groupId = parseInt(req.params[0]);
+    Data.findGroup(groupId, function (err, group){
+      if(!err && (group === null || containsObject(fbid, group.members) )){
+        Data.findGroupMembers(group.members, function (err, items){
+          if(err){
+            res.writeHead(404, {
+              'Content-Type': 'application/json; charset=utf8'
+            });
+            res.end(JSON.stringify(undefined));
+          }
+          else{
+            res.writeHead(200, {
+              'Content-Type': 'application/json; charset=utf8'
+            });
+            res.end(JSON.stringify({"group": group, "members": items}));
+          }
+        });
+      }
+      else{
+        res.writeHead(404, {
+          'Content-Type': 'application/json; charset=utf8'
+        });
+        res.end(JSON.stringify(undefined));
+      }
+    });
+  }
+  else{
+    res.writeHead(404, {
+      'Content-Type': 'application/json; charset=utf8'
+    });
+    res.end(JSON.stringify(undefined));
+  }
+};
