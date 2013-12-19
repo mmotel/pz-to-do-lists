@@ -290,6 +290,7 @@ $(document).ready(function () {
 			$.getJSON('http://localhost:3000/data/get/members/'+groupid+'/', function (data){
 				GUI.hideAll();
 				GUI.fillGroupUsers(data.group, data.members);
+				GUI.showUserSearchForm();
 			});
 		};
 
