@@ -375,7 +375,7 @@ var GUI = {
 	},
 	fillDeleteGroupModal: function (group){
 		$('#user-delete-group-modal-id').val(group.id);
-		$('#user-delete-group-modal-name').text("Nazwa zadania: " + group.name);
+		$('#user-delete-group-modal-name').text("Nazwa grupy: " + group.name);
 	},
 	getDeleteListModal: function (){
 		var listId = parseInt($('#user-delete-list-modal-id').val());
