@@ -17,6 +17,7 @@ var GUI = {
 		$('#editing-tasks').hide();
 		$('#adding-tasks').hide();
 		$('#adding-groups').hide();
+		$('#editing-groups').hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
