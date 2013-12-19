@@ -80,7 +80,7 @@ var GUI = {
 		}
 
 		//addGroupSmall button click
-		$('.addGroupSmall').click(function () { addListClick(this); });
+		$('.addListSmall').click(function () { addListClick(this); });
 
 		//showGroup button click
 		$('.showGroupSmall').click(function () { showGroupClick(this); });
