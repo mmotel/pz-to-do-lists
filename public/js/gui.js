@@ -165,8 +165,7 @@ var GUI = {
 
 		for(var i = 0; i < tab.length; i++){
 			$('#group-users').append('<tr><td></td>'+
-				'<td><button type="button" class="btn btn-link btn-sm showGroupBig"'+
-				'id="showGroupBig'+ tab[i].id+'">'+ tab[i].profile.displayName +'</button></td>'+
+				'<td>'+ tab[i].profile.displayName +'</td>'+
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń z grupy</button></td>'+
@@ -174,6 +173,23 @@ var GUI = {
 		}
 		//rmUser button click
 		$('.rmUser').click(function() { rmClick(this); });
+	},
+	fillSearchedUsers: function (group, tab, addClick){
+		$('#user-search').slideDown('fast');
+
+		$('#searched-users').children().remove();
+		$('#searched-users').append('<tr><th></th><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+
+		for(var i = 0; i < tab.length; i++){
+			$('#searched-users').append('<tr><td></td>'+
+				'<td>'+ tab[i].profile.displayName +'</td>'+
+				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Usuń z grupy</button></td>'+
+				'</tr>');
+		}
+		//addUser button click
+		$('.addUser').click(function() { addClick(this); });
 	},
 	fillUserAllTasks: function (listName, tab, rmClick, editClick, taskDoneClick){
 		$('#show-all-tasks-list-name').html(listName);
