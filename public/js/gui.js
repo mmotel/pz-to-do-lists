@@ -16,6 +16,7 @@ var GUI = {
 		$('#show-all-tasks').hide();
 		$('#editing-tasks').hide();
 		$('#adding-tasks').hide();
+		$('#adding-groups').hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
@@ -228,6 +229,20 @@ var GUI = {
 		neweditlist.descr = $('#edit-list-description').val();
 		return neweditlist;
 	},
+	fillAddGroupForm: function (group){
+		// $('#add-group-name').val(group.name);
+		// $('#add-group-description').val(group.descr);
+	},
+	clearAddGroupForm: function (){
+		$('#add-group-name').val("");
+		$('#add-group-description').val("");
+	},
+	getAddGroupForm: function (){
+		var newaddgroup = {};
+		newaddgroup.name = $('#add-group-name').val();
+		newaddgroup.descr = $('#add-group-description').val();
+		return newaddgroup;
+	},
 	fillDeleteListModal: function (list){
 		$('#user-delete-list-modal-id').val(list.id);
 		$('#user-delete-list-modal-name').text("Nazwa listy: " + list.name);
@@ -270,6 +285,12 @@ var GUI = {
 	},
 	showEditingTaskForm: function (){
 		$('#editing-tasks').slideDown('fast');
+	},
+	showAddingGroupForm: function (){
+		$('#adding-groups').slideDown('fast');
+	},
+	showEditingGroupForm: function (){
+		$('#editing-groups').slideDown('fast');
 	},
 	showDeleteAccountModal: function (){
 		$('#user-delete-account-modal').modal('show');
