@@ -260,12 +260,22 @@ $(document).ready(function () {
 			GUI.clearEditGroupForm();
 			GUI.hideAll();
 		});
+		//rm-group
+		var rmGroupClick = function (that){
+			var groupid = $(that).attr('id');
+			groupid = groupid.substring(7, groupid.length);
+
+			$.getJSON('http://localhost:3000/data/get/group/'+groupid+'/', function (group){
+				GUI.fillDeleteGroupModal(group);
+
+			});
+		};
 
 		//show user groups
 		$('#show-all-groups-button').click(function (){
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.hideAll();
-				GUI.fillUserAllGroups(groups, editGroupClick);
+				GUI.fillUserAllGroups(groups, editGroupClick, rmGroupClick);
 				GUI.fillUserGroupsSmall(groups);
 			});
 		});
@@ -317,12 +327,12 @@ $(document).ready(function () {
 		});
 		//Add group
 		socket.on('addedGroup', function (data){
-			GUI.fillUserAllGroups(data, editGroupClick);
+			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick);
 			GUI.fillUserGroupsSmall(data);
 		});
 		//Edit group
 		socket.on('editedGroup', function (data){
-			GUI.fillUserAllGroups(data, editGroupClick);
+			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick);
 			GUI.fillUserGroupsSmall(data);
 		})
 		//---
