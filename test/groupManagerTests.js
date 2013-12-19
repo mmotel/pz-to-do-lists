@@ -56,3 +56,35 @@ describe('Manager.findGroup', function (){
 		});
 	});
 });
+
+describe('Manager.removeGroup', function (){
+	it('should remove group', function (done){
+		var newGroup = new Group(1, 'Moja grupa', 'Opis mojej grupy');
+		Manager.createGroup(newGroup, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newGroup.owner, item.owner);
+				assert.strictEqual(newGroup.name, item.name);
+				assert.strictEqual(newGroup.descr, item.descr);
+				console.log(item);
+				
+				Manager.removeGroup(item.id, function (err, result){
+					if (err){ done(err); }
+					else{
+						assert.strictEqual(1, result);
+
+						Manager.findGroup(item.id, function (err, item){
+							if (err){ done(err); }
+							else{
+								assert.strictEqual(null, item);
+								done();
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+});
