@@ -57,6 +57,15 @@ describe('Manager.findGroup', function (){
 			}
 		});
 	});
+	it('should not find group if does not exist', function (done){
+		Manager.findGroup(0, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.strictEqual(null, item);
+				done();
+			}
+		});
+	});
 });
 
 describe('Manager.removeGroup', function (){
