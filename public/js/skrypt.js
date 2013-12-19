@@ -218,6 +218,24 @@ $(document).ready(function () {
 			$('#user-done-task-modal').modal('hide');
 			GUI.hideAll();
 		});
+		//add-gruop
+		$('#add-group-button').click(function (){
+			GUI.hideAll();
+			GUI.clearAddGroupForm();
+			GUI.showAddingGroupForm();
+		});
+
+		$('#add-group-save-button').click(function (){
+			var newGroup = GUI.getAddGroupForm();
+			newGroup.owner = user.id;
+			socket.emit('addGroup', newGroup);
+			GUI.hideAll();
+
+		});
+
+		$('#add-group-cancel-button').click(function (){
+
+		});
 
 
 		//sockets.io
@@ -264,6 +282,10 @@ $(document).ready(function () {
 		socket.on('doneTask', function (data) {
 			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 		});
+		//Add group
+		socket.on('addedGroup', function (data){
+			GUI.fillUserAllGroups(data);
+		});
 		//---
 
 
@@ -284,6 +306,10 @@ $(document).ready(function () {
 		//get & show lists' panel
 		$.getJSON('http://localhost:3000/data/get/lists/', function (lists){
 			GUI.fillUserListsSmall(lists, addTaskClick, showListClick);
+		
+			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
+				GUI.fillUserGroupsSmall(groups);
+			});
 		});
 
 	};
