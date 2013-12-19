@@ -165,12 +165,13 @@ var GUI = {
 		$('#group-users').append('<tr><th></th><th>Nazwa</th><th colspan="3">Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
-			$('#group-users').append('<tr><td></td>'+
+			$('#group-users').append('<tr><td><img id="fbImg'+tab[i].id+'"></td>'+
 				'<td>'+ tab[i].profile.displayName +'</td>'+
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
 					tab[i].id +'"' + ( tab[i].id === group.owner ? 'disabled="disabled"' : ' ' ) + '>'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń z grupy</button></td>'+
 				'</tr>');
+			GUIutils.getSmallFbPic(tab[i].id, "fbImg"+tab[i].id);
 		}
 		//rmUser button click
 		$('.rmUser').click(function() { rmClick(this); });
@@ -182,12 +183,13 @@ var GUI = {
 		$('#searched-users').append('<tr><th></th><th>Nazwa</th><th colspan="3">Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
-			$('#searched-users').append('<tr><td></td>'+
+			$('#searched-users').append('<tr><td><img id="searchFbImg'+tab[i].id+'"></td>'+
 				'<td>'+ tab[i].profile.displayName +'</td>'+
 				'<td><button type="button" class="btn btn-success btn-sm pull-right addUser" id="addUser'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj do grupy</button></td>'+
 				'</tr>');
+			GUIutils.getSmallFbPic(tab[i].id, "searchFbImg"+tab[i].id);
 		}
 		//addUser button click
 		$('.addUser').click(function() { addClick(this); });

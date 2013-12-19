@@ -8,3 +8,7 @@ body {
 #user-lists-small, #user-groups-small{
 	margin-bottom: 0px;
 }
+
+#group-users td, #searched-users td {
+	vertical-align: middle;
+}
