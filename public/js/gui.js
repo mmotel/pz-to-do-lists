@@ -244,6 +244,20 @@ var GUI = {
 		newaddgroup.descr = $('#add-group-description').val();
 		return newaddgroup;
 	},
+	fillEditGroupForm: function (group){
+		 $('#edit-group-name').val(group.name);
+		 $('#edit-group-description').val(group.descr);
+	},
+	clearEditGroupForm: function (){
+		$('#edit-group-name').val("");
+		$('#edit-group-description').val("");
+	},
+	getEditGroupForm: function (){
+		var neweditgroup = {};
+		neweditgroup.name = $('#edit-group-name').val();
+		neweditgroup.descr = $('#edit-group-description').val();
+		return neweditgroup;
+	},
 	fillDeleteListModal: function (list){
 		$('#user-delete-list-modal-id').val(list.id);
 		$('#user-delete-list-modal-name').text("Nazwa listy: " + list.name);
