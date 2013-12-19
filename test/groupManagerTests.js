@@ -21,7 +21,7 @@ describe('Manager.addGroup', function (){
 				assert.strictEqual(newGroup.owner, item.owner);
 				assert.strictEqual(newGroup.name, item.name);
 				assert.strictEqual(newGroup.descr, item.descr);
-				console.log(item);
+				assert.strictEqual(newGroup.owner, item.members[0].fbid);
 				done();
 			}
 		});
@@ -39,6 +39,7 @@ describe('Manager.findGroup', function (){
 				assert.strictEqual(newGroup.owner, item.owner);
 				assert.strictEqual(newGroup.name, item.name);
 				assert.strictEqual(newGroup.descr, item.descr);
+				assert.strictEqual(newGroup.owner, item.members[0].fbid);
 				
 				Manager.findGroup(item.id, function (err, item2){
 					if (err){ done(err); }
@@ -48,6 +49,7 @@ describe('Manager.findGroup', function (){
 						assert.strictEqual(item.fbid, item2.fbid);
 						assert.strictEqual(item.name, item2.name);
 						assert.strictEqual(item.descr, item2.descr);
+						assert.strictEqual(item.members[0].fbid, item2.members[0].fbid);
 						assert.strictEqual(item.trash, item2.trash);
 						done();
 					}
@@ -68,7 +70,7 @@ describe('Manager.removeGroup', function (){
 				assert.strictEqual(newGroup.owner, item.owner);
 				assert.strictEqual(newGroup.name, item.name);
 				assert.strictEqual(newGroup.descr, item.descr);
-				console.log(item);
+				assert.strictEqual(newGroup.owner, item.members[0].fbid);
 				
 				Manager.removeGroup(item.id, function (err, result){
 					if (err){ done(err); }
