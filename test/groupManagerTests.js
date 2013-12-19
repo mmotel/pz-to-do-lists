@@ -170,6 +170,15 @@ describe('Manager.findAllGroups', function (){
 			}
 		});
 	});
+	it('should not find groups if does not exist', function (done){
+			Manager.findAllGroups(0, function (err, item){
+				if (err){ done(err); }
+				else{
+					assert.strictEqual(0, item.length);
+					done();
+				}
+			});
+		});
 });
 
 describe('Manager.updateGroup', function (){
