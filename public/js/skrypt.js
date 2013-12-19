@@ -271,6 +271,14 @@ $(document).ready(function () {
 			});
 		};
 
+		$('#deleteGroupConfirm').click(function (){
+			var data = {};
+			data.id = GUI.getDeleteGroupModal();
+			data.fbid = user.id;
+			socket.emit('rmGroup', data);
+			$('#user-delete-group-modal').modal('hide');
+		});
+
 		//show user groups
 		$('#show-all-groups-button').click(function (){
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
@@ -332,6 +340,11 @@ $(document).ready(function () {
 		});
 		//Edit group
 		socket.on('editedGroup', function (data){
+			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick);
+			GUI.fillUserGroupsSmall(data);
+		})
+		//Rm group
+		socket.on('rmedGroup', function (data){
 			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick);
 			GUI.fillUserGroupsSmall(data);
 		})
