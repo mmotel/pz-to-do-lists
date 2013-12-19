@@ -16,5 +16,13 @@ var GUIutils = {
 			$('#'+picElementId).attr('src', pic.data.url);
 		});
 
+	},
+	getSmallFbPic : function (fbid, picElementId) {
+
+		$.getJSON('http://graph.facebook.com/'+fbid+'/picture?type=small&redirect=false', function(pic){
+			console.log(pic.data.url);
+			$('#'+picElementId).attr('src', pic.data.url);
+		});
+
 	}
 };
