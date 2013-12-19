@@ -411,5 +411,8 @@ var GUI = {
 	},
 	showDoneTaskModal: function (){
 		$('#user-done-task-modal').modal('show');
+	},
+	showDeleteGroupModal: function (){
+		$('#user-delete-group-modal').modal('show');
 	}
 };
