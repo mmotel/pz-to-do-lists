@@ -375,7 +375,7 @@ var GUI = {
 		var listId = parseInt($('#user-done-task-modal-list-id').val());
 		return {"id": taskId, "listid": listId};
 	},
-	getDoneTaskModal: function (){
+	getDeleteGroupModal: function (){
 		var groupId = parseInt($('#user-delete-group-modal-id').val());
 		return groupId;
 	},
