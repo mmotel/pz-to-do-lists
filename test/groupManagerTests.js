@@ -10,6 +10,16 @@ var Group = function(owner, name, descr){
 	return this;
 };
 
+var Profile = function(id, displayName, familyName, givenName, middleName){
+    this.id = id;
+    this.name = {};
+    this.displayName = displayName;
+    this.name.familyName = familyName;
+    this.name.givenName = givenName;
+    this.name.middleName = middleName;
+    return this;
+};
+
 describe('Manager.addGroup', function (){
 	it('should create new group', function (done){
 		var newGroup = new Group(1, 'Moja grupa', 'Opis mojej grupy');
@@ -255,6 +265,48 @@ describe('Manager.addUserToGroup', function (){
 								assert.strictEqual(item.trash, item2.trash);
 								assert.strictEqual(newGroup.owner, item2.members[0].fbid);
 								assert.strictEqual(8, item2.members[1].fbid);
+								done();
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+});
+
+describe('Manager.findGroupMembers', function (){
+	it('should create new group', function (done){
+
+	    var demoProfile = new Profile(1, 'Testowy Profil', "Profil", "Test", "Testowy");
+
+	    Manager.createUser(demoProfile, function (err, item){
+	    	if(err){ done(err); }
+	    	else{
+		        assert.notStrictEqual(undefined, item._id); //if(undefined !== item._id)
+		        assert.strictEqual(demoProfile.id, item.id);
+		        assert.strictEqual(demoProfile.displayName, item.profile.displayName);
+		        assert.strictEqual(demoProfile.name.familyName, item.profile.name.familyName);
+		        assert.strictEqual(demoProfile.name.givenName, item.profile.name.givenName);
+		        assert.strictEqual(demoProfile.name.middleName, item.profile.name.middleName);
+
+
+				var newGroup = new Group(item.id, 'Moja grupa', 'Opis mojej grupy');
+				Manager.createGroup(newGroup, function (err, item2){
+					if (err){ done(err); }
+					else{
+						assert.notStrictEqual(undefined, item2._id);
+						assert.notStrictEqual(undefined, item2.id);
+						assert.strictEqual(newGroup.owner, item2.owner);
+						assert.strictEqual(newGroup.name, item2.name);
+						assert.strictEqual(newGroup.descr, item2.descr);
+						assert.strictEqual(newGroup.owner, item2.members[0].fbid);
+						
+
+						Manager.findGroupMembers(item2.members, function (err, items){
+							if(err){ done(err); }
+							else{
+								console.log(items);
 								done();
 							}
 						});
