@@ -8,6 +8,8 @@ var GUI = {
 		$('#user-groups-small-panel').hide();
 		$('#add-list-button').hide();
 		$('#show-all-lists-button').hide();
+		$('#add-group-button').hide();
+		$('#show-all-groups-button').hide();
 	},
 	hideAll: function () {
 		$('#user-settings').hide();
@@ -38,6 +40,8 @@ var GUI = {
 		$('#user-lists-small-panel').show();
 		$('#add-list-button').show();
 		$('#show-all-lists-button').show();
+		$('#add-group-button').show();
+		$('#show-all-groups-button').show();
 	},
 	showNotLoggedin: function (){
 		$('#login-link').show();
@@ -61,6 +65,25 @@ var GUI = {
 
 		//showList button click
 		$('.showListSmall').click(function () { showListClick(this); });
+	},
+	fillUserGroupsSmall: function (tab, addListClick, showGroupClick){
+		$('#user-groups-small').children().remove();
+
+		for(var i = 0; i < tab.length; i++){
+			$('#user-groups-small').append('<tr>'+
+				'<td><button type="button" class="btn btn-link btn-sm showGroupsSmall"'+
+				'id="showGroups'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
+				'<td><button type="button" class="btn btn-link btn-sm pull-right addListSmall"'+
+				' id="addList'+ tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj liste</button>'+
+				'</td></tr>');
+		}
+
+		//addGroupSmall button click
+		$('.addGroupSmall').click(function () { addListClick(this); });
+
+		//showGroup button click
+		$('.showGroupSmall').click(function () { showGroupClick(this); });
 	},
 	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick, showListClick){
 		$('#show-all-lists').slideDown('fast');
