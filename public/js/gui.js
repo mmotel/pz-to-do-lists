@@ -159,6 +159,7 @@ var GUI = {
 		$('#show-groups').slideDown('fast');
 
 		$('#show-group-name').html(group.name);
+		$('#show-group-id').val(group.id);
 
 		$('#group-users').children().remove();
 		$('#group-users').append('<tr><th></th><th>Nazwa</th><th colspan="3">Opcje</th></tr>');
@@ -167,7 +168,7 @@ var GUI = {
 			$('#group-users').append('<tr><td></td>'+
 				'<td>'+ tab[i].profile.displayName +'</td>'+
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
-					tab[i].id +'">'+
+					tab[i].id +'"' + ( tab[i].id === group.owner ? 'disabled="disabled"' : ' ' ) + '>'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń z grupy</button></td>'+
 				'</tr>');
 		}
@@ -415,6 +416,9 @@ var GUI = {
 	},
 	showEditingGroupForm: function (){
 		$('#editing-groups').slideDown('fast');
+	},
+	showUserSearchForm: function (){
+		$('#user-search').slideDown('fast');
 	},
 	showDeleteAccountModal: function (){
 		$('#user-delete-account-modal').modal('show');
