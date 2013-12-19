@@ -6,3 +6,5 @@ db.appUsers.drop();
 db.appLists.drop();
 //tasks
 db.appTasks.drop();
+//groups
+db.appGroups.grop();
