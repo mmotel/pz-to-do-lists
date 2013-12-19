@@ -214,3 +214,37 @@ describe('Manager.findOrCreateUser', function (){
   });
 
 });
+
+describe('Manager.searchUsers', function (){
+  it('should find users if they match query', function (done){
+
+    var demoProfile = new Profile(1, 'Jan Kowalski', "Profil", "Test", "Testowy");
+
+    Manager.createUser(demoProfile, function (err, item){
+      if(err){ done(err); }
+      else{
+        assert.notStrictEqual(undefined, item._id);
+        assert.strictEqual(demoProfile.id, item.id);
+        assert.strictEqual(demoProfile.displayName, item.profile.displayName);
+        assert.strictEqual(demoProfile.name.familyName, item.profile.name.familyName);
+        assert.strictEqual(demoProfile.name.givenName, item.profile.name.givenName);
+        assert.strictEqual(demoProfile.name.middleName, item.profile.name.middleName);
+        
+        Manager.searchUsers('kowal', function (err, items){
+          if(err){ done(err); }
+          else{
+            // console.log(items);
+            assert.strictEqual(1, items.length);
+            assert.strictEqual(item._id.toString(), items[0]._id.toString());
+            assert.strictEqual(item.id, items[0].id);
+            assert.strictEqual(item.profile.displayName, items[0].profile.displayName);
+            assert.strictEqual(item.profile.name.familyName, items[0].profile.name.familyName);
+            assert.strictEqual(item.profile.name.givenName, items[0].profile.name.givenName);
+            assert.strictEqual(item.profile.name.middleName, items[0].profile.name.middleName);
+            done();
+          }
+        });
+      }
+    });
+  });
+});
