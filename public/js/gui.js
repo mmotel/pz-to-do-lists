@@ -62,6 +62,25 @@ var GUI = {
 		//showList button click
 		$('.showListSmall').click(function () { showListClick(this); });
 	},
+	fillUserGroupsSmall: function (tab, addListClick, showGroupClick){
+		$('#user-groups-small').children().remove();
+
+		for(var i = 0; i < tab.length; i++){
+			$('#user-groups-small').append('<tr>'+
+				'<td><button type="button" class="btn btn-link btn-sm showGroupsSmall"'+
+				'id="showGroups'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
+				'<td><button type="button" class="btn btn-link btn-sm pull-right addListSmall"'+
+				' id="addList'+ tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj liste</button>'+
+				'</td></tr>');
+		}
+
+		//addGroupSmall button click
+		$('.addGroupSmall').click(function () { addListClick(this); });
+
+		//showGroup button click
+		$('.showGroupSmall').click(function () { showGroupClick(this); });
+	},
 	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick, showListClick){
 		$('#show-all-lists').slideDown('fast');
 
