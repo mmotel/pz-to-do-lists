@@ -226,3 +226,42 @@ describe('Manager.updateGroup', function (){
   });
 });
 
+describe('Manager.addUserToGroup', function (){
+	it('should add user to group members', function (done){
+		var newGroup = new Group(1, 'Moja grupa', 'Opis mojej grupy');
+		Manager.createGroup(newGroup, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newGroup.owner, item.owner);
+				assert.strictEqual(newGroup.name, item.name);
+				assert.strictEqual(newGroup.descr, item.descr);
+				assert.strictEqual(newGroup.owner, item.members[0].fbid);
+				
+				Manager.addUserToGroup(8, item.id, function (err, result){
+					if(err){ done(err); }
+					else{
+						assert.strictEqual(1, result);
+						Manager.findGroup(item.id, function (err, item2){
+							if (err){ done(err); }
+							else{
+								// console.log(item2);
+								assert.strictEqual(item._id.toString(), item2._id.toString());
+								assert.strictEqual(item.id, item2.id);
+								assert.strictEqual(item.fbid, item2.fbid);
+								assert.strictEqual(item.name, item2.name);
+								assert.strictEqual(item.descr, item2.descr);
+								assert.strictEqual(item.trash, item2.trash);
+								assert.strictEqual(newGroup.owner, item2.members[0].fbid);
+								assert.strictEqual(8, item2.members[1].fbid);
+								done();
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+});
+
