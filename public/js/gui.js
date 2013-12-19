@@ -68,13 +68,13 @@ var GUI = {
 		//showList button click
 		$('.showListSmall').click(function () { showListClick(this); });
 	},
-	fillUserGroupsSmall: function (tab, addListClick, showGroupClick){
+	fillUserGroupsSmall: function (tab, showGroupClick, addListClick){
 		$('#user-groups-small').children().remove();
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-groups-small').append('<tr>'+
-				'<td><button type="button" class="btn btn-link btn-sm showGroupsSmall"'+
-				'id="showGroups'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
+				'<td><button type="button" class="btn btn-link btn-sm showGroupSmall"'+
+				'id="showGroup'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
 				'<td><button type="button" class="btn btn-link btn-sm pull-right addListSmall"'+
 				' id="addList'+ tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj liste</button>'+
@@ -121,7 +121,7 @@ var GUI = {
 		//showList button click
 		$('.showListBig').click(function () { showListClick(this); });
 	},
-	fillUserAllGroups: function (tab, editClick, rmClick, addListClick, showListClick){
+	fillUserAllGroups: function (tab, editClick, rmClick, showGroupClick, addListClick){
 		$('#show-all-groups').slideDown('fast');
 
 		$('#user-groups-big').children().remove();
@@ -161,7 +161,7 @@ var GUI = {
 		$('#show-group-name').html(group.name);
 
 		$('#group-users').children().remove();
-		$('#group-users').append('<tr><th></th><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+		$('#group-users').append('<tr><th></th><th>Nazwa</th><th colspan="3">Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
 			$('#group-users').append('<tr><td></td>'+
@@ -178,7 +178,7 @@ var GUI = {
 		$('#user-search').slideDown('fast');
 
 		$('#searched-users').children().remove();
-		$('#searched-users').append('<tr><th></th><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+		$('#searched-users').append('<tr><th></th><th>Nazwa</th><th colspan="3">Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
 			$('#searched-users').append('<tr><td></td>'+

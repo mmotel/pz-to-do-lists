@@ -279,12 +279,26 @@ $(document).ready(function () {
 			$('#user-delete-group-modal').modal('hide');
 		});
 
+		var showGroupClick = function (that){
+			var groupid = $(that).attr('id');
+			if(groupid.substring(0, 12) === "showGroupBig"){
+				groupid = groupid.substring(12, groupid.length);
+			}else if(groupid.substring(0,9) === "showGroup"){
+				groupid = groupid.substring(9 , groupid.length);
+			}
+
+			$.getJSON('http://localhost:3000/data/get/members/'+groupid+'/', function (data){
+				GUI.hideAll();
+				GUI.fillGroupUsers(data.group, data.members);
+			});
+		};
+
 		//show user groups
 		$('#show-all-groups-button').click(function (){
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.hideAll();
-				GUI.fillUserAllGroups(groups, editGroupClick, rmGroupClick);
-				GUI.fillUserGroupsSmall(groups);
+				GUI.fillUserAllGroups(groups, editGroupClick, rmGroupClick, showGroupClick);
+				GUI.fillUserGroupsSmall(groups, showGroupClick);
 			});
 		});
 
@@ -335,18 +349,18 @@ $(document).ready(function () {
 		});
 		//Add group
 		socket.on('addedGroup', function (data){
-			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick);
-			GUI.fillUserGroupsSmall(data);
+			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick);
+			GUI.fillUserGroupsSmall(data, showGroupClick);
 		});
 		//Edit group
 		socket.on('editedGroup', function (data){
-			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick);
-			GUI.fillUserGroupsSmall(data);
+			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick);
+			GUI.fillUserGroupsSmall(data, showGroupClick);
 		})
 		//Rm group
 		socket.on('rmedGroup', function (data){
-			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick);
-			GUI.fillUserGroupsSmall(data);
+			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick);
+			GUI.fillUserGroupsSmall(data, showGroupClick);
 		})
 		//---
 
@@ -370,7 +384,7 @@ $(document).ready(function () {
 			GUI.fillUserListsSmall(lists, addTaskClick, showListClick);
 		
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
-				GUI.fillUserGroupsSmall(groups);
+				GUI.fillUserGroupsSmall(groups, showGroupClick);
 			});
 		});
 
