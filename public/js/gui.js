@@ -8,6 +8,8 @@ var GUI = {
 		$('#user-groups-small-panel').hide();
 		$('#add-list-button').hide();
 		$('#show-all-lists-button').hide();
+		$('#add-group-button').hide();
+		$('#show-all-groups-button').hide();
 	},
 	hideAll: function () {
 		$('#user-settings').hide();
@@ -38,6 +40,8 @@ var GUI = {
 		$('#user-lists-small-panel').show();
 		$('#add-list-button').show();
 		$('#show-all-lists-button').show();
+		$('#add-group-button').show();
+		$('#show-all-groups-button').show();
 	},
 	showNotLoggedin: function (){
 		$('#login-link').show();
