@@ -85,3 +85,7 @@ app.get('/data/get/lists/', function (req, res) { routes.getLists(req, res, appU
 app.get(/data\/get\/task\/(\d+)/, function (req, res) { routes.getTask(req, res, appUser, Manager); });
 
 app.get(/data\/get\/tasks\/(\d+)/, function (req, res) { routes.getTasks(req, res, appUser, Manager); });
+
+app.get(/data\/get\/group\/(\d+)/, function (req, res) { routes.getGroup(req, res, appUser, Manager); });
+
+app.get('/data/get/groups/', function (req, res) { routes.getGroups(req, res, appUser, Manager); });

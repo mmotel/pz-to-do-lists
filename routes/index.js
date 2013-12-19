@@ -1,3 +1,14 @@
+var containsObject = function (obj, list) {
+    
+    for(var i =0; i < list.length; i++){
+      if(list[i].fbid === obj){
+        return true;
+      }
+    }
+
+    return false;
+}
+
 exports.logout = function(req, res, appUser){
   appUser.logout(req.sessionID);
   req.logout();
@@ -143,6 +154,66 @@ exports.getTasks = function (req, res, appUser, Data){
           'Content-Type': 'application/json; charset=utf8'
         });
         res.end(JSON.stringify(undefined));
+      }
+    });
+  }
+  else{
+    res.writeHead(404, {
+      'Content-Type': 'application/json; charset=utf8'
+    });
+    res.end(JSON.stringify(undefined));
+  }
+};
+
+exports.getGroup = function (req, res, appUser, Data){
+  var sid = req.sessionID;
+  var fbid = appUser.checkLogin(sid);
+
+  if(fbid !== null){
+    var groupId = parseInt(req.params[0]);
+    Data.findGroup(groupId, function (err, group){
+      if(!err && (group === null || containsObject(fbid, group.members) )){
+        res.writeHead(200, {
+          'Content-Type': 'application/json; charset=utf8'
+        });
+        res.end(JSON.stringify(group));
+      }
+      else{
+        res.writeHead(404, {
+          'Content-Type': 'application/json; charset=utf8'
+        });
+        res.end(JSON.stringify(undefined));
+      }
+    });
+  }
+  else{
+    res.writeHead(404, {
+      'Content-Type': 'application/json; charset=utf8'
+    });
+    res.end(JSON.stringify(undefined));
+  }
+};
+
+exports.getGroups = function (req, res, appUser, Data){
+  var sid = req.sessionID;
+  console.log(sid);
+  var fbid = appUser.checkLogin(sid);
+  console.log(fbid);
+
+  if(fbid !== null){
+    Data.findAllGroups(fbid, function (err, groups){
+      if(err){
+        res.writeHead(404, {
+          'Content-Type': 'application/json; charset=utf8'
+        });
+        res.end(JSON.stringify(undefined));
+      }
+      else{
+        console.log(groups);
+        res.writeHead(200, {
+          'Content-Type': 'application/json; charset=utf8'
+        });
+        res.end(JSON.stringify(groups));
       }
     });
   }
