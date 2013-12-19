@@ -263,3 +263,35 @@ exports.getMembers = function (req, res, appUser, Data){
     res.end(JSON.stringify(undefined));
   }
 };
+
+exports.searchUsers = function (req, res, appUser, Data){
+  var sid = req.sessionID;
+  console.log(sid);
+  var fbid = appUser.checkLogin(sid);
+  console.log(fbid);
+
+  if(fbid !== null){
+    var query = req.params[0];
+    Data.searchUsers(query, function (err, users){
+      if(err){
+        res.writeHead(404, {
+          'Content-Type': 'application/json; charset=utf8'
+        });
+        res.end(JSON.stringify(undefined));
+      }
+      else{
+        console.log(users);
+        res.writeHead(200, {
+          'Content-Type': 'application/json; charset=utf8'
+        });
+        res.end(JSON.stringify(users));
+      }
+    });
+  }
+  else{
+    res.writeHead(404, {
+      'Content-Type': 'application/json; charset=utf8'
+    });
+    res.end(JSON.stringify(undefined));
+  }
+};

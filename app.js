@@ -91,3 +91,5 @@ app.get(/data\/get\/group\/(\d+)/, function (req, res) { routes.getGroup(req, re
 app.get('/data/get/groups/', function (req, res) { routes.getGroups(req, res, appUser, Manager); });
 
 app.get(/data\/get\/members\/(\d+)/, function (req, res) { routes.getMembers(req, res, appUser, Manager); });
+
+app.get(/data\/search\/users\/(\w+)/, function (req, res) { routes.searchUsers(req, res, appUser, Manager); });
