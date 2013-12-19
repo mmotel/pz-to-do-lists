@@ -23,6 +23,7 @@ var GUI = {
 		$('#adding-tasks').hide();
 		$('#adding-groups').hide();
 		$('#editing-groups').hide();
+		$("#user-search").hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
@@ -373,6 +374,10 @@ var GUI = {
 		var taskId = parseInt($('#user-done-task-modal-id').val());
 		var listId = parseInt($('#user-done-task-modal-list-id').val());
 		return {"id": taskId, "listid": listId};
+	},
+	getDoneTaskModal: function (){
+		var groupId = parseInt($('#user-delete-group-modal-id').val());
+		return groupId;
 	},
 	showUsersSettings: function (){
 		$('#user-settings').slideDown('fast');
