@@ -293,11 +293,21 @@ $(document).ready(function () {
 				GUI.showUserSearchForm();
 			});
 		};
+
+		//add user to group
+		var addUserToGroupClick = function (that){
+			var userid = $(that).attr('id');
+			userid = userid.substring(7, userid.length);
+			var groupid = parseInt($('#show-group-id').val());
+
+			socket.emit('addUserToGroup', {"fbid": user.id, "user": userid, "group": groupid});
+		};
+
 		//search users
 		$('#search-user-button').click(function (){
 			var query = $('#search-user-query').val().replace(/\s/g,"%20");
 			$.getJSON('http://localhost:3000/data/search/users/'+query+'/', function (data){
-				GUI.fillSearchedUsers(data);
+				GUI.fillSearchedUsers(data, addUserToGroupClick);
 			});
 		});
 
@@ -364,12 +374,16 @@ $(document).ready(function () {
 		socket.on('editedGroup', function (data){
 			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick);
 			GUI.fillUserGroupsSmall(data, showGroupClick);
-		})
+		});
 		//Rm group
 		socket.on('rmedGroup', function (data){
 			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick);
 			GUI.fillUserGroupsSmall(data, showGroupClick);
-		})
+		});
+		//Add user to group
+		socket.on('addUserToGroup', function (data){
+			GUI.fillGroupUsers(data.group, data.members);
+		});
 		//---
 
 
