@@ -184,7 +184,7 @@ var GUI = {
 		for(var i = 0; i < tab.length; i++){
 			$('#searched-users').append('<tr><td></td>'+
 				'<td>'+ tab[i].profile.displayName +'</td>'+
-				'<td><button type="button" class="btn btn-success btn-sm pull-right rmUser" id="rmUser'+ 
+				'<td><button type="button" class="btn btn-success btn-sm pull-right addUser" id="addUser'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj do grupy</button></td>'+
 				'</tr>');
