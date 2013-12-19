@@ -15,6 +15,8 @@ tests: ./scripts/dropTestDb.js
 	mongo test ./scripts/dropTestDb.js
 	mocha ./test/taskManagerTests.js
 	mongo test ./scripts/dropTestDb.js
+	mocha ./test/groupManagerTests.js
+	mongo test ./scripts/dropTestDb.js
 	mocha ./test/userTests.js
 	mongo test ./scripts/dropTestDb.js
 
