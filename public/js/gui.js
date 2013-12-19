@@ -5,6 +5,7 @@ var GUI = {
 		$('#login-panel').hide();
 		$('#loggedin-panel').hide();
 		$('#user-lists-small-panel').hide();
+		$('#user-groups-small-panel').hide();
 		$('#add-list-button').hide();
 		$('#show-all-lists-button').hide();
 	},
@@ -33,6 +34,7 @@ var GUI = {
 		$('#logout-link').show();
 		$('#login-panel').hide();
 		$('#loggedin-panel').show();
+		$('#user-groups-small-panel').show();
 		$('#user-lists-small-panel').show();
 		$('#add-list-button').show();
 		$('#show-all-lists-button').show();
