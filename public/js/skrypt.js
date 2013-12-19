@@ -236,6 +236,14 @@ $(document).ready(function () {
 		$('#add-group-cancel-button').click(function (){
 
 		});
+		//show user groups
+		$('#show-all-groups-button').click(function (){
+			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
+				GUI.hideAll();
+				GUI.fillUserAllGroups(groups);
+				GUI.fillUserGroupsSmall(groups);
+			});
+		});
 
 
 		//sockets.io
