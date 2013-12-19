@@ -234,7 +234,8 @@ $(document).ready(function () {
 		});
 
 		$('#add-group-cancel-button').click(function (){
-
+			GUI.clearEditGroupForm();
+			GUI.hideAll();
 		});
 		//edit-group
 		var editGroupClick = function (that){
@@ -312,6 +313,7 @@ $(document).ready(function () {
 		//Add group
 		socket.on('addedGroup', function (data){
 			GUI.fillUserAllGroups(data, editGroupClick);
+			GUI.fillUserGroupsSmall(data);
 		});
 		//Edit group
 		socket.on('editedGroup', function (data){
