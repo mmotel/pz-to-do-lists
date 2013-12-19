@@ -243,6 +243,27 @@
 			</form>
 		</div>
 		<!-- Koniec formularza edytowania zadania -->
+		<!-- formularz dodawania grupy-->
+		<div id="adding-groups">
+		  	<h2><span class="glyphicon glyphicon-plus"></span> Dodawanie grupy</h2>
+			<ul class="nav nav-pills nav-justified">
+			  <li id="add-group-save-button"><a><span class="glyphicon glyphicon-ok"></span> Dodaj</a></li>
+			  <li id="add-group-cancel-button"><a><span class="glyphicon glyphicon-minus"></span> Anuluj</a></li>
+			</ul>
+			<form role="form">
+				<input type="hidden" id="add-group-id">
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Nazwa</label>
+			    <input type="text" class="form-control" id="add-group-name" placeholder="Nazwa">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Opis</label>
+				<textarea class="form-control" rows="4" id="add-group-description" 
+					placeholder="Opis"></textarea>
+			  </div>
+			</form>
+		</div>
+		<!-- koniec formularza dodawania grupy-->
 		<div id="show-all-lists">
 		  	<h2><span class="glyphicon glyphicon-list"></span> Moje listy</h2>
 		  		<table class="table table-hover table-striped" id="user-lists-big">
