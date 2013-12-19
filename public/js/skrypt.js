@@ -234,7 +234,7 @@ $(document).ready(function () {
 		});
 
 		$('#add-group-cancel-button').click(function (){
-			GUI.clearEditGroupForm();
+			GUI.clearAddGroupForm();
 			GUI.hideAll();
 		});
 		//edit-group
