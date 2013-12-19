@@ -256,6 +256,11 @@ $(document).ready(function () {
 			GUI.hideAll();
 		});
 
+		$('#edit-group-cancel-button').click(function (){
+			GUI.clearEditGroupForm();
+			GUI.hideAll();
+		});
+
 		//show user groups
 		$('#show-all-groups-button').click(function (){
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
