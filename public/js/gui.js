@@ -1,4 +1,8 @@
-var GUI = {
+var GUI;
+
+$(document).ready(function () {
+	'use strict';
+GUI = {
 	hideLogin: function() {
 		$('#login-link').hide();
 		$('#logout-link').hide();
@@ -247,18 +251,38 @@ var GUI = {
 		newuser.familyName = $('#user-settings-familyname').val();
 		return newuser;
 	},
-	fillAddListForm: function (list){
-		$('#add-list-name').val(list.name);
-		$('#add-list-description').val(list.descr);
+	fillAddListForm: function (groups, groupId){
+		if(!groupId){
+			$('#add-list-type-private').prop('checked', true);
+		}else{
+			$('#add-list-type-group').prop('checked', true);
+		}
+
+		$('#add-list-select-groups').hide();
+		$('#add-list-group').children().remove();
+
+		for(var i=0; i < groups.length; i++){
+			$('#add-list-group').append('<option value="'+ groups[i].id +'">'+ groups[i].name +'</option>');
+		}
 	},
 	clearAddListForm: function (){
 		$('#add-list-name').val("");
 		$('#add-list-description').val("");
+		$('#add-list-type-private').prop('checked', true);
+		$('#add-list-group').children().remove();
 	},
 	getAddListForm: function (){
 		var newaddlist = {};
 		newaddlist.name = $('#add-list-name').val();
 		newaddlist.descr = $('#add-list-description').val();
+
+		if($('input:radio[name=addListType]:checked').val() === "private"){
+			newaddlist.groupid = null;
+		}
+		else{
+			newaddlist.groupid = parseInt( $('#add-list-group').val() );
+		}
+
 		return newaddlist;
 	},
 	fillAddTaskForm: function (listId, task){
@@ -320,7 +344,7 @@ var GUI = {
 		$('#edit-list-description').val(list.descr);
 	},
 	clearEditListForm: function (){
-		$('#edit-list-id').val("")
+		$('#edit-list-id').val("");
 		$('#edit-list-name').val("");
 		$('#edit-list-description').val("");
 	},
@@ -351,13 +375,13 @@ var GUI = {
 		 $('#edit-group-description').val(group.descr);
 	},
 	clearEditGroupForm: function (){
-		$('#edit-group-id').val("")
+		$('#edit-group-id').val("");
 		$('#edit-group-name').val("");
 		$('#edit-group-description').val("");
 	},
 	getEditGroupForm: function (){
 		var neweditgroup = {};
-		neweditgroup.id = parseInt($('#edit-group-id').val())
+		neweditgroup.id = parseInt($('#edit-group-id').val());
 		neweditgroup.name = $('#edit-group-name').val();
 		neweditgroup.descr = $('#edit-group-description').val();
 		return neweditgroup;
@@ -401,7 +425,7 @@ var GUI = {
 	showUsersSettings: function (){
 		$('#user-settings').slideDown('fast');
 	},
-	showAddingListForm: function (){
+	showAddingListForm: function (groups, groupId){
 		$('#adding-lists').slideDown('fast');
 	},
 	showEditingListForm: function (){
@@ -438,3 +462,5 @@ var GUI = {
 		$('#user-delete-group-modal').modal('show');
 	}
 };
+
+});

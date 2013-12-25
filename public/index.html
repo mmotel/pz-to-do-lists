@@ -158,6 +158,25 @@
 			    <input type="text" class="form-control" id="add-list-name" placeholder="Nazwa">
 			  </div>
 			  <div class="form-group">
+			    <label for="exampleInputEmail1">Typ</label>
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="addListType" id="add-list-type-private" value="private"> <!-- checked> -->
+				    Prywatna
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="addListType" id="add-list-type-group" value="group">
+				    Grupowa
+				  </label>
+				</div>
+			  </div>
+			  <div class="form-group" id="add-list-select-groups">
+			    <label for="exampleInputPassword1">Grupa</label>
+				<select class="form-control" rows="4" id="add-list-group"></select>
+			  </div>
+			  <div class="form-group">
 			    <label for="exampleInputPassword1">Opis</label>
 				<textarea class="form-control" rows="4" id="add-list-description" 
 					placeholder="Opis"></textarea>

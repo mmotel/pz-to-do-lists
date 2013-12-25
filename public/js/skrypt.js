@@ -150,9 +150,12 @@ $(document).ready(function () {
 		});
 		//add-list
 		$('#add-list-button').click(function (){
-			GUI.hideAll();
-			GUI.clearAddListForm();
-			GUI.showAddingListForm();
+			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
+				GUI.hideAll();
+				GUI.clearAddListForm();
+				GUI.fillAddListForm(groups);
+				GUI.showAddingListForm();
+			});
 		});
 
 		$('#add-list-save-button').click(function () {
@@ -409,6 +412,18 @@ $(document).ready(function () {
 
 		$('#edit-task-deadline').datepicker({
 			inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
+		});
+
+		//bind action on gui 
+		$('input:radio[name=addListType]').change(function (){
+			var type = $('input:radio[name=addListType]:checked').val();
+			console.log(type);
+			if(type === "group"){
+				$('#add-list-select-groups').slideDown('fast');
+			}
+			else{
+				$('#add-list-select-groups').slideUp('fast');				
+			}
 		});
 
 		//fill user data
