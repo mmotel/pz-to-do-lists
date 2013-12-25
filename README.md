@@ -65,7 +65,7 @@ Groups' managment `22.12.2013 18:00` `DONE`
 ###Task 5 
 Group's lists' and tasks' management `02.01.2014 18:00` `new deadline`
 ###Task 6 
-Incoming tasks etc. `09.01.2014 18:00` `new deadline`
+Incoming tasks, permissions, validators `09.01.2014 18:00` `new deadline`
 ###Extra time
 One week, just in case `16.01.2014 18:00` 
 
