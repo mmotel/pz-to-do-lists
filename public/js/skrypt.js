@@ -282,6 +282,28 @@ $(document).ready(function () {
 			$('#user-delete-group-modal').modal('hide');
 		});
 
+		//add list to group
+		var addListToGroupClick = function (that){
+			var groupid = $(that).attr('id');
+			// console.log(groupid);
+
+			if(groupid.substring(0,10) === "addListBig"){
+				groupid = groupid.substring(10, groupid.length);
+			}
+			else if(groupid.substring(0,7) === "addList"){
+				groupid = groupid.substring(7, groupid.length);
+			}
+
+			console.log(groupid);
+
+			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
+				GUI.hideAll();
+				GUI.clearAddListForm();
+				GUI.fillAddListForm(groups, groupid);
+				GUI.showAddingListForm();
+			});
+		};
+
 		//remove user from group
 		var removeUserFromGroupClick = function (that){
 			var userid = $(that).attr('id');
@@ -327,8 +349,8 @@ $(document).ready(function () {
 		$('#show-all-groups-button').click(function (){
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.hideAll();
-				GUI.fillUserAllGroups(groups, editGroupClick, rmGroupClick, showGroupClick);
-				GUI.fillUserGroupsSmall(groups, showGroupClick);
+				GUI.fillUserAllGroups(groups, editGroupClick, rmGroupClick, showGroupClick, addListToGroupClick);
+				GUI.fillUserGroupsSmall(groups, showGroupClick, addListToGroupClick);
 			});
 		});
 
@@ -379,18 +401,18 @@ $(document).ready(function () {
 		});
 		//Add group
 		socket.on('addedGroup', function (data){
-			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick);
-			GUI.fillUserGroupsSmall(data, showGroupClick);
+			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick, addListToGroupClick);
+			GUI.fillUserGroupsSmall(data, showGroupClick, addListToGroupClick);
 		});
 		//Edit group
 		socket.on('editedGroup', function (data){
-			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick);
-			GUI.fillUserGroupsSmall(data, showGroupClick);
+			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick, addListToGroupClick);
+			GUI.fillUserGroupsSmall(data, showGroupClick, addListToGroupClick);
 		});
 		//Rm group
 		socket.on('rmedGroup', function (data){
-			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick);
-			GUI.fillUserGroupsSmall(data, showGroupClick);
+			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick, addListToGroupClick);
+			GUI.fillUserGroupsSmall(data, showGroupClick, addListToGroupClick);
 		});
 		//Add user to group
 		socket.on('addUserToGroup', function (data){
@@ -435,7 +457,7 @@ $(document).ready(function () {
 			GUI.fillUserListsSmall(lists, addTaskClick, showListClick);
 		
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
-				GUI.fillUserGroupsSmall(groups, showGroupClick);
+				GUI.fillUserGroupsSmall(groups, showGroupClick, addListToGroupClick);
 			});
 		});
 

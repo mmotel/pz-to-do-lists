@@ -142,7 +142,7 @@ GUI = {
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmGroup" id="rmGroup'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right addListAll" id="addListBig'+ 
+				'<td><button type="button" class="btn btn-primary btn-sm pull-right addListBig" id="addListBig'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button></td>'+
 				'</tr>');
@@ -153,8 +153,8 @@ GUI = {
 		//editGroup button click
 		$('.editGroup').click(function () { editClick(this); });
 
-		//addListAll button click
-		$('.addListAll').click(function () { addListClick(this); });
+		//addListBig button click
+		$('.addListBig').click(function () { addListClick(this); });
 
 		//showGroup button click
 		$('.showGroupBig').click(function () { showGroupClick(this); });
@@ -254,15 +254,19 @@ GUI = {
 	fillAddListForm: function (groups, groupId){
 		if(!groupId){
 			$('#add-list-type-private').prop('checked', true);
+			$('#add-list-select-groups').hide();
 		}else{
 			$('#add-list-type-group').prop('checked', true);
+			$('#add-list-select-groups').show();
 		}
-
-		$('#add-list-select-groups').hide();
 		$('#add-list-group').children().remove();
 
 		for(var i=0; i < groups.length; i++){
 			$('#add-list-group').append('<option value="'+ groups[i].id +'">'+ groups[i].name +'</option>');
+		}
+
+		if(groupId){
+			$('#add-list-group').val(groupId);
 		}
 	},
 	clearAddListForm: function (){
