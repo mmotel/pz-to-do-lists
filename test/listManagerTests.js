@@ -3,7 +3,7 @@ var assert = require("assert"); //module used by tests
 var Data = require('../lib/newData.js')("test");
 var Manager = require('../lib/dataManager.js')(Data);
 
-var List = function(fbid, groupid, name, descr, trash){
+var List = function(fbid, groupid, name, descr){
     this.fbid = fbid;
     this.groupid = groupid;
     this.name = name;
