@@ -3,8 +3,9 @@ var assert = require("assert"); //module used by tests
 var Data = require('../lib/newData.js')("test");
 var Manager = require('../lib/dataManager.js')(Data);
 
-var List = function(fbid, name, descr, trash){
+var List = function(fbid, groupid, name, descr, trash){
     this.fbid = fbid;
+    this.groupid = groupid;
     this.name = name;
     this.descr = descr;
     this.trash = false;
@@ -13,7 +14,7 @@ var List = function(fbid, name, descr, trash){
 
 describe('Manager.addList', function(){
 	it('should add new list', function (done){
-		var newList = new List(1, 'Moja Lista', 'Moj opis');
+		var newList = new List(1, null, 'Moja Lista', 'Moj opis');
 		Manager.addList(newList, function (err, item){
 			if (err){ done(err); }
 			else{
@@ -30,7 +31,7 @@ describe('Manager.addList', function(){
 
 describe('Manager.findList', function(){
 	it('should find list if exist', function (done){
-		var newList = new List(1, 'Moja Lista', 'Moj opis');
+		var newList = new List(1, null, 'Moja Lista', 'Moj opis');
 		Manager.addList(newList, function (err, item){
 			if (err){ done(err); }
 			else{
@@ -70,7 +71,7 @@ describe('Manager.findList', function(){
 
 describe('Manager.findAllLists', function (){
 	it('should find user all lists', function (done){
-		var newList = new List(2, 'Moja Lista', 'Moj opis');
+		var newList = new List(2, null, 'Moja Lista', 'Moj opis');
 		Manager.addList(newList, function (err, item){
 			if (err){ done(); }
 			else{
@@ -81,7 +82,7 @@ describe('Manager.findAllLists', function (){
 				assert.strictEqual(newList.descr, item.descr);
 				assert.strictEqual(newList.trash, item.trash);
 
-				var newList2 = new List(2, 'Moja Lista2', 'Moj opis2');
+				var newList2 = new List(2, null, 'Moja Lista2', 'Moj opis2');
 				Manager.addList(newList2, function (err, item2){
 					if (err) { done(); }
 					else{
@@ -141,7 +142,7 @@ describe('Manager.findAllLists', function (){
 
 describe('Manager.removeList', function(){
 	it('should remove list if exist', function (done){
-		var newList = new List(1, 'Moja Lista', 'Moj opis');
+		var newList = new List(1, null, 'Moja Lista', 'Moj opis');
 		Manager.addList(newList, function (err, item){
 			if (err){ done(err); }
 			else{
@@ -182,7 +183,7 @@ describe('Manager.removeList', function(){
 
 describe('Manager.removeAllLists', function(){
 	it('should remove all user lists', function (done){
-		var newList = new List(6, 'Moja Lista', 'Moj opis');
+		var newList = new List(6, null, 'Moja Lista', 'Moj opis');
 		Manager.addList(newList, function (err, item){
 			if (err) { done(err); }
 			else{
@@ -193,7 +194,7 @@ describe('Manager.removeAllLists', function(){
 				assert.strictEqual(newList.descr, item.descr);
 				assert.strictEqual(newList.trash, item.trash);
 
-				var newList2 = new List(6, 'Moja Lista2', 'Moj opis2');
+				var newList2 = new List(6, null, 'Moja Lista2', 'Moj opis2');
 				Manager.addList(newList2, function (err, item2){
 					if (err){ done(); }
 					else{
@@ -236,7 +237,7 @@ describe('Manager.removeAllLists', function(){
 
 describe('Manager.updateList', function(){
 	it('should update list', function (done){
-		var newList = new List(1, 'Moja Lista', 'Moj opis');
+		var newList = new List(1, null, 'Moja Lista', 'Moj opis');
 		Manager.addList(newList, function (err, item){
 			if (err){ done(err); }
 			else{
