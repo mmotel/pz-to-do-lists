@@ -161,6 +161,7 @@ $(document).ready(function () {
 		$('#add-list-save-button').click(function () {
 			var newlist = GUI.getAddListForm();
 			newlist.fbid = user.id;
+			console.log(newlist);
 			socket.emit('addList', newlist);
 			GUI.clearAddListForm();
 			GUI.hideAll();
@@ -439,7 +440,7 @@ $(document).ready(function () {
 		//bind action on gui 
 		$('input:radio[name=addListType]').change(function (){
 			var type = $('input:radio[name=addListType]:checked').val();
-			console.log(type);
+			// console.log(type);
 			if(type === "group"){
 				$('#add-list-select-groups').slideDown('fast');
 			}
