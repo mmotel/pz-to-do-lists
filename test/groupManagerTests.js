@@ -20,6 +20,15 @@ var Profile = function(id, displayName, familyName, givenName, middleName){
     return this;
 };
 
+var List = function(fbid, groupid, name, descr){
+    this.fbid = fbid;
+    this.groupid = groupid;
+    this.name = name;
+    this.descr = descr;
+    this.trash = false;
+    return this;
+};
+
 describe('Manager.addGroup', function (){
 	it('should create new group', function (done){
 		var newGroup = new Group(1, 'Moja grupa', 'Opis mojej grupy');
@@ -348,6 +357,72 @@ describe('Manager.findGroupMembers', function (){
 							else{
 								// console.log(items);
 								done();
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+});
+
+describe('Manager.findUserGroupsLists', function (){
+	it('should add user to group members', function (done){
+		var newGroup = new Group(1, 'Moja grupa', 'Opis mojej grupy');
+		Manager.createGroup(newGroup, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newGroup.owner, item.owner);
+				assert.strictEqual(newGroup.name, item.name);
+				assert.strictEqual(newGroup.descr, item.descr);
+				assert.strictEqual(newGroup.owner, item.members[0].fbid);
+				
+				Manager.addUserToGroup(8, item.id, function (err, result){
+					if(err){ done(err); }
+					else{
+						assert.strictEqual(1, result);
+						Manager.findGroup(item.id, function (err, item2){
+							if (err){ done(err); }
+							else{
+								// console.log(item2);
+								assert.strictEqual(item._id.toString(), item2._id.toString());
+								assert.strictEqual(item.id, item2.id);
+								assert.strictEqual(item.owner, item2.owner);
+								assert.strictEqual(item.name, item2.name);
+								assert.strictEqual(item.descr, item2.descr);
+								assert.strictEqual(item.trash, item2.trash);
+								assert.strictEqual(newGroup.owner, item2.members[0].fbid);
+								assert.strictEqual(8, item2.members[1].fbid);
+							
+								var newList = new List(8, item.id, "grupowa", "descr");
+
+								Manager.addList(newList, function (err, item3){
+									if(err){ done(err); }
+									else{
+										assert.notStrictEqual(undefined, item3._id);
+										assert.notStrictEqual(undefined, item3.id);
+										assert.strictEqual(newList.fbid, item3.fbid);
+										assert.strictEqual(newList.groupid, item3.groupid);
+										assert.strictEqual(newList.name, item3.name);
+										assert.strictEqual(newList.descr, item3.descr);
+
+										Manager.findUserGroupsLists(8, function (err, lists){
+											if(err){ done(err); }
+											else{
+												assert.strictEqual(1, lists.length);
+												assert.strictEqual(item3._id.toString(), lists[0]._id.toString());
+												assert.strictEqual(item3.id, lists[0].id);
+												assert.strictEqual(newList.fbid, lists[0].fbid);
+												assert.strictEqual(newList.groupid, lists[0].groupid);
+												assert.strictEqual(newList.name, lists[0].name);
+												assert.strictEqual(newList.descr, lists[0].descr);
+												done();	
+											}
+										});
+									}
+								});
 							}
 						});
 					}
