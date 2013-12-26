@@ -7,4 +7,4 @@ db.appLists.drop();
 //tasks
 db.appTasks.drop();
 //groups
-db.appGroups.grop();
+db.appGroups.drop();
