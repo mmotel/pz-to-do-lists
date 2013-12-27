@@ -367,7 +367,7 @@ describe('Manager.findGroupMembers', function (){
 });
 
 describe('Manager.findUserGroupsLists', function (){
-	it('should add user to group members', function (done){
+	it('should find user groups lists', function (done){
 		var newGroup = new Group(1, 'Moja grupa', 'Opis mojej grupy');
 		Manager.createGroup(newGroup, function (err, item){
 			if (err){ done(err); }
@@ -423,6 +423,51 @@ describe('Manager.findUserGroupsLists', function (){
 										});
 									}
 								});
+							}
+						});
+					}
+				});
+			}
+		});
+	});
+});
+
+describe('Manager.findGroupLists', function (){
+	it('should find group lists', function (done){
+		var newGroup = new Group(9, 'Moja grupa', 'Opis mojej grupy');
+		Manager.createGroup(newGroup, function (err, item){
+			if (err){ done(err); }
+			else{
+				assert.notStrictEqual(undefined, item._id);
+				assert.notStrictEqual(undefined, item.id);
+				assert.strictEqual(newGroup.owner, item.owner);
+				assert.strictEqual(newGroup.name, item.name);
+				assert.strictEqual(newGroup.descr, item.descr);
+				assert.strictEqual(newGroup.owner, item.members[0].fbid);
+						
+				var newList = new List(9, item.id, "grupowa", "descr");
+
+				Manager.addList(newList, function (err, item2){
+					if(err){ done(err); }
+					else{
+						assert.notStrictEqual(undefined, item2._id);
+						assert.notStrictEqual(undefined, item2.id);
+						assert.strictEqual(newList.fbid, item2.fbid);
+						assert.strictEqual(newList.groupid, item2.groupid);
+						assert.strictEqual(newList.name, item2.name);
+						assert.strictEqual(newList.descr, item2.descr);
+
+						Manager.findGroupLists(item.id, function (err, lists){
+							if(err){ done(err); }
+							else{
+								assert.strictEqual(1, lists.length);
+								assert.strictEqual(item2._id.toString(), lists[0]._id.toString());
+								assert.strictEqual(item2.id, lists[0].id);
+								assert.strictEqual(item2.fbid, lists[0].fbid);
+								assert.strictEqual(item2.groupid, lists[0].groupid);
+								assert.strictEqual(item2.name, lists[0].name);
+								assert.strictEqual(item2.descr, lists[0].descr);
+								done();	
 							}
 						});
 					}
