@@ -69,19 +69,17 @@ exports.getList = function (req, res, appUser, Data){
           }
           else{
             Data.findGroupMembers(group.members, function (err, members){
-              if(err){
+              if(err || !( containsObject(fbid, members) ) ){
                 res.writeHead(404, {
                   'Content-Type': 'application/json; charset=utf8'
                 });
                 res.end(JSON.stringify(undefined));
               }
               else{
-                if(containsObject(fbid, members)){
                   res.writeHead(200, {
                     'Content-Type': 'application/json; charset=utf8'
                   });
                   res.end(JSON.stringify(list));
-                }
               }
             });
           }
