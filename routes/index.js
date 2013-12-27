@@ -59,6 +59,34 @@ exports.getList = function (req, res, appUser, Data){
         });
         res.end(JSON.stringify(list));
       }
+      else if(!err && list.groupid !== null){
+        Data.findGroup(list.groupid, function (err, group){
+          if(err){
+            res.writeHead(404, {
+              'Content-Type': 'application/json; charset=utf8'
+            });
+            res.end(JSON.stringify(undefined));
+          }
+          else{
+            Data.findGroupMembers(group.members, function (err, members){
+              if(err){
+                res.writeHead(404, {
+                  'Content-Type': 'application/json; charset=utf8'
+                });
+                res.end(JSON.stringify(undefined));
+              }
+              else{
+                if(containsObject(fbid, members)){
+                  res.writeHead(200, {
+                    'Content-Type': 'application/json; charset=utf8'
+                  });
+                  res.end(JSON.stringify(list));
+                }
+              }
+            });
+          }
+        });
+      }
       else{
         res.writeHead(404, {
           'Content-Type': 'application/json; charset=utf8'
