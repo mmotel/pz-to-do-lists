@@ -95,10 +95,44 @@ GUI = {
 		$('#show-all-lists').slideDown('fast');
 
 		$('#user-lists-big').children().remove();
+		$('#group-lists-big').children().remove();
 		$('#user-lists-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-lists-big').append('<tr>'+
+				'<td><button type="button" class="btn btn-link btn-sm showListBig"'+
+				'id="showListBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
+				'<td>'+ tab[i].descr +'</td>'+
+				'<td><button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
+				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
+				'<td><button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
+				'</tr>');
+		}
+		//rmList button click
+		$('.rmList').click(function() { rmClick(this); });
+
+		//editList button click
+		$('.editList').click(function () { editClick(this); });
+
+		//addListAll button click
+		$('.addTaskAll').click(function () { addTaskClick(this); });
+
+		//showList button click
+		$('.showListBig').click(function () { showListClick(this); });
+	},
+	fillGroupLists: function (tab, rmClick, editClick, addTaskClick, showListClick){
+		$('#user-lists-big').children().remove();
+		$('#group-lists-big').children().remove();
+		$('#group-lists-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+
+		for(var i = 0; i < tab.length; i++){
+			$('#group-lists-big').append('<tr>'+
 				'<td><button type="button" class="btn btn-link btn-sm showListBig"'+
 				'id="showListBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
 				'<td>'+ tab[i].descr +'</td>'+

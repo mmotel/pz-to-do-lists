@@ -324,6 +324,7 @@ $(document).ready(function () {
 
 			$.getJSON('http://localhost:3000/data/get/members/'+groupid+'/', function (data){
 				GUI.hideAll();
+				GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick);
 				GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
 				GUI.showUserSearchForm();
 			});
@@ -417,11 +418,13 @@ $(document).ready(function () {
 		});
 		//Add user to group
 		socket.on('addUserToGroup', function (data){
+			GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick);
 			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
 		});
 
 		//Remove user from group
 		socket.on('removeUserFromGroup', function (data){
+			GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick);
 			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
 		});
 		//---

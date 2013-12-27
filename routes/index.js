@@ -267,10 +267,20 @@ exports.getMembers = function (req, res, appUser, Data){
             res.end(JSON.stringify(undefined));
           }
           else{
-            res.writeHead(200, {
-              'Content-Type': 'application/json; charset=utf8'
+            Data.findGroupLists(groupId, function (err, lists){
+              if(err){
+                res.writeHead(404, {
+                  'Content-Type': 'application/json; charset=utf8'
+                });
+                res.end(JSON.stringify(undefined));
+              }
+              else{
+                res.writeHead(200, {
+                  'Content-Type': 'application/json; charset=utf8'
+                });
+                res.end(JSON.stringify({"group": group, "members": items, "lists": lists}));
+              }
             });
-            res.end(JSON.stringify({"group": group, "members": items}));
           }
         });
       }
