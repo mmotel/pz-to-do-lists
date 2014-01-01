@@ -84,9 +84,22 @@ $(document).ready(function () {
 				id = id.substring(7, id.length);
 			}
 
-			GUI.fillAddTaskForm(id);
-			GUI.hideAll();
-			GUI.showAddingTaskForm();
+			$.getJSON('http://localhost:3000/data/get/list/'+id+'/', function (list){
+				console.log(list);
+				if(list.groupid !== null){
+					$.getJSON('http://localhost:3000/data/get/group/members/'+list.groupid+'/', function (data){
+						console.log(data.members);
+					GUI.fillAddTaskForm(id, list.groupid, data.members);
+					GUI.hideAll();
+					GUI.showAddingTaskForm();			
+					});
+				}
+				else{		
+					GUI.fillAddTaskForm(id, null);
+					GUI.hideAll();
+					GUI.showAddingTaskForm();
+				}
+			});
 		};
 		//edit task button click
 		var editTaskCLick = function (that){
@@ -192,7 +205,14 @@ $(document).ready(function () {
 		$('#add-task-save-button').click(function (){
 			var newTask = GUI.getAddTaskForm();
 			newTask.fbid = user.id;
+
+
+			if(newTask.executor === null){
+				newTask.executor = user.id;
+			}
+
 			socket.emit('addTask', newTask);
+			GUI.clearAddTaskForm();
 			GUI.hideAll();
 		});
 		//edit-task
