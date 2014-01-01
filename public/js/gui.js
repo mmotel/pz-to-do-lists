@@ -384,7 +384,7 @@ GUI = {
 		newaddtask.executor = $('#add-task-executor').val();
 		return newaddtask;
 	},
-	fillEditTaskForm: function (task){
+	fillEditTaskForm: function (task, groupId, members){
 		$('#edit-task-id').val(task.id);
 		$('#edit-task-list-id').val(task.listid);
 		$('#edit-task-name').val(task.name);
@@ -393,18 +393,36 @@ GUI = {
 		$('#edit-task-deadline').datepicker( "setDate" , dateString);
 		$('#edit-task-description').val(task.descr);
 		if(task.status){ $('#done').prop('checked', true); }
+
+		$('#edit-task-group-id').val(groupId);
+		$('#edit-task-executor').children().remove();
+		if(members){
+
+			for(var i=0; i < members.length; i++){
+				$('#edit-task-executor').append('<option value="'+ members[i].id +'"'+
+					(task.executor === members[i].id ? ' selected' : ' ') +'>'+
+					members[i].profile.displayName +'</option>');
+			}
+			$('#edit-task-select-executor').show();
+		}
+		else{
+			$('#edit-task-select-executor').hide();
+		}
 	},
 	clearEditTaskForm: function (){
 		$('#edit-task-id').val("");
 		$('#edit-task-list-id').val("");
+		$('#edit-task-group-id').val("");
 		$('#edit-task-name').val("");
 		$('#edit-task-deadline').val("");
 		$('#edit-task-description').val("");
 		$('#notDone').prop('checked', true);
+		$('#edit-task-executor').children().remove();
 	},
 	getEditTaskForm: function (){
 		var editedtask = {};
 		editedtask.listid = parseInt($('#edit-task-list-id').val());
+		editedtask.groupid = parseInt($('#edit-task-group-id').val());
 		editedtask.id = parseInt($('#edit-task-id').val());
 		editedtask.name = $('#edit-task-name').val();
 		var date = $('#edit-task-deadline').val().split('-');
@@ -414,6 +432,8 @@ GUI = {
 		}else{
 			editedtask.status = false;
 		}
+		editedtask.descr = $('#edit-task-description').val();
+		editedtask.executor = $('#edit-task-executor').val();
 		return editedtask;
 	},
 	fillEditListForm: function (list){

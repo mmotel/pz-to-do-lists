@@ -107,9 +107,19 @@ $(document).ready(function () {
 			taskid = taskid.substring(8, taskid.length);
 
 			$.getJSON('http://localhost:3000/data/get/task/'+taskid+'/', function (task){
-				GUI.fillEditTaskForm(task);
-				GUI.hideAll();
-				GUI.showEditingTaskForm();
+
+				if(task.groupid !== null){
+					$.getJSON('http://localhost:3000/data/get/group/members/'+task.groupid+'/', function (data){
+						GUI.fillEditTaskForm(task, task.groupid, data.members);
+						GUI.hideAll();
+						GUI.showEditingTaskForm();
+					});
+				}
+				else{
+					GUI.fillEditTaskForm(task, task.groupid);
+					GUI.hideAll();
+					GUI.showEditingTaskForm();
+				}
 			});
 		};
 		//remove task button click
@@ -206,7 +216,6 @@ $(document).ready(function () {
 			var newTask = GUI.getAddTaskForm();
 			newTask.fbid = user.id;
 
-
 			if(newTask.executor === null){
 				newTask.executor = user.id;
 			}
@@ -224,6 +233,11 @@ $(document).ready(function () {
 		$('#edit-task-save-button').click(function (){
 			var editedTask = GUI.getEditTaskForm();
 			editedTask.fbid = user.id;
+
+			if(editedTask.executor === null){
+				editedTask.executor = user.id;
+			}
+
 			socket.emit('editTask', editedTask);
 			GUI.hideAll();
 		});
