@@ -251,7 +251,7 @@ exports.getGroups = function (req, res, appUser, Data){
   }
 };
 
-exports.getMembers = function (req, res, appUser, Data){
+exports.getGroupAll = function (req, res, appUser, Data){
   var sid = req.sessionID;
   var fbid = appUser.checkLogin(sid);
 

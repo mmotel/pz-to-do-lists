@@ -322,7 +322,7 @@ $(document).ready(function () {
 				groupid = groupid.substring(9 , groupid.length);
 			}
 
-			$.getJSON('http://localhost:3000/data/get/members/'+groupid+'/', function (data){
+			$.getJSON('http://localhost:3000/data/get/group/all/'+groupid+'/', function (data){
 				GUI.hideAll();
 				GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick);
 				GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
