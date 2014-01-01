@@ -1,6 +1,29 @@
 var GUI;
 
 $(document).ready(function () {
+
+	//setting up datepickers for add & edit tash forms
+	$('#add-task-deadline').datepicker({
+		inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
+	});
+
+	$('#edit-task-deadline').datepicker({
+		inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
+	});
+
+	//actions with add group/priavate list
+	$('input:radio[name=addListType]').change(function (){
+		var type = $('input:radio[name=addListType]:checked').val();
+		// console.log(type);
+		if(type === "group"){
+			$('#add-list-select-groups').slideDown('fast');
+		}
+		else{
+			$('#add-list-select-groups').slideUp('fast');				
+		}
+	});
+
+
 	'use strict';
 GUI = {
 	hideLogin: function() {
