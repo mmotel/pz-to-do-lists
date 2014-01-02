@@ -63,11 +63,11 @@ Tasks' managment `15.12.2013 18:00` `DONE`
 ###Task 4 
 Groups' managment `22.12.2013 18:00` `DONE`
 ###Task 5 
-Group's lists' and tasks' management `02.01.2014 18:00` `new deadline`
+Group's lists' and tasks' management `DONE`
 ###Task 6 
 Incoming tasks, permissions, validators `09.01.2014 18:00` `new deadline`
-###Extra time
-One week, just in case `16.01.2014 18:00` 
+###Task 7
+Extended task life cycle (new/in progress/done/closed) `16.01.2014 18:00` 
 
 #[Docs (wiki)](https://github.com/mmotel/pz-to-do-lists/wiki)
 
