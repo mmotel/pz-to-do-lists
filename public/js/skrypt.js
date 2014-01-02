@@ -153,8 +153,17 @@ $(document).ready(function () {
 			}
 
 			$.getJSON('http://localhost:3000/data/get/tasks/'+listid+'/', function (tasks){
-				GUI.hideAll();
-				GUI.fillUserAllTasks(listName, tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+
+				if(tasks[0] && tasks[0].groupid !== null){
+					$.getJSON('http://localhost:3000/data/get/group/members/'+tasks[0].groupid+'/', function (data){
+						GUI.hideAll();
+						GUI.fillUserAllTasks(listName, tasks, rmTaskClick, editTaskCLick, taskDoneClick, data.members);
+					});
+				}
+				else{
+					GUI.hideAll();
+					GUI.fillUserAllTasks(listName, tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+				}
 			});
 
 		};

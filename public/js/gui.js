@@ -3,6 +3,19 @@ var GUI;
 $(document).ready(function () {
 	'use strict';
 
+	//helper functions
+	var findMember = function(members, userid){
+		for(var i=0; i < members.length; i++){
+			console.log(members[i].id + ' : ' + userid);
+			if(members[i].id === userid){
+				return members[i].profile.displayName;
+			}
+		}
+		if(i === members.length){
+			return 'brak';
+		}
+	};
+
 	//setting up datepickers for add & edit tash forms
 	$('#add-task-deadline').datepicker({
 		inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
@@ -254,16 +267,18 @@ GUI = {
 		//addUser button click
 		$('.addUser').click(function() { addClick(this); });
 	},
-	fillUserAllTasks: function (listName, tab, rmClick, editClick, taskDoneClick){
+	fillUserAllTasks: function (listName, tab, rmClick, editClick, taskDoneClick, members){ //<---- !!!
 		$('#show-all-tasks-list-name').html(listName);
 		$('#user-tasks-big').children().remove();
 		$('#user-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Termin</th><th>Status</th>'+
+			(members ? '<th>Wykonawca</th>' : '') +
 			'<th colspan="3">Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
 				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td>'+
+				(members ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') +
 				'<td><button type="button" class="btn btn-default btn-sm pull-right editTask" id="editTask'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
