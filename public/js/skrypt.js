@@ -194,6 +194,9 @@ $(document).ready(function () {
 			var newlist = GUI.getAddListForm();
 			newlist.fbid = user.id;
 			console.log(newlist);
+			if(newlist.groupid !== null){
+				newlist.perms = GUI.getPermsListForm();
+			}
 			socket.emit('addList', newlist);
 			GUI.clearAddListForm();
 			GUI.hideAll();
@@ -343,6 +346,10 @@ $(document).ready(function () {
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.hideAll();
 				GUI.clearAddListForm();
+				if(groupid !== null){
+					GUI.fillPermsListForm();
+					GUI.showPermsListForm();
+				}
 				GUI.fillAddListForm(groups, groupid);
 				GUI.showAddingListForm();
 			});
