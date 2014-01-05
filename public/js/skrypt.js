@@ -65,10 +65,22 @@ $(document).ready(function () {
 		};
 
 		var editListClick = function (that) {
+			GUI.clearEditListForm();
 			var listId = $(that).attr('id');
 			listId = parseInt(listId.substring(8, listId.length));
 
 			$.getJSON('http://localhost:3000/data/get/list/'+listId+'/', function (list){
+				if(list.groupid !== null){
+					$.getJSON('http://localhost:3000/data/get/group/'+list.groupid+'/', function (group){
+						if(user.id === list.fbid || user.id === group.owner){
+							GUI.fillEditListForm(list);
+							GUI.fillPermsListForm(list.perms);
+							GUI.hideAll();
+							GUI.showEditingListForm();		
+							GUI.showPermsListForm();					
+						}
+					});
+				}
 				GUI.fillEditListForm(list);
 				GUI.hideAll();
 				GUI.showEditingListForm();
@@ -197,6 +209,9 @@ $(document).ready(function () {
 			if(newlist.groupid !== null){
 				newlist.perms = GUI.getPermsListForm();
 			}
+			else{
+				newlist.perms = null;
+			}
 			socket.emit('addList', newlist);
 			GUI.clearAddListForm();
 			GUI.hideAll();
@@ -210,7 +225,14 @@ $(document).ready(function () {
 		$('#edit-list-save-button').click(function () {
 			var editedList = GUI.getEditListForm();
 			editedList.fbid = user.id;
-			socket.emit('editList', editedList);
+			console.log(editedList.groupid);
+			if(editedList.groupid !== NaN){
+				editedList.perms = GUI.getPermsListForm();
+			}
+			else{
+				editedTask.perms = null;
+			}
+			// socket.emit('editList', editedList);
 			GUI.hideAll();
 		});
 

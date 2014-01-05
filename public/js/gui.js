@@ -460,17 +460,20 @@ GUI = {
 	},
 	fillEditListForm: function (list){
 		$('#edit-list-id').val(list.id);
+		$('#edit-list-groupid').val(list.groupid);
 		$('#edit-list-name').val(list.name);
 		$('#edit-list-description').val(list.descr);
 	},
 	clearEditListForm: function (){
 		$('#edit-list-id').val("");
+		$('#edit-list-groupid').val("");
 		$('#edit-list-name').val("");
 		$('#edit-list-description').val("");
 	},
 	getEditListForm: function (){
 		var neweditlist = {};
 		neweditlist.id = parseInt($('#edit-list-id').val());
+		neweditlist.groupid = parseInt($('#edit-list-groupid').val());
 		neweditlist.name = $('#edit-list-name').val();
 		neweditlist.descr = $('#edit-list-description').val();
 		return neweditlist;
@@ -548,6 +551,16 @@ GUI = {
 			$('#perm-list-edit-private').prop('checked', true);
 			$('#perm-list-rm-private').prop('checked', true);
 			$('#perm-list-status-private').prop('checked', true);
+		}
+		else{
+			if(perms.addTask){ $('#perm-list-add-private').prop('checked', true); }
+				else{ $('#perm-list-add-group').prop('checked', true); }
+			if(perms.editTask){ $('#perm-list-edit-private').prop('checked', true); }
+				else{ $('#perm-list-edit-group').prop('checked', true); }
+			if(perms.rmTask){ $('#perm-list-rm-private').prop('checked', true); }
+				else{ $('#perm-list-rm-group').prop('checked', true); }
+			if(perms.status){ $('#perm-list-status-private').prop('checked', true); }
+				else{ $('#perm-list-status-group').prop('checked', true); }
 		}
 	},
 	clearPermsListForm: function (){
