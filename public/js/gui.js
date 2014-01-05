@@ -31,11 +31,17 @@ $(document).ready(function () {
 		// console.log(type);
 		if(type === "group"){
 			$('#add-list-select-groups').slideDown('fast');
+			GUI.fillPermsListForm();
+			GUI.showPermsListForm();
 		}
 		else{
-			$('#add-list-select-groups').slideUp('fast');				
+			$('#add-list-select-groups').slideUp('fast');	
+			$('#permissions-lists').slideUp();			
 		}
 	});
+
+	$('.radio').css({'display': 'inline-table', 'margin': '5px'});
+	$('label').css({'display': 'block', 'clear':'both'});
 
 GUI = {
 	hideLogin: function() {
@@ -63,6 +69,7 @@ GUI = {
 		$('#adding-groups').hide();
 		$('#editing-groups').hide();
 		$("#user-search").hide();
+		$('#permissions-lists').hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
@@ -535,6 +542,28 @@ GUI = {
 		var groupId = parseInt($('#user-delete-group-modal-id').val());
 		return groupId;
 	},
+	fillPermsListForm: function (perms){
+		if(!perms){
+			$('#perm-list-add-private').prop('checked', true);
+			$('#perm-list-edit-private').prop('checked', true);
+			$('#perm-list-rm-private').prop('checked', true);
+			$('#perm-list-status-private').prop('checked', true);
+		}
+	},
+	clearPermsListForm: function (){
+		$('#perm-list-add-private').prop('checked', true);
+		$('#perm-list-edit-private').prop('checked', true);
+		$('#perm-list-rm-private').prop('checked', true);
+		$('#perm-list-status-private').prop('checked', true);
+	},
+	getPermsListForm: function (){
+		var perms = {};
+		perms.addTask = ($('input:radio[name=permListAdd]:checked').val() === 'private');
+		perms.editTask = ($('input:radio[name=permListEdit]:checked').val() === 'private');
+		perms.rmTask = ($('input:radio[name=permListRm]:checked').val() === 'private');
+		perms.status = ($('input:radio[name=permListStatus]:checked').val() === 'private');
+		return perms;
+	},
 	showUsersSettings: function (){
 		$('#user-settings').slideDown('fast');
 	},
@@ -573,6 +602,9 @@ GUI = {
 	},
 	showDeleteGroupModal: function (){
 		$('#user-delete-group-modal').modal('show');
+	},
+	showPermsListForm: function (){
+		$('#permissions-lists').slideDown();
 	}
 };
 

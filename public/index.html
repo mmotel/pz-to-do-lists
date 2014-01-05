@@ -205,6 +205,80 @@
 			</form>
 		</div>
 		<!-- Koniec formularza edytowania listy -->
+		<!-- lists permissions form -->
+		<div id="permissions-lists">
+			<h4>Uprawnienia</h4>
+			  <div class="form-group">
+			    <label>Dodawanie zadań</label>
+			    <table>
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="permListAdd" id="perm-list-add-private" value="private"> <!-- checked> -->
+				    Prywatne
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="permListAdd" id="perm-list-add-group" value="group">
+				    Publiczne
+				  </label>
+				</div>
+			  </div>
+			  <div class="form-group">
+			    <label>Edytowanie zadań</label>
+			    <table>
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="permListEdit" id="perm-list-edit-private" value="private"> <!-- checked> -->
+				    Prywatne
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="permListEdit" id="perm-list-edit-group" value="group">
+				    Publiczne
+				  </label>
+				</div>
+			  </div>
+			  <div class="form-group">
+			    <label>Usuwanie zadań</label>
+			    <table>
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="permListRm" id="perm-list-rm-private" value="private"> <!-- checked> -->
+				    Prywatne
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="permListRm" id="perm-list-rm-group" value="group">
+				    Publiczne
+				  </label>
+				</div>
+			  </div>
+			  <div class="form-group">
+			    <label>Zmienianie statusu zadań</label>
+			    <table>
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="permListStatus" id="perm-list-status-private" value="private"> <!-- checked> -->
+				    Prywatne 
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="permListStatus" id="perm-list-status-group" value="group">
+				    Publiczne
+				  </label>
+				</div>
+			  </div>
+			  <hr/>
+			<p>
+				Prywatne - zmian mogą dokonywać tylko właściciel grupy i listy. <br/>
+				Publiczne - zmian mogą dokonywaćwszyscy członkowie.
+			</p>
+		</div>
+		<!-- lists permissions form end-->
 		<!-- Poczatek formularza dodawania zadania -->
 		<div id="adding-tasks">
 		  	<h2><span class="glyphicon glyphicon-plus"></span> Dodawanie zadania</h2>
