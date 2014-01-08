@@ -204,17 +204,19 @@ $(document).ready(function () {
 
 		$('#add-list-save-button').click(function () {
 			var newlist = GUI.getAddListForm();
-			newlist.fbid = user.id;
-			console.log(newlist);
-			if(newlist.groupid !== null){
-				newlist.perms = GUI.getPermsListForm();
+			if(newlist !== undefined){
+				newlist.fbid = user.id;
+				console.log(newlist);
+				if(newlist.groupid !== null){
+					newlist.perms = GUI.getPermsListForm();
+				}
+				else{
+					newlist.perms = null;
+				}
+				socket.emit('addList', newlist);
+				GUI.clearAddListForm();
+				GUI.hideAll();
 			}
-			else{
-				newlist.perms = null;
-			}
-			socket.emit('addList', newlist);
-			GUI.clearAddListForm();
-			GUI.hideAll();
 		});
 
 		$('#add-list-cancel-button').click(function () {
@@ -299,9 +301,11 @@ $(document).ready(function () {
 
 		$('#add-group-save-button').click(function (){
 			var newGroup = GUI.getAddGroupForm();
-			newGroup.owner = user.id;
-			socket.emit('addGroup', newGroup);
-			GUI.hideAll();
+			if(newGroup !== undefined){
+				newGroup.owner = user.id;
+				socket.emit('addGroup', newGroup);
+				GUI.hideAll();
+			}
 
 		});
 
