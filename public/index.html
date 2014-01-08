@@ -397,6 +397,76 @@
 			</form>
 		</div>
 		<!-- koniec formularza edytowania grupy-->
+		<!-- groups permissions form -->
+		<div id="permissions-groups">
+			<h4>Uprawnienia</h4>
+			  <div class="form-group">
+			    <label>Dodawanie i usuwanie członków grupy</label>
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="permGroupAddRmUser" id="perm-group-add-rm-user-private" value="private"> <!-- checked> -->
+				    Prywatne*
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="permGroupAddRmUser" id="perm-group-add-rm-user-group" value="group">
+				    Publiczne
+				  </label>
+				</div>
+			  </div>
+			  <div class="form-group">
+			    <label>Dodawanie list</label>
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="permGroupAdd" id="perm-group-add-private" value="private"> <!-- checked> -->
+				    Prywatne
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="permGroupAdd" id="perm-group-add-group" value="group">
+				    Publiczne
+				  </label>
+				</div>
+			  </div>
+			  <div class="form-group">
+			    <label>Edytowanie list</label>
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="permGroupEdit" id="perm-group-edit-private" value="private"> <!-- checked> -->
+				    Prywatne
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="permGroupEdit" id="perm-group-edit-group" value="group">
+				    Publiczne
+				  </label>
+				</div>
+			  </div>
+			  <div class="form-group">
+			    <label>Usuwanie list</label>
+			    <div class="radio">
+				  <label>
+				    <input type="radio" name="permGroupRm" id="perm-group-rm-private" value="private"> <!-- checked> -->
+				    Prywatne
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="permGroupRm" id="perm-group-rm-group" value="group">
+				    Publiczne
+				  </label>
+				</div>
+			  </div>
+			  <hr/>
+			<p>
+				Prywatne - zmian mogą dokonywać tylko właściciel grupy i listy. * - tylko właściciel grupy. <br/>
+				Publiczne - zmian mogą dokonywaćwszyscy członkowie.
+			</p>
+		</div>
+		<!-- groups permissions form end-->
 		<div id="show-all-lists">
 		  	<h2><span class="glyphicon glyphicon-list"></span> Moje listy</h2>
 		  		<table class="table table-hover table-striped" id="user-lists-big">
