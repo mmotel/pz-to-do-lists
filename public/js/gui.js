@@ -363,7 +363,8 @@ GUI = {
 			newaddlist.groupid = null;
 		}
 		else{
-			newaddlist.groupid = parseInt( $('#add-list-group').val() );
+			newaddlist.groupid = parseInt( $('#add-list-group').val() ); //if empty === NaN
+			// if(newaddlist.groupid === NaN) do stuff about err
 		}
 
 		return newaddlist;
@@ -486,12 +487,22 @@ GUI = {
 	clearAddGroupForm: function (){
 		$('#add-group-name').val("");
 		$('#add-group-description').val("");
+		$('#add-group-name').parent().removeClass('has-error'); //<<---!
 	},
 	getAddGroupForm: function (){
 		var newaddgroup = {};
 		newaddgroup.name = $('#add-group-name').val();
 		newaddgroup.descr = $('#add-group-description').val();
-		return newaddgroup;
+
+		var error = false; //<<----!
+
+		if(newaddgroup.name === ""){
+			$('#add-group-name').parent().addClass('has-error');
+			error = true;
+		}
+
+		if(error){ return undefined; }
+		else { return newaddgroup; }
 	},
 	fillEditGroupForm: function (group){
 		 $('#edit-group-id').val(group.id);
