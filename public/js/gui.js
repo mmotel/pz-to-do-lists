@@ -70,6 +70,7 @@ GUI = {
 		$('#editing-groups').hide();
 		$("#user-search").hide();
 		$('#permissions-lists').hide();
+		$('#permissions-groups').hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
