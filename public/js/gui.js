@@ -355,12 +355,14 @@ GUI = {
 		$('#add-list-description').val("");
 		$('#add-list-type-private').prop('checked', true);
 		$('#add-list-group').children().remove();
-		$('#add-list-name').parent().removeClass('has-error');
+		$('#adding-lists .form-group').removeClass('has-error');
 	},
 	getAddListForm: function (){
 		var newaddlist = {};
 		newaddlist.name = $('#add-list-name').val();
 		newaddlist.descr = $('#add-list-description').val();
+
+		$('#adding-lists .form-group').removeClass('has-error');
 
 		var err = false;
 
@@ -373,8 +375,11 @@ GUI = {
 			newaddlist.groupid = null;
 		}
 		else{
-			newaddlist.groupid = parseInt( $('#add-list-group').val() ); //if empty === NaN
-			// if(newaddlist.groupid === NaN) do stuff about err
+			newaddlist.groupid = parseInt( $('#add-list-group').val() );
+			if($('#add-list-group').val() === null){
+				$('#add-list-group').parent().addClass('has-error');
+				err = true;
+			}
 		}
 		if(err){
 			return undefined;
@@ -525,11 +530,11 @@ GUI = {
 		$('#edit-list-description').val(list.descr);
 	},
 	clearEditListForm: function (){
-		$('#edit-list-id').val("");
-		$('#edit-list-groupid').val("");
+		$('#edit-list-id').val(null);
+		$('#edit-list-groupid').val(null);
 		$('#edit-list-name').val("");
 		$('#edit-list-description').val("");
-		$('#edit-list-name').parent().removeClass('has-error');
+		$('#editing-lists .form-group').removeClass('has-error');
 	},
 	getEditListForm: function (){
 		var neweditlist = {};
@@ -537,6 +542,8 @@ GUI = {
 		neweditlist.groupid = parseInt($('#edit-list-groupid').val());
 		neweditlist.name = $('#edit-list-name').val();
 		neweditlist.descr = $('#edit-list-description').val();
+
+		$('#editing-lists .form-group').removeClass('has-error');
 
 		var err = false;
 
