@@ -21,9 +21,11 @@ $(document).ready(function () {
 		inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
 	});
 
+	$('#add-task-deadline').datepicker("setDate", new Date());
 	$('#edit-task-deadline').datepicker({
 		inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
 	});
+	$('#edit-task-deadline').datepicker("setDate", new Date());
 
 	//actions with add group/priavate list
 	$('input:radio[name=addListType]').change(function (){
@@ -395,20 +397,15 @@ GUI = {
 		else{
 			$('#add-task-select-executor').hide();
 		}
-
-		// $('#add-task-name').val(task.name);
-		// $('#add-task-description').val(task.descr);
 	},
 	clearAddTaskForm: function (){
-		$('#add-task-list-id').val("");
-		$('#add-task-group-id').val("");
+		$('#add-task-list-id').val(null);
+		$('#add-task-group-id').val(null);
 		$('#add-task-name').val("");
 		$('#add-task-description').val("");
 		$('#add-task-deadline').val("");
 		$('#add-task-executor').children().remove();
-		$('#add-task-name').parent().removeClass('has-error');
-		$('#add-task-deadline').parent().removeClass('has-error');
-		$('#add-task-executor').parent().removeClass('has-error');
+		$('#adding-tasks .form-group').removeClass('has-error');
 	},
 	getAddTaskForm: function (){
 		var newaddtask = {};
@@ -421,17 +418,21 @@ GUI = {
 		newaddtask.descr = $('#add-task-description').val();
 		newaddtask.executor = $('#add-task-executor').val();
 
+		$('#adding-tasks .form-group').removeClass('has-error');
+
 		var err = false;
 
-		if(newaddtask.name === ""){
+		console.log(newaddtask);
+
+		if(newaddtask.name === ""){ 
 			$('#add-task-name').parent().addClass('has-error');
 			err = true;
 		}
-		if($('#add-task-deadline').val() === ""){
+		if($('#add-task-deadline').val() === ""){ 
 			$('#add-task-deadline').parent().addClass('has-error');
 			err = true;
 		}
-		if(newaddtask.executor === ""){
+		if($('#add-task-group-id').val() !== "" && newaddtask.executor === null){ 
 			$('#add-task-executor').parent().addClass('has-error');
 			err = true;
 		}
@@ -468,17 +469,15 @@ GUI = {
 		}
 	},
 	clearEditTaskForm: function (){
-		$('#edit-task-id').val("");
-		$('#edit-task-list-id').val("");
-		$('#edit-task-group-id').val("");
+		$('#edit-task-id').val(null);
+		$('#edit-task-list-id').val(null);
+		$('#edit-task-group-id').val(null);
 		$('#edit-task-name').val("");
 		$('#edit-task-deadline').val("");
 		$('#edit-task-description').val("");
 		$('#notDone').prop('checked', true);
 		$('#edit-task-executor').children().remove();
-		$('#edit-task-name').parent().removeClass('has-error');
-		$('#edit-task-deadline').parent().removeClass('has-error');
-		$('#edit-task-executor').parent().removeClass('has-error');
+		$('#editing-tasks .form-group').parent().removeClass('has-error');
 	},
 	getEditTaskForm: function (){
 		var editedtask = {};
@@ -496,6 +495,8 @@ GUI = {
 		editedtask.descr = $('#edit-task-description').val();
 		editedtask.executor = $('#edit-task-executor').val();
 
+		$('#editing-tasks .form-group').parent().removeClass('has-error');
+
 		var err = false;
 
 		if(editedtask.name === ""){
@@ -506,7 +507,7 @@ GUI = {
 			$('#edit-task-deadline').parent().addClass('has-error');
 			err = true;
 		}
-		if(editedtask.executor === ""){
+		if($('#edit-task-group-id').val() !== "" && editedtask.executor === null){
 			$('#edit-task-executor').parent().addClass('has-error');
 			err = true;
 		}
