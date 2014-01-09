@@ -45,6 +45,8 @@ $(document).ready(function () {
 	$('.radio').css({'display': 'inline-table', 'margin': '5px'});
 	$('label').css({'display': 'block', 'clear':'both'});
 
+	$('#top-menu').css({'margin-right': '10px'});
+
 GUI = {
 	hideLogin: function() {
 		$('#login-link').hide();
@@ -57,6 +59,7 @@ GUI = {
 		$('#show-all-lists-button').hide();
 		$('#add-group-button').hide();
 		$('#show-all-groups-button').hide();
+		$('#settings-button').hide();
 	},
 	hideAll: function () {
 		$('#user-settings').hide();
@@ -77,7 +80,7 @@ GUI = {
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
 		//fill loggedin panel with data
-		GUIutils.getNormalFbPic(user.id, 'profile-normal-pic');
+		GUIutils.getSmallFbPic(user.id, 'profile-normal-pic');
 		// getLargeFbPic(user.id, 'fbLargePic');
 		$('#profile-display-name').text(user.profile.displayName);
 	},
@@ -93,6 +96,7 @@ GUI = {
 		$('#show-all-lists-button').show();
 		$('#add-group-button').show();
 		$('#show-all-groups-button').show();
+		$('#settings-button').show();
 	},
 	showNotLoggedin: function (){
 		$('#login-link').show();

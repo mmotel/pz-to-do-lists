@@ -16,10 +16,11 @@
 		<script src="/js/gui.js"></script>
 		<script src="/js/skrypt.js"></script>
 	</head>  
-	<body>
-<div class"row">
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation" id="top-navbar">
-	<div class="container">
+	<body id="body">
+
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation" id="top-navbar">
+<div class="container">
   <!-- Brand and toggle get grouped for better mobile display -->
 	  <div class="navbar-header">
 	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -28,95 +29,78 @@
 	      <span class="icon-bar"></span>
 	      <span class="icon-bar"></span>
 	    </button>
-	    <a class="navbar-brand" href="#"> <span class="glyphicon glyphicon-list glyphicon-white"></span> Listy zadań</a>
+	    <a class="navbar-brand"> <span class="glyphicon glyphicon-list glyphicon-white"></span> Listy zadań</a>
 	  </div>
 
 	  <!-- Collect the nav links, forms, and other content for toggling -->
 	  <div class="collapse navbar-collapse navbar-ex1-collapse">
-	<!--     <ul class="nav navbar-nav">
-	      <li class="active">		<button type="button" class="btn btn-primary pull-right" id="add-list-button">
-			<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button></li>
-			</ul>
-	      <li><a href="#">Link</a></li>
-	      <li class="dropdown">
-	        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-	        <ul class="dropdown-menu">
-	          <li><a href="#">Action</a></li>
-	          <li><a href="#">Another action</a></li>
-	          <li><a href="#">Something else here</a></li>
-	          <li><a href="#">Separated link</a></li>
-	          <li><a href="#">One more separated link</a></li>
-	        </ul>
+	    <ul class="nav navbar-nav navbar-right" id="top-menu">
+		    <li>
+		    	<a id="show-all-lists-button"><span class="glyphicon glyphicon-list"></span> Moje listy</a>
+		    </li>
+		    <li>
+		    	<a id="show-all-groups-button"><span class="glyphicon glyphicon-list-alt"></span> Moje grupy</a>
+		    </li>  
+				<li>
+					<a id="add-list-button"><span class="glyphicon glyphicon-plus"></span> Dodaj listę</a>
+				</li>
+		    <li>
+		    	<a id="add-group-button"><span class="glyphicon glyphicon-plus"></span> Dodaj grupę</a>
+		    </li>
+				<li>
+					<a id="settings-button"><span class="glyphicon glyphicon-cog"></span> Ustawienia</a>
+				</li>
+	      <li id="login-link">
+	      	<a href="/auth/facebook">
+	      	<span class="glyphicon glyphicon-log-in"></span> Zaloguj się przez Facebooka</a>
 	      </li>
-	    </ul> -->
-	<!--     <form class="navbar-form navbar-left" role="search">
-	      <div class="form-group">
-	        <input type="text" class="form-control" placeholder="Search">
-	      </div>
-	      <button type="submit" class="btn btn-default">Submit</button>
-	    </form> -->
-	    <button type="button" id="show-all-lists-button" class="btn btn-primary navbar-btn">
-	      	<span class="glyphicon glyphicon-list"></span> Moje listy</button>
-	    <button type="button" id="show-all-groups-button" class="btn btn-primary navbar-btn">
-	      	<span class="glyphicon glyphicon-list-alt"></span> Moje grupy</button>  
-		<button type="button" id="add-list-button" class="btn btn-primary navbar-btn">
-	      	<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button>
-	    <button type="button" id="add-group-button" class="btn btn-primary navbar-btn">
-	      	<span class="glyphicon glyphicon-plus"></span> Dodaj grupę</button>
-	    <ul class="nav navbar-nav navbar-right">
-	      <li id="login-link"><a href="/auth/facebook">Zaloguj się przez Facebooka</a></li>
-	      <li id="logout-link"><a href="/logout">Wyloguj</a></li>
+	      <li id="logout-link">
+	      	<a href="/logout">
+	      	<span class="glyphicon glyphicon-log-out"></span> Wyloguj</a>
+	      </li>
 	    </ul>
 	  </div><!-- /.navbar-collapse -->
-	</div>
+  </div>
 </nav>
-</div>
-<div class="container">
+<div class="container" id="content">
 	<div class="row">
-	<div class="col-md-4">
-	<div class="panel panel-default" id="login-panel">
-	<div class="panel-body">
+	<div class="col-md-4" id="left-col">
+	<div id="login-panel">
 	  	<h1>Witaj!</h1>
 	  	<p>
-  		<a class="btn btn-primary btn-lg" href="/auth/facebook">Zaloguj się przez Facebooka</a>
+  		<a class="btn btn-primary btn-lg" href="/auth/facebook">
+  			<span class="glyphicon glyphicon-log-in"></span> Zaloguj się przez Facebooka</a>
 		</p>
 	</div>
-	</div>
 	<!-- Początek panelu uzytkownika -->
-	<div class="panel panel-default" id="loggedin-panel">
-	<div class="panel-body">
+	<div id="loggedin-panel">
 		<div class="row">
-			<div class="col-md-5">
+			<div class="col-md-3 visible-lg">
 				<img src="" alt="zdjęcie profilowe" class="img-rounded" id="profile-normal-pic">
 			</div>
-			<div class="col-md-7">
+			<div class="col-md-9">
 				<h3 id="profile-display-name">Nazwa do wyświetlenia</h3>
-				<button type="button" class="btn btn-primary" id="settings-button"><span class="glyphicon glyphicon-cog"></span> Ustawienia</button>
 			</div>
-		</div>
 	</div>
 	</div>
 	<!-- Koniec panelu uzytkownika -->
 	<!-- Poczatek panelu grup uzytkownika -->
-	<div class="panel panel-default" id="user-groups-small-panel">
-	<div class="panel-heading"> Moje grupy	</div>
-	<div class="panel-body">
+	<div id="user-groups-small-panel">
+	<h3> Moje grupy	</h3>
 		<table class="table table-hover table-striped" id="user-groups-small">
 		</table>
 	</div>
-	</div>
 	<!-- Koniec panelu grup uzytkownika -->
+	<hr/>
 	<!-- Poczatek panelu list uzytkownika -->
-	<div class="panel panel-default" id="user-lists-small-panel">
-	<div class="panel-heading"> Moje listy	</div>
-	<div class="panel-body">
+	<div id="user-lists-small-panel">
+	<h3> Moje listy </h3>
 		<table class="table table-hover table-striped" id="user-lists-small">
 		</table>
 	</div>
-	</div>
 	<!-- Koniec panelu list uzytkownika -->
 	</div>
-	  <div class="col-md-8">
+	  <div class="col-md-8" id="right-col">
 	  	<!-- Poczatek formularza ustawien konta uzytkownika -->
 	  	<div id="user-settings">
 		  	<h2><span class="glyphicon glyphicon-cog"></span> Ustawienia konta</h2>
