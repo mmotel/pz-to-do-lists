@@ -359,6 +359,13 @@ GUI = {
 		newaddlist.name = $('#add-list-name').val();
 		newaddlist.descr = $('#add-list-description').val();
 
+		var err = false;
+
+		if(newaddlist.name === ""){
+			$('#add-list-name').parent().addClass('has-error');
+			err = true;
+		}
+
 		if($('input:radio[name=addListType]:checked').val() === "private"){
 			newaddlist.groupid = null;
 		}
@@ -366,8 +373,11 @@ GUI = {
 			newaddlist.groupid = parseInt( $('#add-list-group').val() ); //if empty === NaN
 			// if(newaddlist.groupid === NaN) do stuff about err
 		}
-
-		return newaddlist;
+		if(err){
+			return undefined;
+		}else{
+			return newaddlist;
+		}
 	},
 	fillAddTaskForm: function (listId, groupId, members){
 		$('#add-task-list-id').val(listId);
