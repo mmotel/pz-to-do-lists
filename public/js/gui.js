@@ -488,7 +488,19 @@ GUI = {
 		neweditlist.groupid = parseInt($('#edit-list-groupid').val());
 		neweditlist.name = $('#edit-list-name').val();
 		neweditlist.descr = $('#edit-list-description').val();
-		return neweditlist;
+
+		var err = false;
+
+		if(neweditlist.name === ""){
+			$('#edit-list-name').parent().addClass('has-error');
+			err = true;
+		}
+
+		if(err){
+			return undefined;
+		}else{
+			return neweditlist;
+		}
 	},
 	fillAddGroupForm: function (group){
 		// $('#add-group-name').val(group.name);

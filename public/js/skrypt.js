@@ -226,16 +226,18 @@ $(document).ready(function () {
 		//edit-list
 		$('#edit-list-save-button').click(function () {
 			var editedList = GUI.getEditListForm();
-			editedList.fbid = user.id;
-			console.log(editedList.groupid);
-			if(editedList.groupid !== NaN){
-				editedList.perms = GUI.getPermsListForm();
-			}
-			else{
-				editedTask.perms = null;
-			}
-			// socket.emit('editList', editedList);
-			GUI.hideAll();
+			if(editedList !== undefined){
+				editedList.fbid = user.id;
+				console.log(editedList.groupid);
+				if(editedList.groupid !== NaN){
+					editedList.perms = GUI.getPermsListForm();
+				}
+				else{
+					editedTask.perms = null;
+				}
+				socket.emit('editList', editedList);
+				GUI.hideAll();
+				}
 		});
 
 		$('#edit-list-cancel-button').click(function () {
