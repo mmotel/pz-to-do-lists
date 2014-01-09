@@ -427,7 +427,7 @@ GUI = {
 			$('#add-task-name').parent().addClass('has-error');
 			err = true;
 		}
-		if(newaddtask.deadline === ""){
+		if($('#add-task-deadline').val() === ""){
 			$('#add-task-deadline').parent().addClass('has-error');
 			err = true;
 		}

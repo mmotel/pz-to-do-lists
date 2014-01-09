@@ -252,8 +252,8 @@ $(document).ready(function () {
 
 		$('#add-task-save-button').click(function (){
 			var newTask = GUI.getAddTaskForm();
-			newTask.fbid = user.id;
 			if(newTask !== undefined){
+				newTask.fbid = user.id;
 				if(newTask.executor === null){
 					newTask.executor = user.id;
 				}
