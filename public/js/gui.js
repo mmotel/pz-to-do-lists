@@ -353,6 +353,7 @@ GUI = {
 		$('#add-list-description').val("");
 		$('#add-list-type-private').prop('checked', true);
 		$('#add-list-group').children().remove();
+		$('#add-list-name').parent().removeClass('has-error');
 	},
 	getAddListForm: function (){
 		var newaddlist = {};
@@ -405,6 +406,9 @@ GUI = {
 		$('#add-task-description').val("");
 		$('#add-task-deadline').val("");
 		$('#add-task-executor').children().remove();
+		$('#add-task-name').parent().removeClass('has-error');
+		$('#add-task-deadline').parent().removeClass('has-error');
+		$('#add-task-executor').parent().removeClass('has-error');
 	},
 	getAddTaskForm: function (){
 		var newaddtask = {};
@@ -501,6 +505,7 @@ GUI = {
 		$('#edit-list-groupid').val("");
 		$('#edit-list-name').val("");
 		$('#edit-list-description').val("");
+		$('#edit-list-name').parent().removeClass('has-error');
 	},
 	getEditListForm: function (){
 		var neweditlist = {};
@@ -555,6 +560,7 @@ GUI = {
 		$('#edit-group-id').val("");
 		$('#edit-group-name').val("");
 		$('#edit-group-description').val("");
+		$('#edit-group-name').parent().removeClass('has-error');
 	},
 	getEditGroupForm: function (){
 		var neweditgroup = {};
