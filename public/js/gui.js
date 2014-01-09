@@ -416,7 +416,27 @@ GUI = {
 		// console.log(newaddtask.deadline);
 		newaddtask.descr = $('#add-task-description').val();
 		newaddtask.executor = $('#add-task-executor').val();
-		return newaddtask;
+
+		var err = false;
+
+		if(newaddtask.name === ""){
+			$('#add-task-name').parent().addClass('has-error');
+			err = true;
+		}
+		if(newaddtask.deadline === ""){
+			$('#add-task-deadline').parent().addClass('has-error');
+			err = true;
+		}
+		if(newaddtask.executor === ""){
+			$('#add-task-executor').parent().addClass('has-error');
+			err = true;
+		}
+
+		if(err){
+			return undefined;
+		}else{
+			return newaddtask;
+		}
 	},
 	fillEditTaskForm: function (task, groupId, members){
 		$('#edit-task-id').val(task.id);

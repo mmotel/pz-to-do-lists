@@ -253,14 +253,15 @@ $(document).ready(function () {
 		$('#add-task-save-button').click(function (){
 			var newTask = GUI.getAddTaskForm();
 			newTask.fbid = user.id;
+			if(newTask !== undefined){
+				if(newTask.executor === null){
+					newTask.executor = user.id;
+				}
 
-			if(newTask.executor === null){
-				newTask.executor = user.id;
+				socket.emit('addTask', newTask);
+				GUI.clearAddTaskForm();
+				GUI.hideAll();
 			}
-
-			socket.emit('addTask', newTask);
-			GUI.clearAddTaskForm();
-			GUI.hideAll();
 		});
 		//edit-task
 		$('#edit-task-cancel-button').click(function (){
