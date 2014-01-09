@@ -327,9 +327,11 @@ $(document).ready(function () {
 
 		$('#edit-group-save-button').click(function (){
 			var editedGroup = GUI.getEditGroupForm();
-			editedGroup.fbid = user.id;
-			socket.emit('editGroup', editedGroup);
-			GUI.hideAll();
+			if(editedGroup !== undefined){
+				editedGroup.fbid = user.id;
+				socket.emit('editGroup', editedGroup);
+				GUI.hideAll();
+			}
 		});
 
 		$('#edit-group-cancel-button').click(function (){

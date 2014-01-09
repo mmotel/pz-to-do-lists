@@ -519,7 +519,19 @@ GUI = {
 		neweditgroup.id = parseInt($('#edit-group-id').val());
 		neweditgroup.name = $('#edit-group-name').val();
 		neweditgroup.descr = $('#edit-group-description').val();
-		return neweditgroup;
+
+		var err = false;
+
+		if(neweditgroup.name === ""){
+			$('#edit-group-name').parent().addClass('has-error');
+			err = true;
+		}
+
+		if(err){
+			return undefined;
+		}else{
+			return neweditgroup;
+		}
 	},
 	fillDeleteListModal: function (list){
 		$('#user-delete-list-modal-id').val(list.id);
