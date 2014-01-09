@@ -476,6 +476,9 @@ GUI = {
 		$('#edit-task-description').val("");
 		$('#notDone').prop('checked', true);
 		$('#edit-task-executor').children().remove();
+		$('#edit-task-name').parent().removeClass('has-error');
+		$('#edit-task-deadline').parent().removeClass('has-error');
+		$('#edit-task-executor').parent().removeClass('has-error');
 	},
 	getEditTaskForm: function (){
 		var editedtask = {};
@@ -492,7 +495,27 @@ GUI = {
 		}
 		editedtask.descr = $('#edit-task-description').val();
 		editedtask.executor = $('#edit-task-executor').val();
-		return editedtask;
+
+		var err = false;
+
+		if(editedtask.name === ""){
+			$('#edit-task-name').parent().addClass('has-error');
+			err = true;
+		}
+		if($('#edit-task-deadline').val() === ""){
+			$('#edit-task-deadline').parent().addClass('has-error');
+			err = true;
+		}
+		if(editedtask.executor === ""){
+			$('#edit-task-executor').parent().addClass('has-error');
+			err = true;
+		}
+
+		if(err){
+			return undefined;
+		}else{
+			return editedtask;
+		}
 	},
 	fillEditListForm: function (list){
 		$('#edit-list-id').val(list.id);

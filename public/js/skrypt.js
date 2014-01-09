@@ -271,14 +271,16 @@ $(document).ready(function () {
 
 		$('#edit-task-save-button').click(function (){
 			var editedTask = GUI.getEditTaskForm();
-			editedTask.fbid = user.id;
+			if(editedTask !== undefined){
+				editedTask.fbid = user.id;
 
-			if(editedTask.executor === null){
-				editedTask.executor = user.id;
+				if(editedTask.executor === null){
+					editedTask.executor = user.id;
+				}
+
+				socket.emit('editTask', editedTask);
+				GUI.hideAll();
 			}
-
-			socket.emit('editTask', editedTask);
-			GUI.hideAll();
 		});
 		//remove task confirm
 		$('#rmTaskConfirm').click(function () {
