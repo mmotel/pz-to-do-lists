@@ -301,6 +301,8 @@ $(document).ready(function () {
 		$('#add-group-button').click(function (){
 			GUI.hideAll();
 			GUI.clearAddGroupForm();
+			GUI.fillPermsGroupForm();
+			GUI.showPermsGroupForm();
 			GUI.showAddingGroupForm();
 		});
 
@@ -308,6 +310,7 @@ $(document).ready(function () {
 			var newGroup = GUI.getAddGroupForm();
 			if(newGroup !== undefined){
 				newGroup.owner = user.id;
+				newGroup.perms = GUI.getPermsGroupForm();
 				socket.emit('addGroup', newGroup);
 				GUI.hideAll();
 			}
@@ -326,6 +329,8 @@ $(document).ready(function () {
 			$.getJSON('http://localhost:3000/data/get/group/'+groupid+'/', function (group){
 				GUI.fillEditGroupForm(group);
 				GUI.hideAll();
+				GUI.fillPermsGroupForm(group.perms);
+				GUI.showPermsGroupForm();
 				GUI.showEditingGroupForm();
 			});
 		};
@@ -334,6 +339,7 @@ $(document).ready(function () {
 			var editedGroup = GUI.getEditGroupForm();
 			if(editedGroup !== undefined){
 				editedGroup.fbid = user.id;
+				editedGroup.perms = GUI.getPermsGroupForm();
 				socket.emit('editGroup', editedGroup);
 				GUI.hideAll();
 			}

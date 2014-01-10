@@ -684,6 +684,38 @@ GUI = {
 		perms.status = ($('input:radio[name=permListStatus]:checked').val() === 'private');
 		return perms;
 	},
+	fillPermsGroupForm: function (perms){
+		if(!perms){
+			$('#perm-group-add-rm-user-private').prop('checked', true);
+			$('#perm-group-add-private').prop('checked', true);
+			$('#perm-group-edit-private').prop('checked', true);
+			$('#perm-group-rm-private').prop('checked', true);
+		}
+		else{
+			if(perms.addRmMembers){ $('#perm-group-add-rm-user-private').prop('checked', true); }
+				else{ $('#perm-group-add-rm-user-group').prop('checked', true); }
+			if(perms.addList){ $('#perm-group-add-private').prop('checked', true); }
+				else{ $('#perm-group-add-group').prop('checked', true); }
+			if(perms.editList){ $('#perm-group-edit-private').prop('checked', true); }
+				else{ $('#perm-group-edit-group').prop('checked', true); }
+			if(perms.rmList){ $('#perm-group-rm-private').prop('checked', true); }
+				else{ $('#perm-group-rm-group').prop('checked', true); }
+		}
+	},
+	clearPermsGroupForm: function (){
+		$('#perm-group-add-rm-user-private').prop('checked', true);
+		$('#perm-group-add-private').prop('checked', true);
+		$('#perm-group-edit-private').prop('checked', true);
+		$('#perm-group-rm-private').prop('checked', true);
+	},
+	getPermsGroupForm: function (){
+		var perms = {};
+		perms.addRmMembers = ($('input:radio[name=permGroupAddRmUser]:checked').val() === 'private');
+		perms.addList = ($('input:radio[name=permGroupAdd]:checked').val() === 'private');
+		perms.editList = ($('input:radio[name=permGroupEdit]:checked').val() === 'private');
+		perms.rmList = ($('input:radio[name=permGroupRm]:checked').val() === 'private');
+		return perms;
+	},
 	showUsersSettings: function (){
 		$('#user-settings').slideDown('fast');
 	},
@@ -725,6 +757,9 @@ GUI = {
 	},
 	showPermsListForm: function (){
 		$('#permissions-lists').slideDown();
+	},
+	showPermsGroupForm: function (){
+		$('#permissions-groups').slideDown();
 	}
 };
 
