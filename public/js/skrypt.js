@@ -164,17 +164,17 @@ $(document).ready(function () {
 				listid = listid.substring(8, listid.length);
 			}
 
-			$.getJSON('http://localhost:3000/data/get/tasks/'+listid+'/', function (tasks){
-
-				if(tasks[0] && tasks[0].groupid !== null){
-					$.getJSON('http://localhost:3000/data/get/group/members/'+tasks[0].groupid+'/', function (data){
+			$.getJSON('http://localhost:3000/data/get/tasks/'+listid+'/', function (data){
+				console.log(data);
+				if(data.list.groupid !== null){
+					$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
 						GUI.hideAll();
-						GUI.fillUserAllTasks(listName, tasks, rmTaskClick, editTaskCLick, taskDoneClick, data.members);
+						GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
 					});
 				}
 				else{
 					GUI.hideAll();
-					GUI.fillUserAllTasks(listName, tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
 				}
 			});
 
@@ -476,19 +476,47 @@ $(document).ready(function () {
 		});
 		//Add task
 		socket.on('addedTask', function (data) {
-			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+			if(data.list.groupid !== null){
+				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
+				});
+			}
+			else{
+				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+			}
 		});
 		//Edit task
 		socket.on('editedTask', function (data) {
-			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+			if(data.list.groupid !== null){
+				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
+				});
+			}
+			else{
+				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+			}
 		});
 		//Remove task
 		socket.on('rmedTask', function (data) {
-			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+			if(data.list.groupid !== null){
+				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
+				});
+			}
+			else{
+				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+			}
 		});
 		//Done task
 		socket.on('doneTask', function (data) {
-			GUI.fillUserAllTasks(data.list.name, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+			if(data.list.groupid !== null){
+				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
+				});
+			}
+			else{
+				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+			}
 		});
 		//Add group
 		socket.on('addedGroup', function (data){

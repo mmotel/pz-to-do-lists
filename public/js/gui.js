@@ -281,8 +281,8 @@ GUI = {
 		//addUser button click
 		$('.addUser').click(function() { addClick(this); });
 	},
-	fillUserAllTasks: function (listName, tab, rmClick, editClick, taskDoneClick, members){ //<---- !!!
-		$('#show-all-tasks-list-name').html(listName);
+	fillUserAllTasks: function (list, tab, rmClick, editClick, taskDoneClick, members, group){ //<---- !!!
+		$('#show-all-tasks-list-name').html(list.name);
 		$('#user-tasks-big').children().remove();
 		$('#user-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Termin</th><th>Status</th>'+
 			(members ? '<th>Wykonawca</th>' : '') +
