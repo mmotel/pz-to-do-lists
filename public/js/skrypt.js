@@ -11,44 +11,52 @@ $(document).ready(function () {
 	//helper functions
 	var isMember = function (members, userId){
 		for(var i = 0; i < members.length; i++){
-			if(members[i].id === userId){ return true; }
+			if(members[i].fbid === userId){ return true; }
 		}
 		return false;
+	}
+
+	var findGroup = function (groups, groupId){
+		for(var i = 0; i < groups.length; i++){
+			if(groups[i].id === groupId){ return groups[i]; }
+		}
+		return null;
 	}
 	//---
 
 	//permissions functions
-	var canAddTask = function (group, members, list, userId){
+	var canAddTask = function (groups, list, userId){
+		var group = findGroup(groups, list.groupid);
 		if(list.perms.addTask){
 			if(list.fbid === userId || group.owner === userId){ return true; }
 			else { return false; }
 		}
-		else if(isMember(members, userId)) { return true; }
+		else if(isMember(group.members, userId)) { return true; }
 		else { return false; }
 	};
-	var canEditTask = function (group, members, list, task, userId){
+	var canEditTask = function (group, list, task, userId){
 		if(list.perms.editTask){
 			if(list.fbid === userId || group.owner === userId || task.fbid === userId){ return true; }
 			else { return false; }
 		}
-		else if(isMember(members, userId)) { return true; }
+		else if(isMember(group.members, userId)) { return true; }
 		else { return false; }
 	};
-	var canRmTask = function (group, members, list, task, userId){
+	var canRmTask = function (group, list, task, userId){
 		if(list.perms.rmTask){
 			if(list.fbid === userId || group.owner === userId || task.fbid === userId){ return true; }
 			else { return false; }
 		}
-		else if(isMember(members, userId)) { return true; }
+		else if(isMember(group.members, userId)) { return true; }
 		else { return false; }
 	};
-	var canChangeStatusTask = function (group, members, list, task, userId){
+	var canChangeStatusTask = function (group, list, task, userId){
 		if(list.perms.status){
 			if(list.fbid === userId || group.owner === userId || task.fbid === userId || 
 				task.executor == userId){ return true; }
 			else { return false; }
 		}
-		else if(isMember(members, userId)) { return true; }
+		else if(isMember(group.members, userId)) { return true; }
 		else { return false; }
 	};
 
@@ -229,8 +237,11 @@ $(document).ready(function () {
 
 		$('#show-all-lists-button').click(function (){
 			$.getJSON('http://localhost:3000/data/get/lists/', function (lists){
-				GUI.hideAll();
-				GUI.fillUserAllLists(lists, rmListClick, editListClick, addTaskClick, showListClick);
+				$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
+					GUI.hideAll();
+					GUI.fillUserAllLists(lists, rmListClick, editListClick, addTaskClick, showListClick,
+						groups, user.id, canAddTask);
+				});
 			});
 		});
 		$('#rmListConfirm').click(function () {
@@ -461,8 +472,10 @@ $(document).ready(function () {
 			}
 
 			$.getJSON('http://localhost:3000/data/get/group/all/'+groupid+'/', function (data){
+				var groups = [ data.group ];
 				GUI.hideAll();
-				GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick);
+				GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick, 
+					groups, user.id, canAddTask);
 				GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
 				GUI.showUserSearchForm();
 			});
@@ -510,18 +523,27 @@ $(document).ready(function () {
 		});
 		//Add list
 		socket.on('addedList', function (data) {
-			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
-			GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick);
+			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
+				GUI.fillUserListsSmall(data, addTaskClick, showListClick, groups, canAddTask, user.id);
+				GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick, 
+					groups, user.id, canAddTask);
+			});
 		});
 		//Remove list
 		socket.on('rmedList', function (data) {
-			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
-			GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick);
+			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
+				GUI.fillUserListsSmall(data, addTaskClick, showListClick, groups, canAddTask, user.id);
+				GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick, 
+					groups, user.id, canAddTask);
+			});
 		});
 		//Edit list
 		socket.on('editedList', function (data) {
-			GUI.fillUserListsSmall(data, addTaskClick, showListClick);
-			GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick);
+			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
+				GUI.fillUserListsSmall(data, addTaskClick, showListClick, groups, canAddTask, user.id);
+				GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick, 
+					groups, user.id, canAddTask);
+			});
 		});
 		//Add task
 		socket.on('addedTask', function (data) {
@@ -605,10 +627,12 @@ $(document).ready(function () {
 		GUI.showLoggedin();
 		//get & show lists' panel
 		$.getJSON('http://localhost:3000/data/get/lists/', function (lists){
-			GUI.fillUserListsSmall(lists, addTaskClick, showListClick);
+			
 		
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
-				GUI.fillUserGroupsSmall(groups, showGroupClick, addListToGroupClick);
+				GUI.fillUserListsSmall(lists, addTaskClick, showListClick, groups, canAddTask, user.id);
+				GUI.fillUserGroupsSmall(groups, showGroupClick, addListToGroupClick, groups, user.id, 
+					canAddTask);
 			});
 		});
 

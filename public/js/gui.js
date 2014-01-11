@@ -102,16 +102,17 @@ GUI = {
 		$('#login-link').show();
 		$('#login-panel').show();
 	},
-	fillUserListsSmall: function (tab, addTaskClick, showListClick){
+	fillUserListsSmall: function (tab, addTaskClick, showListClick, groups, canAddTask, userId){
 		$('#user-lists-small').children().remove();
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-lists-small').append('<tr>'+
 				'<td><button type="button" class="btn btn-link btn-sm showListSmall"'+
-				'id="showList'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
-				'<td><button type="button" class="btn btn-link btn-sm pull-right addTaskSmall"'+
+				'id="showList'+ tab[i].id+'">'+ tab[i].name +'</button></td><td>'+
+				(tab[i].groupid === null || canAddTask(groups, tab[i], userId) ?
+				'<button type="button" class="btn btn-link btn-sm pull-right addTaskSmall"'+
 				' id="addTask'+ tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>' : '') +
 				'</td></tr>');
 		}
 
@@ -140,7 +141,7 @@ GUI = {
 		//showGroup button click
 		$('.showGroupSmall').click(function () { showGroupClick(this); });
 	},
-	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick, showListClick){
+	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick, showListClick, groups, userId, canAddTask){
 		$('#show-all-lists').slideDown('fast');
 
 		$('#user-lists-big').children().remove();
@@ -158,9 +159,11 @@ GUI = {
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
+				'<td>'+
+				(tab[i].groupid === null || canAddTask(groups, tab[i], userId) ?
+				'<button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>' : '' ) + '</td>'+
 				'</tr>');
 		}
 		//rmList button click
@@ -175,7 +178,7 @@ GUI = {
 		//showList button click
 		$('.showListBig').click(function () { showListClick(this); });
 	},
-	fillGroupLists: function (tab, rmClick, editClick, addTaskClick, showListClick){
+	fillGroupLists: function (tab, rmClick, editClick, addTaskClick, showListClick, groups, userId, canAddTask){
 		$('#user-lists-big').children().remove();
 		$('#group-lists-big').children().remove();
 		$('#group-lists-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
@@ -191,9 +194,11 @@ GUI = {
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
+				'<td>'+
+				(tab[i].groupid === null || canAddTask(groups, tab[i], userId) ?
+				'<button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>' : '') + '</td>'+
 				'</tr>');
 		}
 		//rmList button click
@@ -292,16 +297,16 @@ GUI = {
 			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
 				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td>'+
-				(members ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') + '<td>' +
-				(!members || canEditTask(group, members, list, tab[i], userId) ? 
+				(list.groupid !== null ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') + '<td>' +
+				(list.groupid === null || canEditTask(group, list, tab[i], userId) ? 
 				'<button type="button" class="btn btn-default btn-sm pull-right editTask" id="editTask'+ 
 					tab[i].id +'">'  +
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '')+ '</td><td>' +
-				(!members || canRmTask(group, members, list, tab[i], userId) ?
+				(list.groupid === null || canRmTask(group, list, tab[i], userId) ?
 				'<button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmTask'+ 
 					tab[i].id +'">' + 
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>': '') +  '</td><td>' +
-				(!members || canChangeStatusTask(group, members, list, tab[i], userId) ?
+				(list.groupid === null || canChangeStatusTask(group, list, tab[i], userId) ?
 				'<button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
 					tab[i].id +'"'+ (tab[i].status ? 'disabled="disabled"' : ' ') +'>'+
 				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button>' : '') + '</td></tr>' );
