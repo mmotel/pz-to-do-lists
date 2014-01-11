@@ -8,6 +8,48 @@ $(document).ready(function () {
 	GUI.hideAll();
 	//---
 
+	//helper functions
+	var isMember = function (members, userId){
+		for(var i = 0; i < members.length; i++){
+			if(members[i].fb === userId){ return true; }
+		}
+		return false;
+	}
+	//---
+
+	//permissions functions
+	var canAddTask = function (group, members, list, userId){
+		if(list.perms.addTask){
+			if(list.fbid === userId || group.owner === userId){ return true; }
+			else { return false; }
+		}
+		else { return true; }
+	};
+	var canEditTask = function (group, members, list, task, userId){
+		if(list.perms.editTask){
+			if(list.fbid === userId || group.owner === userId || task.fbid === userId){ return true; }
+			else { return false; }
+		}
+		else { return true; }
+	};
+	var canRmTask = function (group, members, list, task, userId){
+		if(list.perms.rmTask){
+			if(list.fbid === userId || group.owner === userId || task.fbid === userId){ return true; }
+			else { return false; }
+		}
+		else { return true; }
+	};
+	var canChangeStatusTask = function (group, members, list, task, userId){
+		if(list.perms.status){
+			if(list.fbid === userId || group.owner === userId || task.fbid === userId || 
+				task.executor == userId){ return true; }
+			else { return false; }
+		}
+		else { return true; }
+	};
+
+	//---
+
 	//starting front-end
 	$.getJSON('http://localhost:3000/getLogin', function (data){ 
 		console.log("data [ " + data + " ]"); 
@@ -169,7 +211,8 @@ $(document).ready(function () {
 				if(data.list.groupid !== null){
 					$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
 						GUI.hideAll();
-						GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
+						GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
+							group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 					});
 				}
 				else{
@@ -478,7 +521,8 @@ $(document).ready(function () {
 		socket.on('addedTask', function (data) {
 			if(data.list.groupid !== null){
 				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
-					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
+						group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 				});
 			}
 			else{
@@ -489,7 +533,8 @@ $(document).ready(function () {
 		socket.on('editedTask', function (data) {
 			if(data.list.groupid !== null){
 				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
-					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
+						group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 				});
 			}
 			else{
@@ -500,7 +545,8 @@ $(document).ready(function () {
 		socket.on('rmedTask', function (data) {
 			if(data.list.groupid !== null){
 				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
-					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
+						group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 				});
 			}
 			else{
@@ -511,7 +557,8 @@ $(document).ready(function () {
 		socket.on('doneTask', function (data) {
 			if(data.list.groupid !== null){
 				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
-					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, group.members, group.group);
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
+						group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 				});
 			}
 			else{
