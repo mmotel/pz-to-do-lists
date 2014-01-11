@@ -114,11 +114,11 @@ $(document).ready(function () {
 			$.getJSON('http://localhost:3000/data/get/list/'+listId+'/', function (list){
 				if(list.groupid !== null){
 					$.getJSON('http://localhost:3000/data/get/group/'+list.groupid+'/', function (group){
+						GUI.fillEditListForm(list);
+						GUI.hideAll();
+						GUI.showEditingListForm();	
 						if(user.id === list.fbid || user.id === group.owner){
-							GUI.fillEditListForm(list);
-							GUI.fillPermsListForm(list.perms);
-							GUI.hideAll();
-							GUI.showEditingListForm();		
+							GUI.fillPermsListForm(list.perms);	
 							GUI.showPermsListForm();					
 						}
 					});
@@ -372,9 +372,11 @@ $(document).ready(function () {
 			$.getJSON('http://localhost:3000/data/get/group/'+groupid+'/', function (group){
 				GUI.fillEditGroupForm(group);
 				GUI.hideAll();
-				GUI.fillPermsGroupForm(group.perms);
-				GUI.showPermsGroupForm();
 				GUI.showEditingGroupForm();
+				if(group.owner === user.id){
+					GUI.fillPermsGroupForm(group.perms);
+					GUI.showPermsGroupForm();
+				}
 			});
 		};
 
