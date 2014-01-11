@@ -11,7 +11,7 @@ $(document).ready(function () {
 	//helper functions
 	var isMember = function (members, userId){
 		for(var i = 0; i < members.length; i++){
-			if(members[i].fb === userId){ return true; }
+			if(members[i].id === userId){ return true; }
 		}
 		return false;
 	}
@@ -23,21 +23,24 @@ $(document).ready(function () {
 			if(list.fbid === userId || group.owner === userId){ return true; }
 			else { return false; }
 		}
-		else { return true; }
+		else if(isMember(members, userId)) { return true; }
+		else { return false; }
 	};
 	var canEditTask = function (group, members, list, task, userId){
 		if(list.perms.editTask){
 			if(list.fbid === userId || group.owner === userId || task.fbid === userId){ return true; }
 			else { return false; }
 		}
-		else { return true; }
+		else if(isMember(members, userId)) { return true; }
+		else { return false; }
 	};
 	var canRmTask = function (group, members, list, task, userId){
 		if(list.perms.rmTask){
 			if(list.fbid === userId || group.owner === userId || task.fbid === userId){ return true; }
 			else { return false; }
 		}
-		else { return true; }
+		else if(isMember(members, userId)) { return true; }
+		else { return false; }
 	};
 	var canChangeStatusTask = function (group, members, list, task, userId){
 		if(list.perms.status){
@@ -45,7 +48,8 @@ $(document).ready(function () {
 				task.executor == userId){ return true; }
 			else { return false; }
 		}
-		else { return true; }
+		else if(isMember(members, userId)) { return true; }
+		else { return false; }
 	};
 
 	//---

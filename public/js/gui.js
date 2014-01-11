@@ -292,20 +292,19 @@ GUI = {
 			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
 				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td>'+
-				(members ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') +
-				(members && canEditTask(group, members, list, tab[i], userId) ? 
-				'<td><button type="button" class="btn btn-default btn-sm pull-right editTask" id="editTask'+ 
+				(members ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') + '<td>' +
+				(!members || canEditTask(group, members, list, tab[i], userId) ? 
+				'<button type="button" class="btn btn-default btn-sm pull-right editTask" id="editTask'+ 
 					tab[i].id +'">'  +
-				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>' : '')+
-				(members && canRmTask(group, members, list, tab[i], userId) ?
-				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmTask'+ 
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '')+ '</td><td>' +
+				(!members || canRmTask(group, members, list, tab[i], userId) ?
+				'<button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmTask'+ 
 					tab[i].id +'">' + 
-				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>': '') +
-				(members && canChangeStatusTask(group, members, list, tab[i], userId) ?
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>': '') +  '</td><td>' +
+				(!members || canChangeStatusTask(group, members, list, tab[i], userId) ?
+				'<button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
 					tab[i].id +'"'+ (tab[i].status ? 'disabled="disabled"' : ' ') +'>'+
-				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button></td>'+
-				'</tr>' : '') );
+				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button>' : '') + '</td></tr>' );
 		}
 		//rmTask button click
 		$('.rmTask').click(function() { rmClick(this); });
