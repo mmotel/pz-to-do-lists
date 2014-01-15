@@ -543,7 +543,7 @@ $(document).ready(function () {
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.hideAll();
 				GUI.fillUserAllGroups(groups, editGroupClick, rmGroupClick, showGroupClick, 
-					addListToGroupClick, canAddList, user.id);
+					addListToGroupClick, canAddList, user.id, canAddRmMembers);
 				GUI.fillUserGroupsSmall(groups, showGroupClick, addListToGroupClick, canAddList, user.id);
 			});
 		});
@@ -645,19 +645,19 @@ $(document).ready(function () {
 		//Add group
 		socket.on('addedGroup', function (data){
 			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick, 
-				addListToGroupClick, canAddList, user.id);
+				addListToGroupClick, canAddList, user.id, canAddRmMembers);
 			GUI.fillUserGroupsSmall(data, showGroupClick, addListToGroupClick, canAddList, user.id);
 		});
 		//Edit group
 		socket.on('editedGroup', function (data){
 			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick, 
-				addListToGroupClick, canAddList, user.id);
+				addListToGroupClick, canAddList, user.id, canAddRmMembers);
 			GUI.fillUserGroupsSmall(data, showGroupClick, addListToGroupClick, canAddList, user.id);
 		});
 		//Rm group
 		socket.on('rmedGroup', function (data){
 			GUI.fillUserAllGroups(data, editGroupClick, rmGroupClick, showGroupClick, 
-				addListToGroupClick, canAddList, user.id);
+				addListToGroupClick, canAddList, user.id, canAddRmMembers);
 			GUI.fillUserGroupsSmall(data, showGroupClick, addListToGroupClick, canAddList, user.id);
 		});
 		//Add user to group

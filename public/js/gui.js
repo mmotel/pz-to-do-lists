@@ -219,7 +219,7 @@ GUI = {
 		//showList button click
 		$('.showListBig').click(function () { showListClick(this); });
 	},
-	fillUserAllGroups: function (tab, editClick, rmClick, showGroupClick, addListClick, canAddList, userId){
+	fillUserAllGroups: function (tab, editClick, rmClick, showGroupClick, addListClick, canAddList, userId, canManageGroup){
 		$('#show-all-groups').slideDown('fast');
 
 		$('#user-groups-big').children().remove();
@@ -229,13 +229,15 @@ GUI = {
 			$('#user-groups-big').append('<tr>'+
 				'<td><button type="button" class="btn btn-link btn-sm showGroupBig"'+
 				'id="showGroupBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
-				'<td>'+ tab[i].descr +'</td>'+
-				'<td><button type="button" class="btn btn-default btn-sm pull-right editGroup" id="editGroup'+ 
+				'<td>'+ tab[i].descr +'</td><td>'+
+				( canManageGroup(tab[i], userId) ?
+				'<button type="button" class="btn btn-default btn-sm pull-right editGroup" id="editGroup'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
-				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmGroup" id="rmGroup'+ 
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '') + '</td><td>'+
+				( canManageGroup(tab[i], userId) ?
+				'<button type="button" class="btn btn-danger btn-sm pull-right rmGroup" id="rmGroup'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td><td>'+
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>' : '') + '</td><td>'+
 				( canAddList(tab[i], userId) ?
 				'<button type="button" class="btn btn-primary btn-sm pull-right addListBig" id="addListBig'+ 
 					tab[i].id +'">'+
