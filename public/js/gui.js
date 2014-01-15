@@ -76,6 +76,7 @@ GUI = {
 		$("#user-search").hide();
 		$('#permissions-lists').hide();
 		$('#permissions-groups').hide();
+		$('#show-incoming-tasks').hide();
 	},
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
@@ -328,6 +329,24 @@ GUI = {
 		$('.taskDone').click(function () { taskDoneClick(this); });
 
 		$('#show-all-tasks').slideDown('fast');
+	},
+	fillIncomingTasks: function (tab, showOnListClick){ //<---- !!!
+		$('#incoming-tasks-big').children().remove();
+		$('#incoming-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Termin</th><th>Status</th>'+
+			'<th>Opcje</th></tr>');
+
+		for(var i = 0; i < tab.length; i++){
+			$('#incoming-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
+				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
+				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td><td>'+
+				'<button type="button" class="btn btn-primary btn-sm pull-right showOnList" id="showOnList'+ 
+					tab[i].listid +'>'+
+				'<span class="glyphicon glyphicon-ok"></span> Pokaż na liście</button>' + '</td></tr>' );
+		}
+		//showOnList button click
+		$('.showOnList').click(function (){ showOnListClick(this); });
+
+		$('#show-incoming-tasks').slideDown('fast');
 	},
 	//functions after code-refactoring
 	fillUserForm: function (user){

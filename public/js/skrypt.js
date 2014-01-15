@@ -252,6 +252,9 @@ $(document).ready(function () {
 			else if(listid.substring(0,8) === "showList"){
 				listid = listid.substring(8, listid.length);
 			}
+			else if(listid.substring(0,10) === "showOnList"){
+				listid = listid.substring(10, listid.length);
+			}
 
 			$.getJSON('http://localhost:3000/data/get/tasks/'+listid+'/', function (data){
 				console.log(data);
@@ -545,6 +548,14 @@ $(document).ready(function () {
 			});
 		});
 
+		//show incoming tasks
+		$('#brand').click(function (){
+			$.getJSON('http://localhost:3000/data/get/tasks/incoming/', function (tasks){
+				GUI.hideAll();
+				GUI.fillIncomingTasks(tasks, showListClick);
+			});
+		})
+
 
 		//sockets.io
 		var socket = io.connect('http://localhost:3000');
@@ -669,10 +680,13 @@ $(document).ready(function () {
 		//get & show lists' panel
 		$.getJSON('http://localhost:3000/data/get/lists/', function (lists){
 			
-		
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.fillUserListsSmall(lists, addTaskClick, showListClick, groups, canAddTask, user.id);
 				GUI.fillUserGroupsSmall(groups, showGroupClick, addListToGroupClick, canAddList, user.id);
+
+				$.getJSON('http://localhost:3000/data/get/tasks/incoming/', function (tasks){
+					GUI.fillIncomingTasks(tasks, showListClick);
+				});
 			});
 		});
 
