@@ -75,7 +75,26 @@ $(document).ready(function () {
 		}
 		else if(isMember(group.members, userId)){ return true; }
 		else { return false; }		
-	}
+	};
+	var canEditList = function (groups, list, userId){
+		var group = findGroup(groups, list.groupid);
+		if(group.perms.editList){
+			if(group.owner === userId || list.fbid === userId){ return true; }
+			else{ return false; }
+		}
+		else if(isMember(group.members, userId)){ return true; }
+		else { return false; }
+	};
+
+	var canRmList = function (groups, list, userId){
+		var group = findGroup(groups, list.groupid);
+		if(group.perms.rmList){
+			if(group.owner === userId || list.fbid === userId){ return true; }
+			else{ return false; }
+		}
+		else if(isMember(group.members, userId)){ return true; }
+		else { return false; }
+	};
 	//---
 
 	//starting front-end
@@ -256,7 +275,7 @@ $(document).ready(function () {
 				$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 					GUI.hideAll();
 					GUI.fillUserAllLists(lists, rmListClick, editListClick, addTaskClick, showListClick,
-						groups, user.id, canAddTask);
+						groups, user.id, canAddTask, canEditList, canRmList);
 				});
 			});
 		});
@@ -545,7 +564,7 @@ $(document).ready(function () {
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.fillUserListsSmall(data, addTaskClick, showListClick, groups, canAddTask, user.id);
 				GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick, 
-					groups, user.id, canAddTask);
+					groups, user.id, canAddTask, canEditList, canRmList);
 			});
 		});
 		//Remove list
@@ -553,7 +572,7 @@ $(document).ready(function () {
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.fillUserListsSmall(data, addTaskClick, showListClick, groups, canAddTask, user.id);
 				GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick, 
-					groups, user.id, canAddTask);
+					groups, user.id, canAddTask, canEditList, canRmList);
 			});
 		});
 		//Edit list
@@ -561,7 +580,7 @@ $(document).ready(function () {
 			$.getJSON('http://localhost:3000/data/get/groups/', function (groups){
 				GUI.fillUserListsSmall(data, addTaskClick, showListClick, groups, canAddTask, user.id);
 				GUI.fillUserAllLists(data, rmListClick, editListClick, addTaskClick, showListClick, 
-					groups, user.id, canAddTask);
+					groups, user.id, canAddTask, canEditList, canRmList);
 			});
 		});
 		//Add task
