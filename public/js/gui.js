@@ -157,15 +157,15 @@ GUI = {
 				'id="showListBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
 				'<td>'+ tab[i].descr +'</td><td><div class="btn-group pull-right">'+
 				(tab[i].groupid === null || canEditList(groups, tab[i], userId) ?
-				'<button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ 
+				'<button type="button" class="btn btn-default btn-sm editList" id="editList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '') +
 				(tab[i].groupid === null || canRmList(groups, tab[i], userId) ?
-				'<button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
+				'<button type="button" class="btn btn-danger btn-sm rmList" id="rmList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>' : '') +
 				(tab[i].groupid === null || canAddTask(groups, tab[i], userId) ?
-				'<button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
+				'<button type="button" class="btn btn-primary btn-sm addTaskAll" id="addTaskBig'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>' : '' ) + '</div></td>'+
 				'</tr>');
@@ -194,15 +194,15 @@ GUI = {
 				'id="showListBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
 				'<td>'+ tab[i].descr +'</td><td><div class="btn-group pull-right">'+
 				(tab[i].groupid === null || canEditList(groups, tab[i], userId) ?
-				'<button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ 
+				'<button type="button" class="btn btn-default btn-sm editList" id="editList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '') + 
 				(tab[i].groupid === null || canRmList(groups, tab[i], userId) ?
-				'<button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
+				'<button type="button" class="btn btn-danger btn-sm rmList" id="rmList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>' : '') +
 				(tab[i].groupid === null || canAddTask(groups, tab[i], userId) ?
-				'<button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
+				'<button type="button" class="btn btn-primary btn-sm addTaskAll" id="addTaskBig'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>' : '') + '</div></td>'+
 				'</tr>');
@@ -231,15 +231,15 @@ GUI = {
 				'id="showGroupBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
 				'<td>'+ tab[i].descr +'</td><td><div class="btn-group pull-right">'+
 				( canManageGroup(tab[i], userId) ?
-				'<button type="button" class="btn btn-default btn-sm pull-right editGroup" id="editGroup'+ 
+				'<button type="button" class="btn btn-default btn-sm editGroup" id="editGroup'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '') +
 				( canManageGroup(tab[i], userId) ?
-				'<button type="button" class="btn btn-danger btn-sm pull-right rmGroup" id="rmGroup'+ 
+				'<button type="button" class="btn btn-danger btn-sm rmGroup" id="rmGroup'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>' : '') +
 				( canAddList(tab[i], userId) ?
-				'<button type="button" class="btn btn-primary btn-sm pull-right addListBig" id="addListBig'+ 
+				'<button type="button" class="btn btn-primary btn-sm addListBig" id="addListBig'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button>' : '') + 
 				'</div></td></tr>');
@@ -311,15 +311,15 @@ GUI = {
 				(list.groupid !== null ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') + '<td>' +
 				'<div class="btn-group pull-right">' +
 				(list.groupid === null || canEditTask(group, list, tab[i], userId) ? 
-				'<button type="button" class="btn btn-default btn-sm pull-right editTask" id="editTask'+ 
+				'<button type="button" class="btn btn-default btn-sm editTask" id="editTask'+ 
 					tab[i].id +'">'  +
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '')+ 
 				(list.groupid === null || canRmTask(group, list, tab[i], userId) ?
-				'<button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmTask'+ 
+				'<button type="button" class="btn btn-danger btn-sm rmTask" id="rmTask'+ 
 					tab[i].id +'">' + 
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>': '') +  
 				(list.groupid === null || canChangeStatusTask(group, list, tab[i], userId) ?
-				'<button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
+				'<button type="button" class="btn btn-primary btn-sm taskDone" id="taskDone'+ 
 					tab[i].id +'"'+ (tab[i].status ? 'disabled="disabled"' : ' ') +'>'+
 				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button>' : '') + '</div></td></tr>' );
 		}
