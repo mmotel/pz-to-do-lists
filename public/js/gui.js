@@ -144,7 +144,7 @@ GUI = {
 		$('.showGroupSmall').click(function () { showGroupClick(this); });
 	},
 	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick, showListClick, groups, userId, 
-			canAddTask, canEditList, canRmList){
+		canAddTask, canEditList, canRmList){
 		$('#show-all-lists').slideDown('fast');
 
 		$('#user-lists-big').children().remove();
@@ -223,26 +223,26 @@ GUI = {
 		$('#show-all-groups').slideDown('fast');
 
 		$('#user-groups-big').children().remove();
-		$('#user-groups-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
+		$('#user-groups-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-groups-big').append('<tr>'+
 				'<td><button type="button" class="btn btn-link btn-sm showGroupBig"'+
 				'id="showGroupBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
-				'<td>'+ tab[i].descr +'</td><td>'+
+				'<td>'+ tab[i].descr +'</td><td><div class="btn-group pull-right">'+
 				( canManageGroup(tab[i], userId) ?
 				'<button type="button" class="btn btn-default btn-sm pull-right editGroup" id="editGroup'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '') + '</td><td>'+
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '') +
 				( canManageGroup(tab[i], userId) ?
 				'<button type="button" class="btn btn-danger btn-sm pull-right rmGroup" id="rmGroup'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>' : '') + '</td><td>'+
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>' : '') +
 				( canAddList(tab[i], userId) ?
 				'<button type="button" class="btn btn-primary btn-sm pull-right addListBig" id="addListBig'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button>' : '') + 
-				'</td></tr>');
+				'</div></td></tr>');
 		}
 		//rmGroup button click
 		$('.rmGroup').click(function() { rmClick(this); });
@@ -263,16 +263,16 @@ GUI = {
 		$('#show-group-id').val(group.id);
 
 		$('#group-users').children().remove();
-		$('#group-users').append('<tr><th></th><th>Nazwa</th><th colspan="3">Opcje</th></tr>');
+		$('#group-users').append('<tr><th></th><th>Nazwa</th><th>Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
 			$('#group-users').append('<tr><td><img id="fbImg'+tab[i].id+'"></td>'+
-				'<td>'+ tab[i].profile.displayName +'</td><td>'+ 
+				'<td>'+ tab[i].profile.displayName +'</td><td><div class="btn-group pull-right">'+ 
 				(canAddRmMembers(group, userId) ? 
 				'<button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
 					tab[i].id +'"' + ( tab[i].id === group.owner ? 'disabled="disabled"' : ' ' ) + '>'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń z grupy</button>' : '') +
-				'</td></tr>');
+				'</div></td></tr>');
 			GUIutils.getSmallFbPic(tab[i].id, "fbImg"+tab[i].id);
 		}
 		//rmUser button click
@@ -286,17 +286,18 @@ GUI = {
 
 		for(var i = 0; i < tab.length; i++){
 			$('#searched-users').append('<tr><td><img id="searchFbImg'+tab[i].id+'"></td>'+
-				'<td>'+ tab[i].profile.displayName +'</td>'+
-				'<td><button type="button" class="btn btn-success btn-sm pull-right addUser" id="addUser'+ 
+				'<td>'+ tab[i].profile.displayName +'</td><td><div class="btn-group pull-right">'+
+				'<button type="button" class="btn btn-success btn-sm pull-right addUser" id="addUser'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj do grupy</button></td>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj do grupy</button></div></td>'+
 				'</tr>');
 			GUIutils.getSmallFbPic(tab[i].id, "searchFbImg"+tab[i].id);
 		}
 		//addUser button click
 		$('.addUser').click(function() { addClick(this); });
 	},
-	fillUserAllTasks: function (list, tab, rmClick, editClick, taskDoneClick, members, group, userId, canEditTask, canRmTask, canChangeStatusTask){ //<---- !!!
+	fillUserAllTasks: function (list, tab, rmClick, editClick, taskDoneClick, members, group, userId, 
+		canEditTask, canRmTask, canChangeStatusTask){ //<---- !!!
 		$('#show-all-tasks-list-name').html(list.name);
 		$('#user-tasks-big').children().remove();
 		$('#user-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Termin</th><th>Status</th>'+
@@ -308,18 +309,19 @@ GUI = {
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
 				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td>'+
 				(list.groupid !== null ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') + '<td>' +
+				'<div class="btn-group pull-right">' +
 				(list.groupid === null || canEditTask(group, list, tab[i], userId) ? 
 				'<button type="button" class="btn btn-default btn-sm pull-right editTask" id="editTask'+ 
 					tab[i].id +'">'  +
-				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '')+ '</td><td>' +
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '')+ 
 				(list.groupid === null || canRmTask(group, list, tab[i], userId) ?
 				'<button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmTask'+ 
 					tab[i].id +'">' + 
-				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>': '') +  '</td><td>' +
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>': '') +  
 				(list.groupid === null || canChangeStatusTask(group, list, tab[i], userId) ?
 				'<button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
 					tab[i].id +'"'+ (tab[i].status ? 'disabled="disabled"' : ' ') +'>'+
-				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button>' : '') + '</td></tr>' );
+				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button>' : '') + '</div></td></tr>' );
 		}
 		//rmTask button click
 		$('.rmTask').click(function() { rmClick(this); });
@@ -340,10 +342,11 @@ GUI = {
 		for(var i = 0; i < tab.length; i++){
 			$('#incoming-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
-				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td><td>'+
+				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +
+				'</td><td><td><div class="btn-group pull-right">'+
 				'<button type="button" class="btn btn-primary btn-sm pull-right showOnList" id="showOnList'+ 
 					tab[i].listid +'>'+
-				'<span class="glyphicon glyphicon-ok"></span> Pokaż na liście</button>' + '</td></tr>' );
+				'<span class="glyphicon glyphicon-ok"></span> Pokaż na liście</button>' + '</div></td></tr>' );
 		}
 		//showOnList button click
 		$('.showOnList').click(function (){ showOnListClick(this); });
