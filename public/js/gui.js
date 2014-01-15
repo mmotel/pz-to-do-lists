@@ -122,16 +122,17 @@ GUI = {
 		//showList button click
 		$('.showListSmall').click(function () { showListClick(this); });
 	},
-	fillUserGroupsSmall: function (tab, showGroupClick, addListClick){
+	fillUserGroupsSmall: function (tab, showGroupClick, addListClick, canAddList, userId){
 		$('#user-groups-small').children().remove();
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-groups-small').append('<tr>'+
 				'<td><button type="button" class="btn btn-link btn-sm showGroupSmall"'+
-				'id="showGroup'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
-				'<td><button type="button" class="btn btn-link btn-sm pull-right addListSmall"'+
+				'id="showGroup'+ tab[i].id+'">'+ tab[i].name +'</button></td><td>'+
+				( canAddList(tab[i], userId) ?
+				'<button type="button" class="btn btn-link btn-sm pull-right addListSmall"'+
 				' id="addList'+ tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj liste</button>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj liste</button>' : '') +
 				'</td></tr>');
 		}
 
@@ -213,7 +214,7 @@ GUI = {
 		//showList button click
 		$('.showListBig').click(function () { showListClick(this); });
 	},
-	fillUserAllGroups: function (tab, editClick, rmClick, showGroupClick, addListClick){
+	fillUserAllGroups: function (tab, editClick, rmClick, showGroupClick, addListClick, canAddList, userId){
 		$('#show-all-groups').slideDown('fast');
 
 		$('#user-groups-big').children().remove();
@@ -229,11 +230,12 @@ GUI = {
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmGroup" id="rmGroup'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right addListBig" id="addListBig'+ 
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td><td>'+
+				( canAddList(tab[i], userId) ?
+				'<button type="button" class="btn btn-primary btn-sm pull-right addListBig" id="addListBig'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button></td>'+
-				'</tr>');
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button>' : '') + 
+				'</td></tr>');
 		}
 		//rmGroup button click
 		$('.rmGroup').click(function() { rmClick(this); });
@@ -344,7 +346,7 @@ GUI = {
 		newuser.familyName = $('#user-settings-familyname').val();
 		return newuser;
 	},
-	fillAddListForm: function (groups, groupId){
+	fillAddListForm: function (groups, canAddList, userId, groupId){
 		if(!groupId){
 			$('#add-list-type-private').prop('checked', true);
 			$('#add-list-select-groups').hide();
@@ -355,7 +357,9 @@ GUI = {
 		$('#add-list-group').children().remove();
 
 		for(var i=0; i < groups.length; i++){
-			$('#add-list-group').append('<option value="'+ groups[i].id +'">'+ groups[i].name +'</option>');
+			if(canAddList(groups[i], userId)){
+				$('#add-list-group').append('<option value="'+ groups[i].id +'">'+ groups[i].name +'</option>');
+			}
 		}
 
 		if(groupId){
