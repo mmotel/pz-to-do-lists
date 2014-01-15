@@ -53,7 +53,7 @@ exports.getList = function (req, res, appUser, Data){
   if(fbid !== null){
     var listId = parseInt(req.params[0]);
     Data.findList(listId, function (err, list){
-      if(!err && (list === null || fbid === list.fbid)){
+      if(!err){
         res.writeHead(200, {
           'Content-Type': 'application/json; charset=utf8'
         });
@@ -140,7 +140,7 @@ exports.getTask = function (req, res, appUser, Data){
   if(fbid !== null){
     var taskId = parseInt(req.params[0]);
     Data.findTask(taskId, function (err, task){
-      if(!err && (task === null || fbid === task.fbid)){
+      if(!err){
         res.writeHead(200, {
           'Content-Type': 'application/json; charset=utf8'
         });
@@ -168,12 +168,22 @@ exports.getTasks = function (req, res, appUser, Data){
 
   if(fbid !== null){
     var listId = parseInt(req.params[0]);
-    Data.findAllTasks(listId, function (err, tasks){
-      if(!err && (!tasks[0] || tasks[0].fbid == fbid)){
-        res.writeHead(200, {
-          'Content-Type': 'application/json; charset=utf8'
+    Data.findList(listId, function (err, list){
+      if(!err){
+        Data.findAllTasks(listId, function (err, tasks){
+          if(err){
+            res.writeHead(404, {
+              'Content-Type': 'application/json; charset=utf8'
+            });
+            res.end(JSON.stringify(undefined));
+          }
+          else{
+            res.writeHead(200, {
+              'Content-Type': 'application/json; charset=utf8'
+            });
+            res.end(JSON.stringify({"tasks": tasks, "list": list}));
+          }
         });
-        res.end(JSON.stringify(tasks));
       }
       else{
         res.writeHead(404, {

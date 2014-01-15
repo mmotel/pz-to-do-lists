@@ -2,7 +2,26 @@
 	font-family: Verdana, Arial;
 }
 
-body {
+#body {
+	background-color: #f1f1f1;
+}
+
+#top-navbar {
+	margin-bottom: 0px;
+}
+
+#left-col, #right-col, #content {
+	background-color: #fff;
+}
+
+#left-col {
+	padding-top: 20px;
+	padding-bottom: 5px;
+	border-right: 1px solid #e7e7e7;
+}
+
+#content {
+	margin-bottom: 10px;
 }
 
 #user-lists-small, #user-groups-small{

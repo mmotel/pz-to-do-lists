@@ -21,9 +21,11 @@ $(document).ready(function () {
 		inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
 	});
 
+	$('#add-task-deadline').datepicker("setDate", new Date());
 	$('#edit-task-deadline').datepicker({
 		inline: true, direction: "down", minDate: new Date(), dateFormat: "dd-mm-yy"
 	});
+	$('#edit-task-deadline').datepicker("setDate", new Date());
 
 	//actions with add group/priavate list
 	$('input:radio[name=addListType]').change(function (){
@@ -43,6 +45,8 @@ $(document).ready(function () {
 	$('.radio').css({'display': 'inline-table', 'margin': '5px'});
 	$('label').css({'display': 'block', 'clear':'both'});
 
+	$('#top-menu').css({'margin-right': '10px'});
+
 GUI = {
 	hideLogin: function() {
 		$('#login-link').hide();
@@ -55,6 +59,7 @@ GUI = {
 		$('#show-all-lists-button').hide();
 		$('#add-group-button').hide();
 		$('#show-all-groups-button').hide();
+		$('#settings-button').hide();
 	},
 	hideAll: function () {
 		$('#user-settings').hide();
@@ -75,7 +80,7 @@ GUI = {
 	fillLoginPanel: function (user){
 		console.log("user.id: " + user.id);
 		//fill loggedin panel with data
-		GUIutils.getNormalFbPic(user.id, 'profile-normal-pic');
+		GUIutils.getSmallFbPic(user.id, 'profile-normal-pic');
 		// getLargeFbPic(user.id, 'fbLargePic');
 		$('#profile-display-name').text(user.profile.displayName);
 	},
@@ -91,21 +96,23 @@ GUI = {
 		$('#show-all-lists-button').show();
 		$('#add-group-button').show();
 		$('#show-all-groups-button').show();
+		$('#settings-button').show();
 	},
 	showNotLoggedin: function (){
 		$('#login-link').show();
 		$('#login-panel').show();
 	},
-	fillUserListsSmall: function (tab, addTaskClick, showListClick){
+	fillUserListsSmall: function (tab, addTaskClick, showListClick, groups, canAddTask, userId){
 		$('#user-lists-small').children().remove();
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-lists-small').append('<tr>'+
 				'<td><button type="button" class="btn btn-link btn-sm showListSmall"'+
-				'id="showList'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
-				'<td><button type="button" class="btn btn-link btn-sm pull-right addTaskSmall"'+
+				'id="showList'+ tab[i].id+'">'+ tab[i].name +'</button></td><td>'+
+				(tab[i].groupid === null || canAddTask(groups, tab[i], userId) ?
+				'<button type="button" class="btn btn-link btn-sm pull-right addTaskSmall"'+
 				' id="addTask'+ tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>' : '') +
 				'</td></tr>');
 		}
 
@@ -115,16 +122,17 @@ GUI = {
 		//showList button click
 		$('.showListSmall').click(function () { showListClick(this); });
 	},
-	fillUserGroupsSmall: function (tab, showGroupClick, addListClick){
+	fillUserGroupsSmall: function (tab, showGroupClick, addListClick, canAddList, userId){
 		$('#user-groups-small').children().remove();
 
 		for(var i = 0; i < tab.length; i++){
 			$('#user-groups-small').append('<tr>'+
 				'<td><button type="button" class="btn btn-link btn-sm showGroupSmall"'+
-				'id="showGroup'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
-				'<td><button type="button" class="btn btn-link btn-sm pull-right addListSmall"'+
+				'id="showGroup'+ tab[i].id+'">'+ tab[i].name +'</button></td><td>'+
+				( canAddList(tab[i], userId) ?
+				'<button type="button" class="btn btn-link btn-sm pull-right addListSmall"'+
 				' id="addList'+ tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj liste</button>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj liste</button>' : '') +
 				'</td></tr>');
 		}
 
@@ -134,7 +142,8 @@ GUI = {
 		//showGroup button click
 		$('.showGroupSmall').click(function () { showGroupClick(this); });
 	},
-	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick, showListClick){
+	fillUserAllLists: function (tab, rmClick, editClick, addTaskClick, showListClick, groups, userId, 
+			canAddTask, canEditList, canRmList){
 		$('#show-all-lists').slideDown('fast');
 
 		$('#user-lists-big').children().remove();
@@ -145,16 +154,21 @@ GUI = {
 			$('#user-lists-big').append('<tr>'+
 				'<td><button type="button" class="btn btn-link btn-sm showListBig"'+
 				'id="showListBig'+ tab[i].id+'">'+ tab[i].name +'</button></td>'+
-				'<td>'+ tab[i].descr +'</td>'+
-				'<td><button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ 
+				'<td>'+ tab[i].descr +'</td><td>'+
+				(tab[i].groupid === null || canEditList(groups, tab[i], userId) ?
+				'<button type="button" class="btn btn-default btn-sm pull-right editList" id="editList'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
-				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '') +
+				'</td><td>' + 
+				(tab[i].groupid === null || canRmList(groups, tab[i], userId) ?
+				'<button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>' : '') +
+				'</td><td>'+
+				(tab[i].groupid === null || canAddTask(groups, tab[i], userId) ?
+				'<button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>' : '' ) + '</td>'+
 				'</tr>');
 		}
 		//rmList button click
@@ -169,7 +183,7 @@ GUI = {
 		//showList button click
 		$('.showListBig').click(function () { showListClick(this); });
 	},
-	fillGroupLists: function (tab, rmClick, editClick, addTaskClick, showListClick){
+	fillGroupLists: function (tab, rmClick, editClick, addTaskClick, showListClick, groups, userId, canAddTask){
 		$('#user-lists-big').children().remove();
 		$('#group-lists-big').children().remove();
 		$('#group-lists-big').append('<tr><th>Nazwa</th><th>Opis</th><th colspan="3">Opcje</th></tr>');
@@ -185,9 +199,11 @@ GUI = {
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmList" id="rmList'+ 
 					tab[i].id +'">'+
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
+				'<td>'+
+				(tab[i].groupid === null || canAddTask(groups, tab[i], userId) ?
+				'<button type="button" class="btn btn-primary btn-sm pull-right addTaskAll" id="addTaskBig'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button></td>'+
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj zadanie</button>' : '') + '</td>'+
 				'</tr>');
 		}
 		//rmList button click
@@ -202,7 +218,7 @@ GUI = {
 		//showList button click
 		$('.showListBig').click(function () { showListClick(this); });
 	},
-	fillUserAllGroups: function (tab, editClick, rmClick, showGroupClick, addListClick){
+	fillUserAllGroups: function (tab, editClick, rmClick, showGroupClick, addListClick, canAddList, userId){
 		$('#show-all-groups').slideDown('fast');
 
 		$('#user-groups-big').children().remove();
@@ -218,11 +234,12 @@ GUI = {
 				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
 				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmGroup" id="rmGroup'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right addListBig" id="addListBig'+ 
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td><td>'+
+				( canAddList(tab[i], userId) ?
+				'<button type="button" class="btn btn-primary btn-sm pull-right addListBig" id="addListBig'+ 
 					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button></td>'+
-				'</tr>');
+				'<span class="glyphicon glyphicon-plus"></span> Dodaj listę</button>' : '') + 
+				'</td></tr>');
 		}
 		//rmGroup button click
 		$('.rmGroup').click(function() { rmClick(this); });
@@ -236,7 +253,7 @@ GUI = {
 		//showGroup button click
 		$('.showGroupBig').click(function () { showGroupClick(this); });
 	},
-	fillGroupUsers: function (group, tab, rmClick){
+	fillGroupUsers: function (group, tab, rmClick, canAddRmMembers, userId){
 		$('#show-groups').slideDown('fast');
 
 		$('#show-group-name').html(group.name);
@@ -247,11 +264,12 @@ GUI = {
 
 		for(var i = 0; i < tab.length; i++){
 			$('#group-users').append('<tr><td><img id="fbImg'+tab[i].id+'"></td>'+
-				'<td>'+ tab[i].profile.displayName +'</td>'+
-				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
+				'<td>'+ tab[i].profile.displayName +'</td><td>'+ 
+				(canAddRmMembers(group, userId) ? 
+				'<button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
 					tab[i].id +'"' + ( tab[i].id === group.owner ? 'disabled="disabled"' : ' ' ) + '>'+
-				'<span class="glyphicon glyphicon-remove"></span> Usuń z grupy</button></td>'+
-				'</tr>');
+				'<span class="glyphicon glyphicon-remove"></span> Usuń z grupy</button>' : '') +
+				'</td></tr>');
 			GUIutils.getSmallFbPic(tab[i].id, "fbImg"+tab[i].id);
 		}
 		//rmUser button click
@@ -275,8 +293,8 @@ GUI = {
 		//addUser button click
 		$('.addUser').click(function() { addClick(this); });
 	},
-	fillUserAllTasks: function (listName, tab, rmClick, editClick, taskDoneClick, members){ //<---- !!!
-		$('#show-all-tasks-list-name').html(listName);
+	fillUserAllTasks: function (list, tab, rmClick, editClick, taskDoneClick, members, group, userId, canEditTask, canRmTask, canChangeStatusTask){ //<---- !!!
+		$('#show-all-tasks-list-name').html(list.name);
 		$('#user-tasks-big').children().remove();
 		$('#user-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Termin</th><th>Status</th>'+
 			(members ? '<th>Wykonawca</th>' : '') +
@@ -286,17 +304,19 @@ GUI = {
 			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
 				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td>'+
-				(members ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') +
-				'<td><button type="button" class="btn btn-default btn-sm pull-right editTask" id="editTask'+ 
-					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button></td>'+
-				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmTask'+ 
-					tab[i].id +'">'+
-				'<span class="glyphicon glyphicon-remove"></span> Usuń</button></td>'+
-				'<td><button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
+				(list.groupid !== null ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') + '<td>' +
+				(list.groupid === null || canEditTask(group, list, tab[i], userId) ? 
+				'<button type="button" class="btn btn-default btn-sm pull-right editTask" id="editTask'+ 
+					tab[i].id +'">'  +
+				'<span class="glyphicon glyphicon-edit"></span> Edytuj</button>' : '')+ '</td><td>' +
+				(list.groupid === null || canRmTask(group, list, tab[i], userId) ?
+				'<button type="button" class="btn btn-danger btn-sm pull-right rmTask" id="rmTask'+ 
+					tab[i].id +'">' + 
+				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>': '') +  '</td><td>' +
+				(list.groupid === null || canChangeStatusTask(group, list, tab[i], userId) ?
+				'<button type="button" class="btn btn-primary btn-sm pull-right taskDone" id="taskDone'+ 
 					tab[i].id +'"'+ (tab[i].status ? 'disabled="disabled"' : ' ') +'>'+
-				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button></td>'+
-				'</tr>');
+				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button>' : '') + '</td></tr>' );
 		}
 		//rmTask button click
 		$('.rmTask').click(function() { rmClick(this); });
@@ -330,7 +350,7 @@ GUI = {
 		newuser.familyName = $('#user-settings-familyname').val();
 		return newuser;
 	},
-	fillAddListForm: function (groups, groupId){
+	fillAddListForm: function (groups, canAddList, userId, groupId){
 		if(!groupId){
 			$('#add-list-type-private').prop('checked', true);
 			$('#add-list-select-groups').hide();
@@ -341,7 +361,9 @@ GUI = {
 		$('#add-list-group').children().remove();
 
 		for(var i=0; i < groups.length; i++){
-			$('#add-list-group').append('<option value="'+ groups[i].id +'">'+ groups[i].name +'</option>');
+			if(canAddList(groups[i], userId)){
+				$('#add-list-group').append('<option value="'+ groups[i].id +'">'+ groups[i].name +'</option>');
+			}
 		}
 
 		if(groupId){
@@ -353,21 +375,37 @@ GUI = {
 		$('#add-list-description').val("");
 		$('#add-list-type-private').prop('checked', true);
 		$('#add-list-group').children().remove();
+		$('#adding-lists .form-group').removeClass('has-error');
 	},
 	getAddListForm: function (){
 		var newaddlist = {};
 		newaddlist.name = $('#add-list-name').val();
 		newaddlist.descr = $('#add-list-description').val();
 
+		$('#adding-lists .form-group').removeClass('has-error');
+
+		var err = false;
+
+		if(newaddlist.name === ""){
+			$('#add-list-name').parent().addClass('has-error');
+			err = true;
+		}
+
 		if($('input:radio[name=addListType]:checked').val() === "private"){
 			newaddlist.groupid = null;
 		}
 		else{
-			newaddlist.groupid = parseInt( $('#add-list-group').val() ); //if empty === NaN
-			// if(newaddlist.groupid === NaN) do stuff about err
+			newaddlist.groupid = parseInt( $('#add-list-group').val() );
+			if($('#add-list-group').val() === null){
+				$('#add-list-group').parent().addClass('has-error');
+				err = true;
+			}
 		}
-
-		return newaddlist;
+		if(err){
+			return undefined;
+		}else{
+			return newaddlist;
+		}
 	},
 	fillAddTaskForm: function (listId, groupId, members){
 		$('#add-task-list-id').val(listId);
@@ -384,17 +422,15 @@ GUI = {
 		else{
 			$('#add-task-select-executor').hide();
 		}
-
-		// $('#add-task-name').val(task.name);
-		// $('#add-task-description').val(task.descr);
 	},
 	clearAddTaskForm: function (){
-		$('#add-task-list-id').val("");
-		$('#add-task-group-id').val("");
+		$('#add-task-list-id').val(null);
+		$('#add-task-group-id').val(null);
 		$('#add-task-name').val("");
 		$('#add-task-description').val("");
 		$('#add-task-deadline').val("");
 		$('#add-task-executor').children().remove();
+		$('#adding-tasks .form-group').removeClass('has-error');
 	},
 	getAddTaskForm: function (){
 		var newaddtask = {};
@@ -406,7 +442,31 @@ GUI = {
 		// console.log(newaddtask.deadline);
 		newaddtask.descr = $('#add-task-description').val();
 		newaddtask.executor = $('#add-task-executor').val();
-		return newaddtask;
+
+		$('#adding-tasks .form-group').removeClass('has-error');
+
+		var err = false;
+
+		console.log(newaddtask);
+
+		if(newaddtask.name === ""){ 
+			$('#add-task-name').parent().addClass('has-error');
+			err = true;
+		}
+		if($('#add-task-deadline').val() === ""){ 
+			$('#add-task-deadline').parent().addClass('has-error');
+			err = true;
+		}
+		if($('#add-task-group-id').val() !== "" && newaddtask.executor === null){ 
+			$('#add-task-executor').parent().addClass('has-error');
+			err = true;
+		}
+
+		if(err){
+			return undefined;
+		}else{
+			return newaddtask;
+		}
 	},
 	fillEditTaskForm: function (task, groupId, members){
 		$('#edit-task-id').val(task.id);
@@ -434,14 +494,15 @@ GUI = {
 		}
 	},
 	clearEditTaskForm: function (){
-		$('#edit-task-id').val("");
-		$('#edit-task-list-id').val("");
-		$('#edit-task-group-id').val("");
+		$('#edit-task-id').val(null);
+		$('#edit-task-list-id').val(null);
+		$('#edit-task-group-id').val(null);
 		$('#edit-task-name').val("");
 		$('#edit-task-deadline').val("");
 		$('#edit-task-description').val("");
 		$('#notDone').prop('checked', true);
 		$('#edit-task-executor').children().remove();
+		$('#editing-tasks .form-group').parent().removeClass('has-error');
 	},
 	getEditTaskForm: function (){
 		var editedtask = {};
@@ -458,7 +519,29 @@ GUI = {
 		}
 		editedtask.descr = $('#edit-task-description').val();
 		editedtask.executor = $('#edit-task-executor').val();
-		return editedtask;
+
+		$('#editing-tasks .form-group').parent().removeClass('has-error');
+
+		var err = false;
+
+		if(editedtask.name === ""){
+			$('#edit-task-name').parent().addClass('has-error');
+			err = true;
+		}
+		if($('#edit-task-deadline').val() === ""){
+			$('#edit-task-deadline').parent().addClass('has-error');
+			err = true;
+		}
+		if($('#edit-task-group-id').val() !== "" && editedtask.executor === null){
+			$('#edit-task-executor').parent().addClass('has-error');
+			err = true;
+		}
+
+		if(err){
+			return undefined;
+		}else{
+			return editedtask;
+		}
 	},
 	fillEditListForm: function (list){
 		$('#edit-list-id').val(list.id);
@@ -467,10 +550,11 @@ GUI = {
 		$('#edit-list-description').val(list.descr);
 	},
 	clearEditListForm: function (){
-		$('#edit-list-id').val("");
-		$('#edit-list-groupid').val("");
+		$('#edit-list-id').val(null);
+		$('#edit-list-groupid').val(null);
 		$('#edit-list-name').val("");
 		$('#edit-list-description').val("");
+		$('#editing-lists .form-group').removeClass('has-error');
 	},
 	getEditListForm: function (){
 		var neweditlist = {};
@@ -478,7 +562,21 @@ GUI = {
 		neweditlist.groupid = parseInt($('#edit-list-groupid').val());
 		neweditlist.name = $('#edit-list-name').val();
 		neweditlist.descr = $('#edit-list-description').val();
-		return neweditlist;
+
+		$('#editing-lists .form-group').removeClass('has-error');
+
+		var err = false;
+
+		if(neweditlist.name === ""){
+			$('#edit-list-name').parent().addClass('has-error');
+			err = true;
+		}
+
+		if(err){
+			return undefined;
+		}else{
+			return neweditlist;
+		}
 	},
 	fillAddGroupForm: function (group){
 		// $('#add-group-name').val(group.name);
@@ -513,13 +611,26 @@ GUI = {
 		$('#edit-group-id').val("");
 		$('#edit-group-name').val("");
 		$('#edit-group-description').val("");
+		$('#edit-group-name').parent().removeClass('has-error');
 	},
 	getEditGroupForm: function (){
 		var neweditgroup = {};
 		neweditgroup.id = parseInt($('#edit-group-id').val());
 		neweditgroup.name = $('#edit-group-name').val();
 		neweditgroup.descr = $('#edit-group-description').val();
-		return neweditgroup;
+
+		var err = false;
+
+		if(neweditgroup.name === ""){
+			$('#edit-group-name').parent().addClass('has-error');
+			err = true;
+		}
+
+		if(err){
+			return undefined;
+		}else{
+			return neweditgroup;
+		}
 	},
 	fillDeleteListModal: function (list){
 		$('#user-delete-list-modal-id').val(list.id);
@@ -589,6 +700,38 @@ GUI = {
 		perms.status = ($('input:radio[name=permListStatus]:checked').val() === 'private');
 		return perms;
 	},
+	fillPermsGroupForm: function (perms){
+		if(!perms){
+			$('#perm-group-add-rm-user-private').prop('checked', true);
+			$('#perm-group-add-private').prop('checked', true);
+			$('#perm-group-edit-private').prop('checked', true);
+			$('#perm-group-rm-private').prop('checked', true);
+		}
+		else{
+			if(perms.addRmMembers){ $('#perm-group-add-rm-user-private').prop('checked', true); }
+				else{ $('#perm-group-add-rm-user-group').prop('checked', true); }
+			if(perms.addList){ $('#perm-group-add-private').prop('checked', true); }
+				else{ $('#perm-group-add-group').prop('checked', true); }
+			if(perms.editList){ $('#perm-group-edit-private').prop('checked', true); }
+				else{ $('#perm-group-edit-group').prop('checked', true); }
+			if(perms.rmList){ $('#perm-group-rm-private').prop('checked', true); }
+				else{ $('#perm-group-rm-group').prop('checked', true); }
+		}
+	},
+	clearPermsGroupForm: function (){
+		$('#perm-group-add-rm-user-private').prop('checked', true);
+		$('#perm-group-add-private').prop('checked', true);
+		$('#perm-group-edit-private').prop('checked', true);
+		$('#perm-group-rm-private').prop('checked', true);
+	},
+	getPermsGroupForm: function (){
+		var perms = {};
+		perms.addRmMembers = ($('input:radio[name=permGroupAddRmUser]:checked').val() === 'private');
+		perms.addList = ($('input:radio[name=permGroupAdd]:checked').val() === 'private');
+		perms.editList = ($('input:radio[name=permGroupEdit]:checked').val() === 'private');
+		perms.rmList = ($('input:radio[name=permGroupRm]:checked').val() === 'private');
+		return perms;
+	},
 	showUsersSettings: function (){
 		$('#user-settings').slideDown('fast');
 	},
@@ -630,6 +773,9 @@ GUI = {
 	},
 	showPermsListForm: function (){
 		$('#permissions-lists').slideDown();
+	},
+	showPermsGroupForm: function (){
+		$('#permissions-groups').slideDown();
 	}
 };
 
