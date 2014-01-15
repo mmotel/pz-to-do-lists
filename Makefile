@@ -19,6 +19,8 @@ tests: ./scripts/dropTestDb.js
 	mongo test ./scripts/dropTestDb.js
 	mocha ./test/userTests.js
 	mongo test ./scripts/dropTestDb.js
+	mocha ./test/incomingTasksTests.js
+	mongo test ./scripts/dropTestDb.js
 
 install: package.json
 	npm install
