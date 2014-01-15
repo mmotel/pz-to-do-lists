@@ -377,3 +377,35 @@ exports.searchUsers = function (req, res, appUser, Data){
     res.end(JSON.stringify(undefined));
   }
 };
+
+exports.getIncomingTasks = function (req, res, appUser, Data){
+  var sid = req.sessionID;
+  console.log(sid);
+  var fbid = appUser.checkLogin(sid);
+  console.log(fbid);
+
+  if(fbid !== null){
+    Data.getIncomingTasks(fbid, function (err, tasks){
+      if(err){
+        res.writeHead(404, {
+          'Content-Type': 'application/json; charset=utf8'
+        });
+        res.end(JSON.stringify(undefined));
+      }
+      else{
+        console.log("tasks:");
+        console.log(tasks);
+        res.writeHead(200, {
+          'Content-Type': 'application/json; charset=utf8'
+        });
+        res.end(JSON.stringify(tasks));
+      }
+    });
+  }
+  else{
+    res.writeHead(404, {
+      'Content-Type': 'application/json; charset=utf8'
+    });
+    res.end(JSON.stringify(undefined));
+  }
+};
