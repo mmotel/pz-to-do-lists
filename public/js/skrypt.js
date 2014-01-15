@@ -513,7 +513,7 @@ $(document).ready(function () {
 				var groups = [ data.group ];
 				GUI.hideAll();
 				GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick, 
-					groups, user.id, canAddTask);
+					groups, user.id, canAddTask, canEditList, canRmList);
 				GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick, canAddRmMembers, user.id);
 				if(canAddRmMembers(data.group, user.id)){
 					GUI.showUserSearchForm();
@@ -662,13 +662,15 @@ $(document).ready(function () {
 		});
 		//Add user to group
 		socket.on('addUserToGroup', function (data){
-			GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick);
+			GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick,
+				canAddTask, canEditList, canRmList);
 			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
 		});
 
 		//Remove user from group
 		socket.on('removeUserFromGroup', function (data){
-			GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick);
+			GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick,
+				canAddTask, canEditList, canRmList);
 			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
 		});
 		//---
