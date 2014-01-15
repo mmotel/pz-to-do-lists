@@ -60,6 +60,14 @@ $(document).ready(function () {
 		else { return false; }
 	};
 
+	var canAddRmMembers = function (group, userId){
+		if(group.perms.addRmMembers){
+			if(group.owner === userId){ return true; }
+			else { return false; }
+		}
+		else if(isMember(group.members, userId)){ return true; }
+		else { return false; }
+	};
 	//---
 
 	//starting front-end
@@ -476,8 +484,10 @@ $(document).ready(function () {
 				GUI.hideAll();
 				GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick, 
 					groups, user.id, canAddTask);
-				GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
-				GUI.showUserSearchForm();
+				GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick, canAddRmMembers, user.id);
+				if(canAddRmMembers(data.group, user.id)){
+					GUI.showUserSearchForm();
+				}
 			});
 		};
 

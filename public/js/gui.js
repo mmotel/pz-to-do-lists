@@ -247,7 +247,7 @@ GUI = {
 		//showGroup button click
 		$('.showGroupBig').click(function () { showGroupClick(this); });
 	},
-	fillGroupUsers: function (group, tab, rmClick){
+	fillGroupUsers: function (group, tab, rmClick, canAddRmMembers, userId){
 		$('#show-groups').slideDown('fast');
 
 		$('#show-group-name').html(group.name);
@@ -258,11 +258,12 @@ GUI = {
 
 		for(var i = 0; i < tab.length; i++){
 			$('#group-users').append('<tr><td><img id="fbImg'+tab[i].id+'"></td>'+
-				'<td>'+ tab[i].profile.displayName +'</td>'+
-				'<td><button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
+				'<td>'+ tab[i].profile.displayName +'</td><td>'+ 
+				(canAddRmMembers(group, userId) ? 
+				'<button type="button" class="btn btn-danger btn-sm pull-right rmUser" id="rmUser'+ 
 					tab[i].id +'"' + ( tab[i].id === group.owner ? 'disabled="disabled"' : ' ' ) + '>'+
-				'<span class="glyphicon glyphicon-remove"></span> Usuń z grupy</button></td>'+
-				'</tr>');
+				'<span class="glyphicon glyphicon-remove"></span> Usuń z grupy</button>' : '') +
+				'</td></tr>');
 			GUIutils.getSmallFbPic(tab[i].id, "fbImg"+tab[i].id);
 		}
 		//rmUser button click
