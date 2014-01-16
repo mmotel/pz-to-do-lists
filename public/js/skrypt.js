@@ -419,6 +419,16 @@ $(document).ready(function () {
 		$('#doneTaskConfirm').click(function (){
 			var doneTask = GUI.getDoneTaskModal();
 			doneTask.fbid = user.id;
+			var d = new Date();
+			doneTask.date = {
+				year: d.getFullYear(),
+				month: d.getMonth() + 1,
+				day: d.getUTCDate(),
+				hours: d.getHours(),
+				mins: d.getMinutes(),
+				secs: d.getSeconds()
+			};
+			console.log(doneTask);
 			socket.emit('doneTask', doneTask);
 			$('#user-done-task-modal').modal('hide');
 			GUI.hideAll();

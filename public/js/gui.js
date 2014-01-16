@@ -311,7 +311,8 @@ GUI = {
 				tab[i].name +'</button></td>' + 
 				'<td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
-				'<td>'+ (tab[i].status ? 'wykonane' : 'niewykonane') +'</td>'+
+				'<td>'+ (tab[i].status === "new" ? 'nowe' : 
+					( tab[i].status === "progres" ? 'w toku' : 'wykonane' ) ) +'</td>'+
 				(list.groupid !== null ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') + '<td>' +
 				'<div class="btn-group pull-right">' +
 				(list.groupid === null || canEditTask(group, list, tab[i], userId) ? 
@@ -324,8 +325,8 @@ GUI = {
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>': '') +  
 				(list.groupid === null || canChangeStatusTask(group, list, tab[i], userId) ?
 				'<button type="button" class="btn btn-primary btn-sm taskDone" id="taskDone'+ 
-					tab[i].id +'"'+ (tab[i].status ? 'disabled="disabled"' : ' ') +'>'+
-				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button>' : '') + '</div></td></tr>' );
+					tab[i].id +'"'+ (tab[i].status === "done" ? 'disabled="disabled"' : ' ') +'>'+
+				'<span class="glyphicon glyphicon-ok"></span> Zmień status</button>' : '') + '</div></td></tr>' );
 		}
 		//showTask button click
 		$('.showTask').click(function (){ showTaskClick(this); });
@@ -352,7 +353,8 @@ GUI = {
 				tab[i].name +'</button></td>'+
 				'<td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
-				'<td>'+ (tab[i].status ? 'wykonane' : 'niewykonane') +
+				'<td>'+ (tab[i].status === "new" ? 'nowe' : 
+					( tab[i].status === "progres" ? 'w toku' : 'wykonane' ) ) +
 				'</td><td><div class="btn-group pull-right">'+
 				'<button type="button" class="btn btn-primary btn-sm pull-right showOnList" id="showOnList'+ 
 					tab[i].listid +'>'+
@@ -514,7 +516,9 @@ GUI = {
 		var dateString = date.day + "-" + date.month + "-" + date.year;
 		$('#edit-task-deadline').datepicker( "setDate" , dateString);
 		$('#edit-task-description').val(task.descr);
-		if(task.status){ $('#done').prop('checked', true); }
+		// if(task.status === "new"){ $('#edit-task-status-new').prop('checked', true); }
+		// else if(task.status === "progres"){ $('#edit-task-status-progres').prop('checked', true); }
+		// else if(task.status === "done"){ $('#edit-task-status-done').prop('checked', true); }
 
 		$('#edit-task-group-id').val(groupId);
 		$('#edit-task-executor').children().remove();
@@ -538,7 +542,7 @@ GUI = {
 		$('#edit-task-name').val("");
 		$('#edit-task-deadline').val("");
 		$('#edit-task-description').val("");
-		$('#notDone').prop('checked', true);
+		// $('#edit-task-status-new').prop('checked', true);
 		$('#edit-task-executor').children().remove();
 		$('#editing-tasks .form-group').parent().removeClass('has-error');
 	},
@@ -550,11 +554,7 @@ GUI = {
 		editedtask.name = $('#edit-task-name').val();
 		var date = $('#edit-task-deadline').val().split('-');
 		editedtask.deadline = { "year": date[2], "month": date[1], "day": date[0] };
-		if($( "input:radio[name=optionsRadios]:checked").val() === "true"){
-			editedtask.status = true;
-		}else{
-			editedtask.status = false;
-		}
+		// editedtask.status = $( "input:radio[name=editTaskStatus]:checked").val();
 		editedtask.descr = $('#edit-task-description').val();
 		editedtask.executor = $('#edit-task-executor').val();
 
@@ -683,6 +683,10 @@ GUI = {
 		$('#user-done-task-modal-id').val(task.id);
 		$('#user-done-task-modal-list-id').val(task.listid);
 		$('#user-done-task-modal-name').text("Nazwa zadania: " + task.name);
+
+		if(task.status === "new"){ $('#task-status-new').prop('checked', true); }
+		else if(task.status === "progres"){ $('#task-status-progres').prop('checked', true); }
+		else if(task.status === "done"){ $('#task-status-done').prop('checked', true); }
 	},
 	fillDeleteGroupModal: function (group){
 		$('#user-delete-group-modal-id').val(group.id);
@@ -700,7 +704,9 @@ GUI = {
 	getDoneTaskModal: function (){
 		var taskId = parseInt($('#user-done-task-modal-id').val());
 		var listId = parseInt($('#user-done-task-modal-list-id').val());
-		return {"id": taskId, "listid": listId};
+		var status = $('input:radio[name=taskStatus]:checked').val();
+		var comment = $('#tast-status-comment').val();
+		return {"id": taskId, "listid": listId, "status": status, "comment": comment};
 	},
 	getDeleteGroupModal: function (){
 		var groupId = parseInt($('#user-delete-group-modal-id').val());
@@ -781,11 +787,35 @@ GUI = {
 			$('#show-task-modal-executor-tr').hide();
 		}
 		$('#show-task-modal-descr').html(task.descr);
-		if(task.status === true){
-			$('#show-task-modal-status').html('wykonane');
+		if(task.status === "new"){
+			$('#show-task-modal-status').html('nowe');
 		}
-		else{
-			$('#show-task-modal-status').html('niewykonane');			
+		else if(task.status === "progres"){
+			$('#show-task-modal-status').html('w toku');			
+		}
+		else if(task.status === "done"){
+			$('#show-task-modal-status').html('wykoane');			
+		}
+
+		for(var i = task.statusChanges.length -1; i >= 0; i--){
+			$('#show-task-lifecycle').append('<div class="panel ' + 
+				( task.statusChanges[i].status === "new" ? 'panel-primary' :
+					( task.statusChanges[i].status === "progres" ? 'panel-default' :
+					'panel-danger' ) ) + 
+				'">' +
+			  '<div class="panel-body">' +
+			    '<b>Status:</b> ' +
+			    ( task.statusChanges[i].status === "new" ? 'nowe' : 
+			    ( task.statusChanges[i].status === "progres" ? 'w toku' : "wykonane" ) ) + '<br/>' +
+			    '<b>Komentarz:</b> ' + task.statusChanges[i].comment + '' +
+			  '</div>' +
+			  '<div class="panel-footer">' + 
+			  task.statusChanges[i].date.day + '.' + task.statusChanges[i].date.month + '.' +
+			  task.statusChanges[i].date.year + ' ' + task.statusChanges[i].date.hours + ':' +
+			  task.statusChanges[i].date.mins +
+			  (members ? (', ' + findMember(members, task.statusChanges[i].fbid) ) : '' ) +
+			  '</div>' +
+			'</div>');
 		}
 	},
 	clearShowTaskModal: function (){
@@ -795,6 +825,7 @@ GUI = {
 		$('#show-task-modal-executor-tr').show();
 		$('#show-task-modal-descr').html("");
 		$('#show-task-modal-status').html("");
+		$('#show-task-lifecycle').children().remove();
 	},
 	showUsersSettings: function (){
 		$('#user-settings').slideDown('fast');

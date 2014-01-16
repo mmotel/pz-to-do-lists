@@ -325,21 +325,27 @@
 				<textarea class="form-control" rows="4" id="edit-task-description" 
 					placeholder="Opis"></textarea>
 			  </div>
-			  <div class="form-group">
+<!-- 			  <div class="form-group" id="edit-list-status">
 			    <label for="exampleInputEmail1">Status</label>
 			    <div class="radio">
 				  <label>
-				    <input type="radio" name="optionsRadios" id="done" value="true">
-				    Wykonane
+				    <input type="radio" name="editTaskStatus" id="edit-task-status-new" value="new">
+				    Nowe
 				  </label>
 				</div>
 				<div class="radio">
 				  <label>
-				    <input type="radio" name="optionsRadios" id="notDone" value="false" checked>
-				    Nie wykonane
+				    <input type="radio" name="editTaskStatus" id="edit-task-status-progres" value="progres" checked>
+				    W toku
 				  </label>
 				</div>
-			  </div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="editTaskStatus" id="edit-task-status-done" value="done" checked>
+				    Wykonane
+				  </label>
+				</div>
+			  </div> -->
 			</form>
 		</div>
 		<!-- Koniec formularza edytowania zadania -->
@@ -567,7 +573,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><span class="glyphicon glyphicon-remove"></span> Czy jesteś pewien?</h4>
+        <h4 class="modal-title"><span class="glyphicon glyphicon-remove"></span> Zmień status zadania</h4>
       </div>
       <div class="modal-body">
       	<form>
@@ -575,11 +581,39 @@
       		<input type="hidden" id="user-done-task-modal-list-id">
       	</form>
 	    <h4 id="user-done-task-modal-name"></h4>
-        <p>Czy na pewno chcesz wykonać zadanie?</p>
+
+		<div class="form-group">
+		<label>Status</label>
+			<div class="radio">
+			  <label>
+			    <input type="radio" name="taskStatus" id="task-status-new" value="new">
+			    Nowe
+			  </label>
+			</div>
+			<div class="radio">
+			  <label>
+			    <input type="radio" name="taskStatus" id="task-status-progres" value="progres">
+			    W toku
+			  </label>
+			</div>
+			<div class="radio">
+			  <label>
+			    <input type="radio" name="taskStatus" id="task-status-done" value="done">
+			    Wykonane
+			  </label>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="exampleInputPassword1">Komentarz</label>
+			<textarea class="form-control" rows="4" id="tast-status-comment" 
+				placeholder="Komentarz"></textarea>
+		</div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-success" id="doneTaskConfirm">Tak, wykonaj zadanie</button>
+        <button type="button" class="btn btn-success" id="doneTaskConfirm">Zapisz</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -640,6 +674,10 @@
       		<td id="show-task-modal-descr">lalalala</td>
       	</tr>
 	    </table>
+
+	    <h4>Cykl życia zadania</h4>
+	    <div id="show-task-lifecycle">
+	    </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
