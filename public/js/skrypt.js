@@ -176,6 +176,36 @@ $(document).ready(function () {
 			});
 		};
 
+		//show task button click
+		var showTaskClick = function (that){
+			var taskId = $(that).attr('id');
+
+			if(taskId.substring(0,11) === "showIncTask"){
+				taskId = parseInt(taskId.substring(11, taskId.length));
+			}
+			else if(taskId.substring(0,8) === "showTask"){ 
+				taskId = parseInt(taskId.substring(8, taskId.length));
+			}
+
+			console.log(taskId);
+
+			$.getJSON('http://localhost:3000/data/get/task/'+taskId+'/', function (task){
+				if(task.groupid !== null){
+					$.getJSON('http://localhost:3000/data/get/group/members/'+task.groupid+'/', 
+						function (data){
+							GUI.clearShowTaskModal();
+							GUI.fillShowTaskModal(task, data.members);
+							GUI.showShowTaskModal();
+					});
+				}
+				else{
+					GUI.clearShowTaskModal();
+					GUI.fillShowTaskModal(task);
+					GUI.showShowTaskModal();
+				}
+			});
+		};
+
 		//add task button click
 		var addTaskClick = function (that){
 			var id = $(that).attr('id');
@@ -262,12 +292,12 @@ $(document).ready(function () {
 					$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
 						GUI.hideAll();
 						GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
-							group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
+							showTaskClick, group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 					});
 				}
 				else{
 					GUI.hideAll();
-					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, showTaskClick);
 				}
 			});
 
@@ -552,7 +582,7 @@ $(document).ready(function () {
 		$('#brand').click(function (){
 			$.getJSON('http://localhost:3000/data/get/tasks/incoming/', function (tasks){
 				GUI.hideAll();
-				GUI.fillIncomingTasks(tasks, showListClick);
+				GUI.fillIncomingTasks(tasks, showListClick, showTaskClick);
 			});
 		})
 
@@ -598,48 +628,48 @@ $(document).ready(function () {
 		socket.on('addedTask', function (data) {
 			if(data.list.groupid !== null){
 				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
-					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, showTaskClick, 
 						group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 				});
 			}
 			else{
-				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, showTaskClick);
 			}
 		});
 		//Edit task
 		socket.on('editedTask', function (data) {
 			if(data.list.groupid !== null){
 				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
-					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, showTaskClick, 
 						group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 				});
 			}
 			else{
-				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, showTaskClick);
 			}
 		});
 		//Remove task
 		socket.on('rmedTask', function (data) {
 			if(data.list.groupid !== null){
 				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
-					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, showTaskClick, 
 						group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 				});
 			}
 			else{
-				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, showTaskClick);
 			}
 		});
 		//Done task
 		socket.on('doneTask', function (data) {
 			if(data.list.groupid !== null){
 				$.getJSON('http://localhost:3000/data/get/group/members/'+data.list.groupid+'/', function (group){
-					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, 
+					GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, showTaskClick, 
 						group.members, group.group, user.id, canEditTask, canRmTask, canChangeStatusTask);
 				});
 			}
 			else{
-				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick);
+				GUI.fillUserAllTasks(data.list, data.tasks, rmTaskClick, editTaskCLick, taskDoneClick, showTaskClick);
 			}
 		});
 		//Add group
@@ -687,7 +717,7 @@ $(document).ready(function () {
 				GUI.fillUserGroupsSmall(groups, showGroupClick, addListToGroupClick, canAddList, user.id);
 
 				$.getJSON('http://localhost:3000/data/get/tasks/incoming/', function (tasks){
-					GUI.fillIncomingTasks(tasks, showListClick);
+					GUI.fillIncomingTasks(tasks, showListClick, showTaskClick);
 				});
 			});
 		});
