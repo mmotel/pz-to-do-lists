@@ -606,5 +606,47 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div>
+<!-- show task modal -->
+<div class="modal fade" id="show-task-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><span class="glyphicon glyphicon-tasks"></span> Zadanie</h4>
+      </div>
+      <div class="modal-body">
+      	<form>
+      		<input type="hidden" id="show-task-modal-id">
+      	</form>
+      	<table class="table">
+      	<tr>
+      		<th>Nazwa</th> 
+      		<td id="show-task-modal-name">lalalala</td>
+      	</tr>
+      	<tr>
+      		<th>Termin</th> 
+      		<td id="show-task-modal-deadline">lalalala</td>
+      	</tr>
+      	<tr id="show-task-modal-executor-tr">
+	      	<th>Wykonawca</th> 
+	      	<td id="show-task-modal-executor">lalalala</td>
+      	</tr>
+      	<tr id="show-task-modal-executor-tr">
+	      	<th>Status</th> 
+	      	<td id="show-task-modal-status">lalalala</td>
+      	</tr>
+      	<tr>
+      		<th>Opis</th> 
+      		<td id="show-task-modal-descr">lalalala</td>
+      	</tr>
+	    </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+        <!-- <button type="button" class="btn btn-danger" id="deleteGroupConfirm">Tak, usuń grupę</button> -->
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
 	</body>
 </html>

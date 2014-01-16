@@ -219,7 +219,8 @@ GUI = {
 		//showList button click
 		$('.showListBig').click(function () { showListClick(this); });
 	},
-	fillUserAllGroups: function (tab, editClick, rmClick, showGroupClick, addListClick, canAddList, userId, canManageGroup){
+	fillUserAllGroups: function (tab, editClick, rmClick, showGroupClick, addListClick, canAddList, userId, 
+		canManageGroup){
 		$('#show-all-groups').slideDown('fast');
 
 		$('#user-groups-big').children().remove();
@@ -296,8 +297,8 @@ GUI = {
 		//addUser button click
 		$('.addUser').click(function() { addClick(this); });
 	},
-	fillUserAllTasks: function (list, tab, rmClick, editClick, taskDoneClick, members, group, userId, 
-		canEditTask, canRmTask, canChangeStatusTask){ //<---- !!!
+	fillUserAllTasks: function (list, tab, rmClick, editClick, taskDoneClick, showTaskClick, members, group, 
+		userId, canEditTask, canRmTask, canChangeStatusTask){ //<---- !!!
 		$('#show-all-tasks-list-name').html(list.name);
 		$('#user-tasks-big').children().remove();
 		$('#user-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Termin</th><th>Status</th>'+
@@ -305,9 +306,12 @@ GUI = {
 			'<th colspan="3">Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
-			$('#user-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
+			$('#user-tasks-big').append('<tr>' + 
+				'<td><button type="button" class="btn btn-link showTask" id="showTask'+tab[i].id+'">' + 
+				tab[i].name +'</button></td>' + 
+				'<td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
-				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +'</td>'+
+				'<td>'+ (tab[i].status ? 'wykonane' : 'niewykonane') +'</td>'+
 				(list.groupid !== null ? '<td>'+ findMember(members, tab[i].executor) +'</td>' : '') + '<td>' +
 				'<div class="btn-group pull-right">' +
 				(list.groupid === null || canEditTask(group, list, tab[i], userId) ? 
@@ -323,6 +327,9 @@ GUI = {
 					tab[i].id +'"'+ (tab[i].status ? 'disabled="disabled"' : ' ') +'>'+
 				'<span class="glyphicon glyphicon-ok"></span> Wykonaj</button>' : '') + '</div></td></tr>' );
 		}
+		//showTask button click
+		$('.showTask').click(function (){ showTaskClick(this); });
+
 		//rmTask button click
 		$('.rmTask').click(function() { rmClick(this); });
 
@@ -334,20 +341,26 @@ GUI = {
 
 		$('#show-all-tasks').slideDown('fast');
 	},
-	fillIncomingTasks: function (tab, showOnListClick){ //<---- !!!
+	fillIncomingTasks: function (tab, showOnListClick, showTaskClick){ //<---- !!!
 		$('#incoming-tasks-big').children().remove();
 		$('#incoming-tasks-big').append('<tr><th>Nazwa</th><th>Opis</th><th>Termin</th><th>Status</th>'+
 			'<th>Opcje</th></tr>');
 
 		for(var i = 0; i < tab.length; i++){
-			$('#incoming-tasks-big').append('<tr><td>'+ tab[i].name +'</td><td>'+ tab[i].descr +'</td>'+
+			$('#incoming-tasks-big').append('<tr>' + 
+				'<td><button type="button" class="btn btn-link showIncTask" id="showIncTask'+tab[i].id+'">' + 
+				tab[i].name +'</button></td>'+
+				'<td>'+ tab[i].descr +'</td>'+
 				'<td>'+ tab[i].deadline.day + "-"+ tab[i].deadline.month + "-" + tab[i].deadline.year +'</td>'+
-				'<td>'+ (tab[i].status ? 'wykonane' : 'nie wykonane') +
-				'</td><td><td><div class="btn-group pull-right">'+
+				'<td>'+ (tab[i].status ? 'wykonane' : 'niewykonane') +
+				'</td><td><div class="btn-group pull-right">'+
 				'<button type="button" class="btn btn-primary btn-sm pull-right showOnList" id="showOnList'+ 
 					tab[i].listid +'>'+
 				'<span class="glyphicon glyphicon-ok"></span> Pokaż na liście</button>' + '</div></td></tr>' );
 		}
+		//showTask button click
+		$('.showIncTask').click(function (){ showTaskClick(this); });
+
 		//showOnList button click
 		$('.showOnList').click(function (){ showOnListClick(this); });
 
@@ -386,7 +399,8 @@ GUI = {
 
 		for(var i=0; i < groups.length; i++){
 			if(canAddList(groups[i], userId)){
-				$('#add-list-group').append('<option value="'+ groups[i].id +'">'+ groups[i].name +'</option>');
+				$('#add-list-group').append('<option value="'+ groups[i].id +'">'+ groups[i].name +
+					'</option>');
 			}
 		}
 
@@ -756,6 +770,32 @@ GUI = {
 		perms.rmList = ($('input:radio[name=permGroupRm]:checked').val() === 'private');
 		return perms;
 	},
+	fillShowTaskModal: function (task, members){
+		$('#show-task-modal-name').html(task.name);
+		$('#show-task-modal-deadline').html(task.deadline.day + '.' + task.deadline.month + '.' + 
+			task.deadline.year);
+		if(members){
+			$('#show-task-modal-executor').html(findMember(members, task.executor));
+		}
+		else{
+			$('#show-task-modal-executor-tr').hide();
+		}
+		$('#show-task-modal-descr').html(task.descr);
+		if(task.status === true){
+			$('#show-task-modal-status').html('wykonane');
+		}
+		else{
+			$('#show-task-modal-status').html('niewykonane');			
+		}
+	},
+	clearShowTaskModal: function (){
+		$('#show-task-modal-name').html("");
+		$('#show-task-modal-deadline').html("");
+		$('#show-task-modal-executor').html("");
+		$('#show-task-modal-executor-tr').show();
+		$('#show-task-modal-descr').html("");
+		$('#show-task-modal-status').html("");
+	},
 	showUsersSettings: function (){
 		$('#user-settings').slideDown('fast');
 	},
@@ -800,6 +840,9 @@ GUI = {
 	},
 	showPermsGroupForm: function (){
 		$('#permissions-groups').slideDown();
+	},
+	showShowTaskModal: function (){
+		$('#show-task-modal').modal();
 	}
 };
 
