@@ -383,6 +383,15 @@ $(document).ready(function () {
 				if(newTask.executor === null){
 					newTask.executor = user.id;
 				}
+				var d = new Date();
+				newTask.date = {
+					year: d.getFullYear(),
+					month: d.getMonth() + 1,
+					day: d.getUTCDate(),
+					hours: d.getHours(),
+					mins: d.getMinutes(),
+					secs: d.getSeconds()
+				}; 
 
 				socket.emit('addTask', newTask);
 				GUI.clearAddTaskForm();
@@ -704,14 +713,14 @@ $(document).ready(function () {
 		socket.on('addUserToGroup', function (data){
 			GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick,
 				canAddTask, canEditList, canRmList);
-			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
+			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick, canAddRmMembers, user.id);
 		});
 
 		//Remove user from group
 		socket.on('removeUserFromGroup', function (data){
 			GUI.fillGroupLists(data.lists, rmListClick, editListClick, addTaskClick, showListClick,
 				canAddTask, canEditList, canRmList);
-			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick);
+			GUI.fillGroupUsers(data.group, data.members, removeUserFromGroupClick, canAddRmMembers, user.id);
 		});
 		//---
 

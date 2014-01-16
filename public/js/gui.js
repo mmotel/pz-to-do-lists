@@ -325,9 +325,17 @@ GUI = {
 				'<span class="glyphicon glyphicon-remove"></span> Usuń</button>': '') +  
 				(list.groupid === null || canChangeStatusTask(group, list, tab[i], userId) ?
 				'<button type="button" class="btn btn-primary btn-sm taskDone" id="taskDone'+ 
-					tab[i].id +'"'+ (tab[i].status === "done" ? 'disabled="disabled"' : ' ') +'>'+
-				'<span class="glyphicon glyphicon-ok"></span> Zmień status</button>' : '') + '</div></td></tr>' );
+					tab[i].id +'">'+
+				'<span class="glyphicon glyphicon-ok"></span> Zmień status</button>' : '') + 
+				'</div></td></tr>' );
+			
+			if(tab[i].status === "done"){
+				if(!(list.groupid === null || list.fbid === userId || group.owner === userId)){
+					$('#taskDone'+tab[i].id).prop('disabled', true);
+				}
+			}
 		}
+
 		//showTask button click
 		$('.showTask').click(function (){ showTaskClick(this); });
 
@@ -684,9 +692,18 @@ GUI = {
 		$('#user-done-task-modal-list-id').val(task.listid);
 		$('#user-done-task-modal-name').text("Nazwa zadania: " + task.name);
 
+		$('#task-status-new').prop('disabled', false);
+		$('#task-status-progres').prop('disabled', false);
+
 		if(task.status === "new"){ $('#task-status-new').prop('checked', true); }
-		else if(task.status === "progres"){ $('#task-status-progres').prop('checked', true); }
-		else if(task.status === "done"){ $('#task-status-done').prop('checked', true); }
+		else if(task.status === "progres"){ 
+			$('#task-status-progres').prop('checked', true); 
+			$('#task-status-new').prop('disabled', true);
+		}
+		else if(task.status === "done"){ 
+			$('#task-status-done').prop('checked', true); 
+			$('#task-status-progres').prop('disabled', true);
+		}
 	},
 	fillDeleteGroupModal: function (group){
 		$('#user-delete-group-modal-id').val(group.id);

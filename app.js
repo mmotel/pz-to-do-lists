@@ -42,8 +42,8 @@ var appServer = require('./lib/server.js');
 appServer.listen(server, appUser, Manager);
 
 //passport-facebook configuration
-var FACEBOOK_APP_ID = '637141929672070';
-var FACEBOOK_APP_SECRET = 'e68a60dd7659d17793c0c42d96bd5aeb';
+var FACEBOOK_APP_ID = '1446423512240607';
+var FACEBOOK_APP_SECRET = '5fbb1875c7d229fcf237b3c3b3268875';
 
 passport.use(new FacebookStrategy({
 	clientID: FACEBOOK_APP_ID,
